@@ -114,6 +114,18 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Rationale:** D-016 established that a QA gate exists before publish but not what it checks. `09_QA` cannot function without a defined minimum scope. This does not resolve `OPEN_QUESTIONS.md` OQ-004 (whether additional, earlier checkpoints — e.g. script-stage — are also wanted); it only fixes what the one mandatory pre-publish gate covers.
 **Owner engine:** `09_QA`.
 
+### D-018 — Thumbnail generation is owned by 07_SEO
+**Status:** Provisional
+**Decision:** Thumbnail creation is owned by `07_SEO`, not a separate engine or `06_Marketing`.
+**Rationale:** D-006's full pipeline names a "Thumbnail Agent" between Shorts Generator and SEO Agent, but no engine folder in the actual 10-folder structure claims it — a real gap found while writing `System/SEO_Principles.md`. Thumbnails are fundamentally a click-through/discoverability lever paired tightly with the title (both are what a viewer sees before clicking), which is `07_SEO`'s existing domain. Cheap to reassign later if it proves better owned by Production (visual asset creation) or Marketing.
+**Owner engine:** `07_SEO`.
+
+### D-019 — Default technical export specs
+**Status:** Provisional
+**Decision:** Default long-form export: 1080p minimum (4K if source/tooling supports it without added cost), 30fps, stereo audio AAC 192kbps or better, Persian burned-in or platform-native captions (D-015).
+**Rationale:** A technical default is needed for `System/Production_Standards.md` to be useful; these are industry-standard baseline values, not brand-identity choices, so the cost of being wrong is low and easy to revise once real tooling/budget (OQ-002, OQ-003) is confirmed.
+**Owner engine:** `05_Production`.
+
 ---
 
 ## Change History

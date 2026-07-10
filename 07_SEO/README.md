@@ -51,6 +51,10 @@ Sixth stage in the pipeline (`01_Core/Architecture.md`). Input: the rendered vid
 
 Inherits `01_Core/Quality_Standards.md` in full. SEO-specific addition: a title or description that oversells relative to the actual video content is a defect, not a growth-hacking tradeoff — it's treated with the same severity as a factual error elsewhere in the pipeline, because it directly damages the trust `01_Core/Vision.md` is built on.
 
+## Thumbnails
+
+Per `DECISIONS.md` D-018, thumbnail generation is owned by this engine, not `05_Production` or `06_Marketing` — thumbnails and titles are a paired click-through decision and belong together. A thumbnail must follow the same honesty rule as titles (§ Decision Rules): it may not depict or imply something the video doesn't actually show or claim. Visual specifics (composition, text overlay style, brand treatment) depend on `System/Brand_Guidelines.md` and the visual gaps still open in `System/Shima_Persona.md` — this section establishes ownership and the honesty constraint; visual execution detail lives in those files once populated.
+
 ## Examples / Edge Cases
 
 - **A News video covering an incremental update:** title reflects the actual scope of the update; the temptation to inflate ("this changes everything") is rejected per the Decision Rules above, even when it would likely outperform an honest title.

@@ -2,6 +2,19 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.15] - 2026-07-10
+### Added
+- `DECISIONS.md` D-018 (Provisional): thumbnail generation owned by `07_SEO` — fills a gap where D-006's pipeline names a "Thumbnail Agent" but no engine folder claimed it.
+- `DECISIONS.md` D-019 (Provisional): default technical export specs (1080p+/30fps/AAC 192kbps+/Persian captions) as a cheap, reversible baseline pending OQ-002/OQ-003.
+- `07_SEO/README.md`: added a Thumbnails section reflecting D-018 (ownership + honesty constraint).
+- `System/Brand_Guidelines.md`: channel visual identity (logo, palette, typography), distinct from `Shima_Persona.md`'s on-camera character bible. Core visual identity flagged `🔶 NEEDS FOUNDER INPUT` — no logo or colors exist in any prior material.
+- `System/Content_Principles.md`: editorial policy — independence from vendor/sponsorship influence, a correction policy (new — not previously specified anywhere), and controversial-topic handling (alarmism/dismissiveness both ruled out).
+- `System/Marketing_Principles.md`: growth-vs-trust priority order and named anti-patterns (engagement bait, misleading previews, manufactured urgency).
+- `System/Production_Standards.md`: technical export spec (D-019) and file naming/versioning conventions, distinct from `05_Production/README.md`'s process spec.
+- `System/Quality_Standards.md`: explicitly scoped as the *technical/deliverable* quality axis (file integrity, spec compliance) — a different file from `01_Core/Quality_Standards.md`'s *editorial/content* axis, with the relationship spelled out to prevent confusion between the two.
+- `System/SEO_Principles.md`: retention-over-clicks and viewer-first keyword philosophy underlying `07_SEO`'s process.
+- `System/Token_Optimization.md`: AI-operational context/token efficiency guidance — the only `System/` file about process rather than content.
+
 ## [0.14] - 2026-07-10
 ### Added
 - `10_Orchestrator/README.md`: full agent spec (D-003 structure, adapted for a coordination role) for the Orchestrator — category-driven workflow selection, artifact-passing sequencing, failure routing that resumes from the rejected point rather than restarting the pipeline, and pipeline-state tracking. Documents the coordination logic independent of whether it's triggered manually or (once OQ-006 resolves) via the D-009 command interface.

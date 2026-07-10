@@ -18,9 +18,10 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `08_Automation/README.md` — pipeline shape only; blocked on OQ-001/OQ-003; adds D-016 (QA-hold ordering)
 - [x] `09_QA/README.md` — review gate + hallucination prevention; scope of gate flagged 🔶 pending OQ-004 (D-017 fixes minimum gate content)
 - [x] `10_Orchestrator/README.md` — engine handoffs, workflow selection, future command interface (D-009); all 10 engine folders (01_Core–10_Orchestrator) now complete
+- [x] `System/` files: `Brand_Guidelines.md` (🔶 no logo/colors ever specified), `Content_Principles.md`, `Marketing_Principles.md`, `Production_Standards.md` (D-019), `Quality_Standards.md` (technical/deliverable axis, distinct from `01_Core/Quality_Standards.md`), `SEO_Principles.md`, `Token_Optimization.md`. Also: D-018 assigns thumbnail ownership to `07_SEO` (gap found while writing `SEO_Principles.md`).
 
 ## Next (in order)
-- [ ] `System/` files: `Brand_Guidelines.md`, `Content_Principles.md`, `Marketing_Principles.md`, `Production_Standards.md`, `Quality_Standards.md`, `SEO_Principles.md`, `Token_Optimization.md`
+- [ ] `Knowledge/`, `Prompts/`, `Templates/`, `Assets/` README expansions
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly
