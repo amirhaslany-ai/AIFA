@@ -2,6 +2,11 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.10] - 2026-07-10
+### Added
+- `06_Marketing/README.md`: full agent spec (D-003 structure) for Marketing — repackages the source video into platform-specific derived assets without ever adding to or reframing away from what the video says; traceability-to-source is a hard gate.
+- `06_Marketing/Platform_Derivation.md`: per-platform format/framing/tone rules for YouTube Shorts, Instagram Reels, TikTok, and Telegram — Telegram treated as a distinct text-forward format rather than a reused video caption, per its "highest-trust distribution" role in the Constitution.
+
 ## [0.9] - 2026-07-10
 ### Added
 - `DECISIONS.md` D-015 (Provisional): every video includes Persian captions by default.
