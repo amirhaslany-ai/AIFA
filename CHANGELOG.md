@@ -2,6 +2,13 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.14] - 2026-07-10
+### Added
+- `10_Orchestrator/README.md`: full agent spec (D-003 structure, adapted for a coordination role) for the Orchestrator — category-driven workflow selection, artifact-passing sequencing, failure routing that resumes from the rejected point rather than restarting the pipeline, and pipeline-state tracking. Documents the coordination logic independent of whether it's triggered manually or (once OQ-006 resolves) via the D-009 command interface.
+
+### Milestone
+- All ten engine folders (`01_Core` through `10_Orchestrator`) now have complete specs. Remaining work: `System/` cross-cutting files, shared resource (`Knowledge/`, `Prompts/`, `Templates/`, `Assets/`) README expansions, and the two remaining `00_System` stubs (`AGENT_ENGINEERING_STANDARD.md`, `CONTENT_PRODUCTION_WORKFLOW.md`).
+
 ## [0.13] - 2026-07-10
 ### Added
 - `DECISIONS.md` D-017 (Provisional): fixes the minimum content of the QA gate D-016 established (traceability, persona consistency, structural compliance, full Quality Standards checklist, independently re-verified) without resolving OQ-004 (how many checkpoints, exactly).
