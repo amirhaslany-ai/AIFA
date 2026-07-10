@@ -20,20 +20,18 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `10_Orchestrator/README.md` — engine handoffs, workflow selection, future command interface (D-009); all 10 engine folders (01_Core–10_Orchestrator) now complete
 - [x] `System/` files: `Brand_Guidelines.md` (🔶 no logo/colors ever specified), `Content_Principles.md`, `Marketing_Principles.md`, `Production_Standards.md` (D-019), `Quality_Standards.md` (technical/deliverable axis, distinct from `01_Core/Quality_Standards.md`), `SEO_Principles.md`, `Token_Optimization.md`. Also: D-018 assigns thumbnail ownership to `07_SEO` (gap found while writing `SEO_Principles.md`).
 - [x] `Knowledge/`, `Prompts/`, `Templates/`, `Assets/` README expansions
+- [x] `00_System/AGENT_ENGINEERING_STANDARD.md` and `00_System/CONTENT_PRODUCTION_WORKFLOW.md`
 
 ## Next (in order)
-- [ ] `00_System/AGENT_ENGINEERING_STANDARD.md` and `00_System/CONTENT_PRODUCTION_WORKFLOW.md` — last two empty stubs
-- [ ] `03_IdeaEngine/README.md` expansion
-- [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
-- [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly
-- [ ] `06_Marketing/README.md`, `07_SEO/README.md` expansion
-- [ ] `08_Automation/README.md` expansion — n8n / pipeline wiring
-- [ ] `09_QA/README.md` expansion — human review gate, KPIs
-- [ ] `10_Orchestrator/README.md` expansion — how engines hand off to each other
-- [ ] `System/` files: Brand_Guidelines, Content_Principles, Marketing_Principles, Production_Standards, Quality_Standards, SEO_Principles, Token_Optimization
-- [ ] `Knowledge/`, `Prompts/`, `Templates/`, `Assets/` README expansions
+*(none — full documentation build-out per the original TODO queue is complete; remaining work is founder input on open 🔶 gaps — see `OPEN_QUESTIONS.md` — and any future refinement)*
 
 ## Blocked / needs founder input before writing
-- Success metrics targets (§6 of Constitution has placeholder cadences only)
-- Budget for tools (avatar/voice/automation stack)
-- Confirm persona name: "Shima" vs "Aifa" (see Constitution §2)
+- Success metrics / cadence targets (`OPEN_QUESTIONS.md` OQ-005; §6 of the Constitution has a placeholder for News only)
+- Budget for tools — avatar/voice/automation stack (OQ-003)
+- Avatar & voice tooling selection, Persian voice-naturalness validation (OQ-002)
+- Shima's visual identity, verbal tics, formality register (`System/Shima_Persona.md` — multiple 🔶 sections)
+- Brand visual identity — logo, palette, typography (`System/Brand_Guidelines.md` — 🔶)
+- AI-disclosure framing (OQ-009)
+- Persona name "Shima" — Provisional per D-012, not yet explicitly Locked
+- Review-gate exact scope (OQ-004 — D-016/D-017 fix a minimum, but don't resolve whether additional earlier gates are wanted)
+- Command-interface timing (OQ-006), multi-language timing (OQ-007), tool assignments (OQ-001), platform-sequencing relative to the aggregator platform (OQ-008)

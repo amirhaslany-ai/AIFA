@@ -2,6 +2,17 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.17] - 2026-07-10
+### Added
+- `00_System/AGENT_ENGINEERING_STANDARD.md`: the detailed spec behind D-003's locked standard structure, written retroactively against the twelve-section pattern already applied consistently across all nine engine READMEs — what each section means, why it's required, and what the standard deliberately does not mandate (fixed length, founder-confirmed specifics everywhere, restating content owned elsewhere).
+- `00_System/CONTENT_PRODUCTION_WORKFLOW.md`: end-to-end walkthrough of one News item from trigger to publish, naming the actual artifacts and fields each stage produces/consumes, plus a worked example of the QA-rejection routing loop and a note on exactly where the four content categories diverge from each other.
+
+### Housekeeping
+- Fixed a bug in `TODO.md`: every prior commit in this session rewrote only the single "Next" line after "Done," leaving the original stale bottom block (a duplicate, already-completed "Next"/"Blocked" list from the file's very first version) untouched and unnoticed since. Removed the stale duplicate block and refreshed "Blocked / needs founder input" to reflect the actual current set of open `🔶`/`OPEN_QUESTIONS.md` gaps.
+
+### Milestone
+- Full documentation build-out per the original `TODO.md` queue is complete: all `00_System` and `01_Core` foundational files, all ten engine folders, all `System/` cross-cutting standards, and all shared-resource READMEs are written. Remaining work is founder input on the logged `🔶`/`OPEN_QUESTIONS.md` gaps, not further unprompted documentation.
+
 ## [0.16] - 2026-07-10
 ### Added
 - `Knowledge/README.md`: the pipeline's cross-content long-term memory — prior published content log (source of `03_IdeaEngine`'s saturation check), source reliability history, and correction log (source of `System/Content_Principles.md`'s correction policy).
