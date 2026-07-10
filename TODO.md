@@ -11,9 +11,10 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `System/Shima_Persona.md` — character bible skeleton; most sections flagged 🔶 NEEDS FOUNDER INPUT (see OQ-002, OQ-007, OQ-009)
 - [x] `02_Research/README.md`, `Methodology.md`, `Source_Reliability.md`, `Workflows.md`
 - [x] `03_IdeaEngine/README.md`, `Topic_Selection.md`, `Viral_Psychology.md`, `Hook_System.md`, `Trend_Scoring.md`
+- [x] `04_ScriptEngine/README.md`, `News_Workflow.md`, `Course_Workflow.md`, `ToolReview_Workflow.md`, `Tips_Workflow.md`
 
 ## Next (in order)
-- [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
+- [ ] `05_Production/README.md` expansion — avatar pipeline, voice/SSML pipeline (D-008), video assembly, hybrid full-screen/PiP layout
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly

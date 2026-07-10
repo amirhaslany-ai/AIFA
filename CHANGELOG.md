@@ -2,6 +2,13 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.8] - 2026-07-10
+### Added
+- `DECISIONS.md` D-013 (Provisional): Tips & Tricks script structure — Hook → Problem/Context → The Tip → Quick Proof/Demo → CTA. Fills a gap D-005 left open.
+- `DECISIONS.md` D-014 (Provisional): News script structure — Hook → What Happened → Why It Matters → Nuance/What's Next → CTA. Clarifies that D-005's News variant describes the upstream research pipeline (owned by `02_Research`), not the script's own section structure.
+- `04_ScriptEngine/README.md`: full agent spec (D-003 structure) for the highest-value engine — the universal 9-step writing process (Research → Extract Facts → Audience Analysis → Hook Generation → Outline → Storytelling → CTA → Revision → Final Polish), decision rules (no skipped steps, D-004 phrasing-proximity rule, tone-gap handling against `Shima_Persona.md`'s open sections), final script output schema.
+- `04_ScriptEngine/News_Workflow.md`, `Course_Workflow.md`, `ToolReview_Workflow.md`, `Tips_Workflow.md`: the four category-specific structural templates, each cross-referencing its owning decision and the matching `02_Research` workflow it builds on.
+
 ## [0.7] - 2026-07-10
 ### Added
 - `03_IdeaEngine/README.md`: full agent spec (D-003 structure) for the Idea Engine — mission, role, responsibilities, decision rules (factual-anchor minimum, single-angle rule, no hype-only angles, mandatory saturation check), content-brief output schema, KPIs.

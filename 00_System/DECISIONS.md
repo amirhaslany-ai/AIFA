@@ -83,6 +83,18 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Rationale:** Matches the actual repository skeleton already in place; avoids inventing a third name.
 **Status note:** Founder reviewed and did not object when this was flagged — treating as confirmed, but logged as Provisional rather than Locked since no explicit "yes, Shima is correct" was given. Will upgrade to Locked on explicit confirmation, or superseded if corrected.
 
+### D-013 — Tips & Tricks script structure (fills a D-005 gap)
+**Status:** Provisional
+**Decision:** Tips scripts follow: Hook → Problem/Context → The Tip (step-by-step) → Quick Proof/Demo → CTA.
+**Rationale:** D-005 defines script structures for Course/Education and Tool Review, and a research-pipeline shape (not a script shape) for News, but never defines a Tips structure. `04_ScriptEngine` cannot function without one. This mirrors the problem-first framing of the Course/Tool Review shapes while staying appropriately short-form.
+**Owner engine:** `04_ScriptEngine`.
+
+### D-014 — News script structure (fills a D-005 gap)
+**Status:** Provisional
+**Decision:** News scripts follow: Hook → What Happened → Why It Matters → Nuance/What's Next → CTA.
+**Rationale:** D-005's News variant ("RSS/X/official sources → Research → Deduplicate → Rank → Script") describes the upstream research pipeline, which `DECISIONS.md`/`02_Research` now owns — it does not describe the final script's section structure, unlike the Course and Tool Review variants which do. A News-specific script shape is needed for `04_ScriptEngine` to function symmetrically with the other three categories.
+**Owner engine:** `04_ScriptEngine`.
+
 ---
 
 ## Change History
