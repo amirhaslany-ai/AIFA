@@ -14,9 +14,10 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `04_ScriptEngine/README.md`, `News_Workflow.md`, `Course_Workflow.md`, `ToolReview_Workflow.md`, `Tips_Workflow.md`
 - [x] `05_Production/README.md`, `Avatar_Pipeline.md`, `Voice_SSML_Pipeline.md`, `Video_Assembly.md` — most content gapped 🔶 pending OQ-002/OQ-003
 - [x] `06_Marketing/README.md`, `Platform_Derivation.md`
+- [x] `07_SEO/README.md`
 
 ## Next (in order)
-- [ ] `07_SEO/README.md` expansion — titles/descriptions/tags/chapters rules
+- [ ] `08_Automation/README.md` expansion — n8n / pipeline wiring (flag OQ-001/OQ-003 gaps)
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly

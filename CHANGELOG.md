@@ -2,6 +2,10 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.11] - 2026-07-10
+### Added
+- `07_SEO/README.md`: full agent spec (D-003 structure) for SEO — titles, descriptions, tags, and chapters. Chapters are derived mechanically from the script's own section structure rather than invented; title/description honesty is enforced as a hard quality gate, not a growth-hacking tradeoff.
+
 ## [0.10] - 2026-07-10
 ### Added
 - `06_Marketing/README.md`: full agent spec (D-003 structure) for Marketing — repackages the source video into platform-specific derived assets without ever adding to or reframing away from what the video says; traceability-to-source is a hard gate.
