@@ -101,6 +101,13 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Rationale:** Standard practice for accessibility and for silent/autoplay viewing on social platforms (Instagram, TikTok); no prior material argues against it, and it's cheap to reverse if the founder wants otherwise.
 **Owner engine:** `05_Production`.
 
+### D-016 — Automation stages/queues; publish execution holds for QA sign-off
+**Status:** Provisional
+**Decision:** `08_Automation` assembles and schedules publish packages (video/asset + metadata per platform), but actual publish execution holds until `09_QA` signs off. Automation does not fire a publish on schedule alone.
+**Rationale:** Reconciles `01_Core/Architecture.md`'s pipeline diagram (which places `08_Automation` before `09_QA`) with Constitution Core Principle 5 ("human review checkpoint before publish"). Without this clarification the two documents would appear to contradict each other on ordering.
+**Owner engines:** `08_Automation`, `09_QA`.
+**Note:** The exact review-gate placement (script only? final video only? both?) is still open — `OPEN_QUESTIONS.md` OQ-004. This decision only fixes that *some* QA gate exists before Automation's publish step, not which artifact(s) it reviews.
+
 ---
 
 ## Change History

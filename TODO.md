@@ -15,9 +15,10 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `05_Production/README.md`, `Avatar_Pipeline.md`, `Voice_SSML_Pipeline.md`, `Video_Assembly.md` — most content gapped 🔶 pending OQ-002/OQ-003
 - [x] `06_Marketing/README.md`, `Platform_Derivation.md`
 - [x] `07_SEO/README.md`
+- [x] `08_Automation/README.md` — pipeline shape only; blocked on OQ-001/OQ-003; adds D-016 (QA-hold ordering)
 
 ## Next (in order)
-- [ ] `08_Automation/README.md` expansion — n8n / pipeline wiring (flag OQ-001/OQ-003 gaps)
+- [ ] `09_QA/README.md` expansion — human review gate (OQ-004), AI hallucination prevention
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly

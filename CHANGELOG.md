@@ -2,6 +2,11 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.12] - 2026-07-10
+### Added
+- `DECISIONS.md` D-016 (Provisional): Automation stages/queues publish packages, but publish execution holds for `09_QA` sign-off — reconciles `01_Core/Architecture.md`'s pipeline diagram (Automation before QA) with Constitution Core Principle 5 (human review before publish).
+- `08_Automation/README.md`: full agent spec (D-003 structure) for Automation — documents pipeline shape (package assembly → scheduling → QA hold → publish execution → status logging) without assuming a specific tool, since OQ-001 (tool assignment) and OQ-003 (budget) remain unresolved. Explicitly a specification, not a running system, at this stage.
+
 ## [0.11] - 2026-07-10
 ### Added
 - `07_SEO/README.md`: full agent spec (D-003 structure) for SEO — titles, descriptions, tags, and chapters. Chapters are derived mechanically from the script's own section structure rather than invented; title/description honesty is enforced as a hard quality gate, not a growth-hacking tradeoff.
