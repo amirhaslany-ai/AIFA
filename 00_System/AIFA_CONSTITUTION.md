@@ -97,6 +97,8 @@ Any AI model (Claude, GPT, Gemini, or other) or human contributor picking up thi
 | `00_System/CLAUDE_MASTER_PROMPT.md` | Written |
 | `00_System/CONTENT_PRODUCTION_WORKFLOW.md` | Written |
 | `00_System/AGENT_ENGINEERING_STANDARD.md` | Written |
+| `00_System/MAINTAINER_DIRECTIVE.md` | v3.0 — maintenance-session protocol |
+| `CLAUDE.md` (repo root) | Written — entry pointer routing to the governing documents |
 | `System/Shima_Persona.md` | Written — multiple sections 🔶 NEEDS FOUNDER INPUT (OQ-002, OQ-007, OQ-009) |
 | `System/Brand_Guidelines.md`, `Content_Principles.md`, `Marketing_Principles.md`, `Production_Standards.md`, `Quality_Standards.md`, `SEO_Principles.md`, `Token_Optimization.md` | Written — `Brand_Guidelines.md` visual identity 🔶 NEEDS FOUNDER INPUT |
 | `01_Core` – `10_Orchestrator` (READMEs + supporting files) | Written — tool-dependent sections in `05_Production`/`08_Automation` gapped 🔶 pending OQ-001/OQ-002/OQ-003 |

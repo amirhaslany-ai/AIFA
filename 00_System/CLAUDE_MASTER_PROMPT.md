@@ -62,6 +62,7 @@ Do not batch multiple unrelated engine folders into a single commit — it defea
 
 ## 7. Cross-references
 - Full AI handover protocol: `AIFA_CONSTITUTION.md` §9
+- Maintenance-session protocol (read → audit → present → founder approval → one improvement → stop): `00_System/MAINTAINER_DIRECTIVE.md`
 - Decision process detail: `01_Core/Decision_Framework.md`
 - Agent structure detail: `00_System/AGENT_ENGINEERING_STANDARD.md`
 - End-to-end pipeline walkthrough: `00_System/CONTENT_PRODUCTION_WORKFLOW.md`

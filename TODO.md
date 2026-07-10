@@ -23,7 +23,7 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `00_System/AGENT_ENGINEERING_STANDARD.md` and `00_System/CONTENT_PRODUCTION_WORKFLOW.md`
 
 ## Next (in order)
-*(none — full documentation build-out per the original TODO queue is complete; remaining work is founder input on open 🔶 gaps — see `OPEN_QUESTIONS.md` — and any future refinement)*
+*(none queued — full documentation build-out per the original TODO queue is complete. Ongoing work runs as maintenance sessions per `00_System/MAINTAINER_DIRECTIVE.md`; substantive progress now depends on founder input on the open 🔶 gaps — see `OPEN_QUESTIONS.md` and the Blocked list below)*
 
 ## Blocked / needs founder input before writing
 - Success metrics / cadence targets (`OPEN_QUESTIONS.md` OQ-005; §6 of the Constitution has a placeholder for News only)

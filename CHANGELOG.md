@@ -2,6 +2,16 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.19] - 2026-07-10
+### Added (founder uploads, logged retroactively)
+- `00_System/MAINTAINER_DIRECTIVE.md` (v3.0): the maintenance-session protocol — read → audit → present findings → founder approval → implement one improvement → update governance docs → stop. Uploaded by the founder via GitHub web UI (commit `3d94b04`).
+- `CLAUDE.md` (repo root): auto-loaded entry pointer routing any AI model to the governing documents and the maintenance protocol. Uploaded by the founder via GitHub web UI (commit `dcd5f35`).
+
+### Housekeeping
+- `00_System/AIFA_CONSTITUTION.md` §10: added the two new files to the living Document Index (founder-approved in session per §9.4; index-only, no structural change).
+- `00_System/CLAUDE_MASTER_PROMPT.md` §7: added a cross-reference to the maintenance-session protocol.
+- `TODO.md`: "Next" now points to the maintenance-session mode as the ongoing work model instead of a bare "(none)".
+
 ## [0.18] - 2026-07-10
 ### Housekeeping (maintenance session)
 - Repo-wide staleness audit after the v0.17 build-out milestone. Refreshed every "(to be written / to be created / not yet populated)" marker that pointed at a file that now exists: `00_System/CLAUDE_MASTER_PROMPT.md` §7, `01_Core/Architecture.md`, `01_Core/Quality_Standards.md` (×2, including the hallucination-prevention pointer now aimed at `09_QA/README.md`'s actual section), `08_Automation/README.md`, `05_Production/Video_Assembly.md` (Brand_Guidelines is written; its 🔶 is the visual-identity content, not the file).
