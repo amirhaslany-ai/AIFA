@@ -26,7 +26,7 @@ Per `01_Core/Quality_Standards.md`: full-screen avatar for key moments, picture-
 2. **Apply layout per segment** — using the mapping above and the script's own section tags (carried through from `04_ScriptEngine`'s output artifact), switch between full-screen and PiP at section boundaries.
 3. **Sync PiP content** — for any PiP segment, the secondary content (screen capture, comparison graphic, source screenshot) must be time-synced to the avatar's spoken reference to it — not just placed adjacent for the segment's duration.
 4. **Captions** — burn in or attach Persian captions for the full video (D-015).
-5. **Brand elements** — lower-thirds, intro/outro treatment. `🔶` Blocked pending `System/Brand_Guidelines.md` (not yet populated) and the visual-identity gaps in `System/Shima_Persona.md`.
+5. **Brand elements** — lower-thirds, intro/outro treatment. `🔶` Blocked pending the visual-identity gaps in `System/Brand_Guidelines.md` (logo/palette/typography still 🔶) and `System/Shima_Persona.md`.
 6. **Export** — primary export is the long-form YouTube video (Constitution §7); platform-specific derivations happen in `06_Marketing`, not here — this engine produces one source-of-truth asset, not multiple platform cuts.
 
 ## 🔶 Open gaps

@@ -11,7 +11,7 @@ This is the general quality bar every pipeline output is checked against before 
 A script passes only if all of the following are true:
 - [ ] Written from scratch in Shima's voice — not a reworded source (D-004). If any sentence could be traced closely to a single source's phrasing, it fails.
 - [ ] Went through the full multi-step workflow for its content type (D-005) — not generated in one pass.
-- [ ] Every factual claim traces back to a source captured during Research — no invented statistics, dates, or quotes. See `AI_Hallucination_Prevention` guidance (to be detailed in `09_QA`).
+- [ ] Every factual claim traces back to a source captured during Research — no invented statistics, dates, or quotes. See the AI Hallucination Prevention section in `09_QA/README.md`.
 - [ ] Has a clear hook in the first 5–8 seconds appropriate to the platform it's primarily built for.
 - [ ] Has a clear, single CTA — not three competing asks.
 - [ ] Matches the category's structure exactly (news / course / tool-review / tips, per D-005) — no structural drift.
@@ -47,4 +47,4 @@ Every engine's own documentation should eventually reference this file and add o
 ## Cross-references
 - Source discipline: `DECISIONS.md` D-004
 - Persona consistency: `DECISIONS.md` D-007, `System/Shima_Persona.md`
-- Review gate: `09_QA/README.md` (to be written), `OPEN_QUESTIONS.md` OQ-004
+- Review gate: `09_QA/README.md`, `OPEN_QUESTIONS.md` OQ-004

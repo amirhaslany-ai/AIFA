@@ -2,6 +2,13 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.18] - 2026-07-10
+### Housekeeping (maintenance session)
+- Repo-wide staleness audit after the v0.17 build-out milestone. Refreshed every "(to be written / to be created / not yet populated)" marker that pointed at a file that now exists: `00_System/CLAUDE_MASTER_PROMPT.md` §7, `01_Core/Architecture.md`, `01_Core/Quality_Standards.md` (×2, including the hallucination-prevention pointer now aimed at `09_QA/README.md`'s actual section), `08_Automation/README.md`, `05_Production/Video_Assembly.md` (Brand_Guidelines is written; its 🔶 is the visual-identity content, not the file).
+- `00_System/DECISIONS.md`: refreshed stale pointer-notes in D-001/D-003/D-005 (non-substantive) and backfilled the Change History with the 2026-07-10 D-013–D-019 additions, which had never been logged there.
+- `00_System/AIFA_CONSTITUTION.md`: updated the §10 living Document Index (still claimed DECISIONS/OPEN_QUESTIONS were "not yet created" and everything else "empty skeleton") and the §5.6 "(to be created next)" parenthetical — founder-approved in session per §9.4; no structural change, so no version bump per §11.
+- Audit also verified all cross-file references resolve (the bare-filename shorthand convention is consistent repo-wide; the only unresolvable references — `SUCCESS_METRICS.md`, `TOOL_SELECTION.md`, `RISKS.md` — are all explicitly flagged as not-yet-created where they appear).
+
 ## [0.17] - 2026-07-10
 ### Added
 - `00_System/AGENT_ENGINEERING_STANDARD.md`: the detailed spec behind D-003's locked standard structure, written retroactively against the twelve-section pattern already applied consistently across all nine engine READMEs — what each section means, why it's required, and what the standard deliberately does not mandate (fixed length, founder-confirmed specifics everywhere, restating content owned elsewhere).

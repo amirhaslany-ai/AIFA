@@ -12,7 +12,7 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Status:** Provisional
 **Decision:** Claude is not "the whole system." Proposed original division of labor: Claude = project lead / senior scriptwriter, ChatGPT = content strategy & trend rewriting, Gemini = source research, Perplexity = news aggregation, ElevenLabs = voice, Hedra/HeyGen/Higgsfield = avatar & video, n8n = automation, Google Drive/Notion = database.
 **Rationale:** No single model reliably performs research, strategy, and long-form writing at production quality simultaneously; splitting by strength avoids forcing one model outside its competence.
-**Note:** This was the original proposal before the repository/agent-pipeline architecture (D-002) was adopted. The *tool* assignments are still open (see `OPEN_QUESTIONS.md`, to be created) — what's locked is the *principle* that this is a multi-tool pipeline, not one model doing everything end-to-end.
+**Note:** This was the original proposal before the repository/agent-pipeline architecture (D-002) was adopted. The *tool* assignments are still open (see `OPEN_QUESTIONS.md` OQ-001) — what's locked is the *principle* that this is a multi-tool pipeline, not one model doing everything end-to-end.
 
 ### D-002 — Documentation-first, multi-file agent architecture (not a single prompt)
 **Status:** Locked
@@ -24,7 +24,7 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Status:** Locked
 **Decision:** Every agent-defining document must include: Mission, Role, Responsibilities, Knowledge Base, Decision Rules, Workflows, Quality Standards, Examples/Edge Cases, Failure Recovery, Output Format, Self-Review Checklist, KPIs, Future Improvements.
 **Rationale:** Makes each agent behave like a documented specialist rather than an ad hoc prompt; ensures nothing critical (failure handling, KPIs) gets forgotten.
-**Reference:** Detailed in `00_System/AGENT_ENGINEERING_STANDARD.md` (not yet populated — next after this file per `TODO.md`).
+**Reference:** Detailed in `00_System/AGENT_ENGINEERING_STANDARD.md`.
 
 ### D-004 — Sources provide facts only; voice is always original
 **Status:** Locked
@@ -39,7 +39,7 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 - **Course/Education:** Skill Tree → Prerequisites → Lessons → Exercises → Quiz → Summary → CTA
 - **Tool Review:** Problem → Tool → Features → Demo → Comparison → Pricing → Alternatives → Conclusion
 **Rationale:** Single-shot generation was identified as the direct cause of generic, low-quality scripts in earlier attempts.
-**Owner engine:** `04_ScriptEngine` (detailed workflows to be written there per `TODO.md`).
+**Owner engine:** `04_ScriptEngine` (detailed in its four per-category workflow files).
 
 ### D-006 — Full production pipeline, agent-per-stage
 **Status:** Locked
@@ -129,4 +129,6 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 ---
 
 ## Change History
+- **2026-07-10 (maintenance):** Refreshed stale pointer-notes in D-001, D-003, and D-005 that still described `OPEN_QUESTIONS.md`, `AGENT_ENGINEERING_STANDARD.md`, and the `04_ScriptEngine` workflow files as not yet written. Non-substantive — no decision's status or content changed.
+- **2026-07-10:** D-013 through D-019 added incrementally during the engine and `System/` build-out (see `CHANGELOG.md` v0.8–v0.15 for per-entry context).
 - **2026-07-09:** Initial log created (D-001 through D-012), extracting decisions implicit in prior conversations and in `AIFA_CONSTITUTION.md` v0.1.

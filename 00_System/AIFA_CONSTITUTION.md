@@ -46,7 +46,7 @@ Produce AI-education and AI-news content at a consistency, accuracy, and product
 3. **Persona consistency over speed.** Shima's appearance, voice, gestures, and tone must be identical across every video. Any new visual/vocal asset must be checked against `System/Shima_Persona.md` before use.
 4. **Small, specialized files over large generalist prompts.** Each agent gets a scoped knowledge base and a single responsibility. This repository structure *is* the enforcement mechanism for that principle — do not collapse folders back into monolithic docs.
 5. **Human review checkpoint before publish.** Full autonomy is a future-state goal, not a v1 requirement. See `09_QA/README.md` for the current review gate.
-6. **Every architectural decision is logged.** Nothing gets silently changed. See `00_System/DECISIONS.md` (to be created next).
+6. **Every architectural decision is logged.** Nothing gets silently changed. See `00_System/DECISIONS.md`.
 
 ## 6. Content Categories
 
@@ -92,14 +92,15 @@ Any AI model (Claude, GPT, Gemini, or other) or human contributor picking up thi
 | File | Status |
 |---|---|
 | `00_System/AIFA_CONSTITUTION.md` | v0.1 — this file |
-| `00_System/DECISIONS.md` | Not yet created |
-| `00_System/OPEN_QUESTIONS.md` | Not yet created |
-| `00_System/CLAUDE_MASTER_PROMPT.md` | Exists, empty skeleton |
-| `00_System/CONTENT_PRODUCTION_WORKFLOW.md` | Exists, empty skeleton |
-| `00_System/AGENT_ENGINEERING_STANDARD.md` | Exists, empty skeleton |
-| `System/Shima_Persona.md` | Exists, empty skeleton |
-| `System/Brand_Guidelines.md`, `Content_Principles.md`, `Marketing_Principles.md`, `Production_Standards.md`, `Quality_Standards.md`, `SEO_Principles.md`, `Token_Optimization.md` | Exist, empty skeletons |
-| `01_Core` – `10_Orchestrator` READMEs | Exist, empty skeletons |
+| `00_System/DECISIONS.md` | Active — D-001 through D-019 |
+| `00_System/OPEN_QUESTIONS.md` | Active — OQ-001 through OQ-009, none yet resolved |
+| `00_System/CLAUDE_MASTER_PROMPT.md` | Written |
+| `00_System/CONTENT_PRODUCTION_WORKFLOW.md` | Written |
+| `00_System/AGENT_ENGINEERING_STANDARD.md` | Written |
+| `System/Shima_Persona.md` | Written — multiple sections 🔶 NEEDS FOUNDER INPUT (OQ-002, OQ-007, OQ-009) |
+| `System/Brand_Guidelines.md`, `Content_Principles.md`, `Marketing_Principles.md`, `Production_Standards.md`, `Quality_Standards.md`, `SEO_Principles.md`, `Token_Optimization.md` | Written — `Brand_Guidelines.md` visual identity 🔶 NEEDS FOUNDER INPUT |
+| `01_Core` – `10_Orchestrator` (READMEs + supporting files) | Written — tool-dependent sections in `05_Production`/`08_Automation` gapped 🔶 pending OQ-001/OQ-002/OQ-003 |
+| `Knowledge/`, `Prompts/`, `Templates/`, `Assets/` READMEs | Written |
 
 ## 11. Versioning
 

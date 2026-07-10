@@ -30,7 +30,7 @@ Seventh/eighth stage in the pipeline (`01_Core/Architecture.md`). Input: all fin
 - `OPEN_QUESTIONS.md` OQ-001 (tool assignments — is n8n still the automation tool, is it confirmed) and OQ-003 (budget) — both block final tool selection and are the main reason this engine remains a specification today.
 - `DECISIONS.md` D-009 — the longer-term command-interface goal (`/news`, `/course`, etc.) that would eventually trigger this engine directly, once the orchestration layer (`10_Orchestrator`) exists.
 - `DECISIONS.md` D-016 — the QA-hold ordering clarification above.
-- `09_QA/README.md` — the review gate this engine's publish step depends on (to be written; see `OPEN_QUESTIONS.md` OQ-004 for what exactly gets reviewed).
+- `09_QA/README.md` — the review gate this engine's publish step depends on (see `OPEN_QUESTIONS.md` OQ-004 for whether additional, earlier checkpoints are also wanted).
 
 ## Decision Rules
 

@@ -63,5 +63,5 @@ Do not batch multiple unrelated engine folders into a single commit — it defea
 ## 7. Cross-references
 - Full AI handover protocol: `AIFA_CONSTITUTION.md` §9
 - Decision process detail: `01_Core/Decision_Framework.md`
-- Agent structure detail: `00_System/AGENT_ENGINEERING_STANDARD.md` (to be populated)
-- End-to-end pipeline walkthrough: `00_System/CONTENT_PRODUCTION_WORKFLOW.md` (to be populated)
+- Agent structure detail: `00_System/AGENT_ENGINEERING_STANDARD.md`
+- End-to-end pipeline walkthrough: `00_System/CONTENT_PRODUCTION_WORKFLOW.md`

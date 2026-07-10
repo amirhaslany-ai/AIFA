@@ -58,5 +58,5 @@ Every handoff between stages is a **defined artifact**, not a conversation. E.g.
 
 ## Cross-references
 - Per-category workflow variants: `DECISIONS.md` D-005
-- Human review gate placement: `09_QA/README.md` (to be written)
+- Human review gate placement: `09_QA/README.md`
 - Command/orchestration model: `DECISIONS.md` D-009, `OPEN_QUESTIONS.md` OQ-006
