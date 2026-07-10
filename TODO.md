@@ -9,9 +9,10 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `01_Core/README.md`, `Vision.md`, `Architecture.md`, `Decision_Framework.md`, `Quality_Standards.md`
 - [x] `00_System/CLAUDE_MASTER_PROMPT.md` — operating instructions for any AI model working in this repo
 - [x] `System/Shima_Persona.md` — character bible skeleton; most sections flagged 🔶 NEEDS FOUNDER INPUT (see OQ-002, OQ-007, OQ-009)
+- [x] `02_Research/README.md`, `Methodology.md`, `Source_Reliability.md`, `Workflows.md`
 
 ## Next (in order)
-- [ ] `02_Research/README.md` expansion + research methodology, source reliability, per-content-type research workflows
+- [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly

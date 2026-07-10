@@ -2,6 +2,13 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.6] - 2026-07-10
+### Added
+- `02_Research/README.md`: full agent spec (D-003 structure) for the Research engine — mission, role, responsibilities, decision rules (corroboration thresholds, conflicting-source handling, vendor-claim labeling), fact-list output schema, KPIs.
+- `02_Research/Methodology.md`: the general five-step research procedure (source discovery → extraction → verification → deduplication → ranking) that every content category specializes.
+- `02_Research/Source_Reliability.md`: four-tier source reliability system with concrete source sets per category; flags OQ-001 as affecting tool assignment, not the tiering logic itself.
+- `02_Research/Workflows.md`: the four per-content-type research workflows (news, course, tool review, tips), each ending in the shared fact-list artifact schema.
+
 ## [0.5] - 2026-07-10
 ### Added
 - `00_System/CLAUDE_MASTER_PROMPT.md`: operating instructions for any AI model working in this repo — read order, non-negotiable working rules, decision/question handling, file-writing checklist, commit discipline.
