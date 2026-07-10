@@ -46,6 +46,11 @@ Per `AIFA_CONSTITUTION.md` §2, Content Studio and the aggregator platform are s
 **Needed:** Founder's intended sequencing between the two workstreams.
 **Blocks:** Nothing directly in this repo yet, but affects how urgently `06_Marketing`/`07_SEO` should optimize for platform-launch traffic versus general brand-building.
 
+### OQ-009 — AI-disclosure framing for Shima
+Constitution Core Principle 1 cites YouTube's 2026 authenticity policy and Instagram's Originality Score as the reason sources must never leak into voice — but neither the Constitution nor any prior material reviewed states whether Shima's AI-generated nature is disclosed to viewers, and if so, how (on-screen every video, channel-level once, platform-dependent, or not at all beyond what platform policy requires).
+**Needed:** Founder's disclosure policy. This is a compliance question, not a style question — getting it wrong risks the exact authenticity-policy penalty D-004 exists to avoid.
+**Blocks:** `System/Shima_Persona.md` §2, `09_QA/README.md` (review gate should check disclosure compliance if a policy is set).
+
 ---
 
 ## Resolved

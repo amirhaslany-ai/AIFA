@@ -4,13 +4,13 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 
 ## Done
 - [x] `00_System/AIFA_CONSTITUTION.md` — v0.1 foundational governance document
+- [x] `00_System/DECISIONS.md` — D-001 through D-012 logged
+- [x] `00_System/OPEN_QUESTIONS.md` — OQ-001 through OQ-008 logged
+- [x] `01_Core/README.md`, `Vision.md`, `Architecture.md`, `Decision_Framework.md`, `Quality_Standards.md`
+- [x] `00_System/CLAUDE_MASTER_PROMPT.md` — operating instructions for any AI model working in this repo
+- [x] `System/Shima_Persona.md` — character bible skeleton; most sections flagged 🔶 NEEDS FOUNDER INPUT (see OQ-002, OQ-007, OQ-009)
 
 ## Next (in order)
-- [ ] `00_System/DECISIONS.md` — extract and log decisions already implicit in prior conversations + this constitution
-- [ ] `00_System/OPEN_QUESTIONS.md` — capture unresolved items (persona naming, cadence targets, budget, avatar tooling, etc.)
-- [ ] `01_Core/README.md` (expand from stub) + `01_Core/Vision.md`, `Architecture.md`, `Decision_Framework.md`, `Quality_Standards.md`
-- [ ] `System/Shima_Persona.md` — character bible (design, voice, gesture/expression/clothing/lighting/camera libraries)
-- [ ] `00_System/CLAUDE_MASTER_PROMPT.md` — operating instructions for any AI model working in this repo
 - [ ] `02_Research/README.md` expansion + research methodology, source reliability, per-content-type research workflows
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
