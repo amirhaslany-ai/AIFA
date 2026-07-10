@@ -16,9 +16,10 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `06_Marketing/README.md`, `Platform_Derivation.md`
 - [x] `07_SEO/README.md`
 - [x] `08_Automation/README.md` — pipeline shape only; blocked on OQ-001/OQ-003; adds D-016 (QA-hold ordering)
+- [x] `09_QA/README.md` — review gate + hallucination prevention; scope of gate flagged 🔶 pending OQ-004 (D-017 fixes minimum gate content)
 
 ## Next (in order)
-- [ ] `09_QA/README.md` expansion — human review gate (OQ-004), AI hallucination prevention
+- [ ] `10_Orchestrator/README.md` expansion — engine handoffs, workflow selection, future command interface (D-009)
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly

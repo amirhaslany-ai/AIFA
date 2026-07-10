@@ -108,6 +108,12 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Owner engines:** `08_Automation`, `09_QA`.
 **Note:** The exact review-gate placement (script only? final video only? both?) is still open — `OPEN_QUESTIONS.md` OQ-004. This decision only fixes that *some* QA gate exists before Automation's publish step, not which artifact(s) it reviews.
 
+### D-017 — Minimum QA gate content (fills a D-016 gap)
+**Status:** Provisional
+**Decision:** At minimum, the QA gate established by D-016 checks the assembled publish package for: factual traceability (every claim traces to a `02_Research` fact-list entry), persona consistency (against `System/Shima_Persona.md`, where defined), category-structural compliance (against the relevant `04_ScriptEngine` workflow template), and the full `01_Core/Quality_Standards.md` checklist, independently re-verified rather than trusted from upstream self-reviews.
+**Rationale:** D-016 established that a QA gate exists before publish but not what it checks. `09_QA` cannot function without a defined minimum scope. This does not resolve `OPEN_QUESTIONS.md` OQ-004 (whether additional, earlier checkpoints — e.g. script-stage — are also wanted); it only fixes what the one mandatory pre-publish gate covers.
+**Owner engine:** `09_QA`.
+
 ---
 
 ## Change History

@@ -2,6 +2,11 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.13] - 2026-07-10
+### Added
+- `DECISIONS.md` D-017 (Provisional): fixes the minimum content of the QA gate D-016 established (traceability, persona consistency, structural compliance, full Quality Standards checklist, independently re-verified) without resolving OQ-004 (how many checkpoints, exactly).
+- `09_QA/README.md`: full agent spec (D-003 structure) for QA. Leads with an explicit `🔶 NEEDS FOUNDER INPUT` on review-gate scope (OQ-004) rather than inventing a placement, then builds the process around the one structurally-required gate. Includes a dedicated AI Hallucination Prevention section (numbers/statistics, direct quotes, Tool Review comparative claims, vendor-claim labeling, Course exercise verification).
+
 ## [0.12] - 2026-07-10
 ### Added
 - `DECISIONS.md` D-016 (Provisional): Automation stages/queues publish packages, but publish execution holds for `09_QA` sign-off — reconciles `01_Core/Architecture.md`'s pipeline diagram (Automation before QA) with Constitution Core Principle 5 (human review before publish).
