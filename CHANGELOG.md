@@ -2,6 +2,14 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.7] - 2026-07-10
+### Added
+- `03_IdeaEngine/README.md`: full agent spec (D-003 structure) for the Idea Engine — mission, role, responsibilities, decision rules (factual-anchor minimum, single-angle rule, no hype-only angles, mandatory saturation check), content-brief output schema, KPIs.
+- `03_IdeaEngine/Topic_Selection.md`: how Research's fact-list becomes candidate topic/angle pairs before scoring.
+- `03_IdeaEngine/Viral_Psychology.md`: general engagement principles (curiosity gap, pattern interrupt, stakes/relevance, specificity, social proof, contrarian framing) subordinated to the honesty mandate.
+- `03_IdeaEngine/Hook_System.md`: hook-direction type library; explicitly splits "choosing the lever" (Idea Engine) from "writing the hook line" (Script Engine's future Hook Generation step) to avoid duplicating with `04_ScriptEngine`.
+- `03_IdeaEngine/Trend_Scoring.md`: scoring rubric for ranking candidates; flags cadence-fit factor as provisional pending OQ-005.
+
 ## [0.6] - 2026-07-10
 ### Added
 - `02_Research/README.md`: full agent spec (D-003 structure) for the Research engine — mission, role, responsibilities, decision rules (corroboration thresholds, conflicting-source handling, vendor-claim labeling), fact-list output schema, KPIs.
