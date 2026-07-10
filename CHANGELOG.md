@@ -2,6 +2,13 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.16] - 2026-07-10
+### Added
+- `Knowledge/README.md`: the pipeline's cross-content long-term memory — prior published content log (source of `03_IdeaEngine`'s saturation check), source reliability history, and correction log (source of `System/Content_Principles.md`'s correction policy).
+- `Prompts/README.md`: reusable cross-engine instruction fragments, kept separate from engine-specific workflow instructions; flags that any tone-invoking fragment is bound by `Shima_Persona.md`'s still-open `🔶` sections.
+- `Templates/README.md`: fillable skeletons implementing (not redefining) the structures already locked in `04_ScriptEngine`'s workflow files and `06_Marketing/Platform_Derivation.md`; owning workflow file is always authoritative over its template.
+- `Assets/README.md`: where persona/brand binary assets would live once populated; explicitly documents that it's empty for the same reason `Shima_Persona.md` and `Brand_Guidelines.md` have open gaps, not as a separate problem.
+
 ## [0.15] - 2026-07-10
 ### Added
 - `DECISIONS.md` D-018 (Provisional): thumbnail generation owned by `07_SEO` — fills a gap where D-006's pipeline names a "Thumbnail Agent" but no engine folder claimed it.
