@@ -95,6 +95,12 @@ Status legend: **Locked** = settled, change requires explicit founder approval �
 **Rationale:** D-005's News variant ("RSS/X/official sources → Research → Deduplicate → Rank → Script") describes the upstream research pipeline, which `DECISIONS.md`/`02_Research` now owns — it does not describe the final script's section structure, unlike the Course and Tool Review variants which do. A News-specific script shape is needed for `04_ScriptEngine` to function symmetrically with the other three categories.
 **Owner engine:** `04_ScriptEngine`.
 
+### D-015 — Every video includes Persian captions
+**Status:** Provisional
+**Decision:** Every rendered video carries Persian captions (burned-in or platform-native, per platform) by default.
+**Rationale:** Standard practice for accessibility and for silent/autoplay viewing on social platforms (Instagram, TikTok); no prior material argues against it, and it's cheap to reverse if the founder wants otherwise.
+**Owner engine:** `05_Production`.
+
 ---
 
 ## Change History

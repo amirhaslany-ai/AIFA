@@ -2,6 +2,14 @@
 
 All notable changes to the AIFA Content Studio documentation are logged here, newest first.
 
+## [0.9] - 2026-07-10
+### Added
+- `DECISIONS.md` D-015 (Provisional): every video includes Persian captions by default.
+- `05_Production/README.md`: full agent spec (D-003 structure) for Production — the most tool-dependent, most gapped engine in the pipeline. Documents the 9-step workflow (ingest → Speech Optimization → SSML → Emotion Tagging → Pause Tagging → Voice Generation → Avatar Generation → Video Assembly → QA Handoff) and explicitly flags that most persona-specific content is blocked on `System/Shima_Persona.md`'s open `🔶` sections.
+- `05_Production/Avatar_Pipeline.md`: tool-agnostic avatar pipeline shape; documents why configuration and per-video generation are separated, and lists exactly which gaps (persona spec, tool choice, budget) block it from running today.
+- `05_Production/Voice_SSML_Pipeline.md`: the D-008 pipeline in full detail (Speech Optimization → SSML → Emotion → Pause → Voice Generation), restating the hard rule that raw script text never reaches a TTS engine directly.
+- `05_Production/Video_Assembly.md`: hybrid full-screen/PiP layout, with an explicit section-to-layout mapping table for all four script categories; captions and brand-element handling.
+
 ## [0.8] - 2026-07-10
 ### Added
 - `DECISIONS.md` D-013 (Provisional): Tips & Tricks script structure — Hook → Problem/Context → The Tip → Quick Proof/Demo → CTA. Fills a gap D-005 left open.

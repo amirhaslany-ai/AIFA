@@ -12,9 +12,11 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `02_Research/README.md`, `Methodology.md`, `Source_Reliability.md`, `Workflows.md`
 - [x] `03_IdeaEngine/README.md`, `Topic_Selection.md`, `Viral_Psychology.md`, `Hook_System.md`, `Trend_Scoring.md`
 - [x] `04_ScriptEngine/README.md`, `News_Workflow.md`, `Course_Workflow.md`, `ToolReview_Workflow.md`, `Tips_Workflow.md`
+- [x] `05_Production/README.md`, `Avatar_Pipeline.md`, `Voice_SSML_Pipeline.md`, `Video_Assembly.md` — most content gapped 🔶 pending OQ-002/OQ-003
 
 ## Next (in order)
-- [ ] `05_Production/README.md` expansion — avatar pipeline, voice/SSML pipeline (D-008), video assembly, hybrid full-screen/PiP layout
+- [ ] `06_Marketing/README.md` expansion — platform-specific derivation (Shorts/Reels/TikTok/Telegram)
+- [ ] `07_SEO/README.md` expansion — titles/descriptions/tags/chapters rules
 - [ ] `03_IdeaEngine/README.md` expansion
 - [ ] `04_ScriptEngine/README.md` expansion — per-category script workflows (news / course / tool-review / tips)
 - [ ] `05_Production/README.md` expansion — avatar, voice (SSML), video assembly
