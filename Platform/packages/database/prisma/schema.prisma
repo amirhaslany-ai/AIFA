@@ -157,3 +157,27 @@ model Message {
   @@index([conversationId])
   @@map("messages")
 }
+
+// Usage Tracking (docs/adr/0015-usage-tracking.md). One row per successfully
+// completed chat exchange — written once by SendChatMessageUseCase right
+// after the wallet debit succeeds, never updated. accountId/conversationId
+// are plain fields, no `@relation` (same cross-aggregate-by-id-only
+// convention as Wallet/Conversation above). userMessageId is unique: it's
+// the same id SendChatMessageUseCase's duplicate-messageId check already
+// guards, so a UsageEvent can only ever be recorded once per real exchange.
+model UsageEvent {
+  id               String   @id @default(uuid())
+  accountId        String
+  conversationId   String
+  userMessageId    String   @unique
+  providerId       String
+  promptTokens     Int
+  completionTokens Int
+  costMinorUnits   BigInt
+  priceMinorUnits  BigInt
+  currency         String
+  createdAt        DateTime @default(now())
+
+  @@index([accountId, createdAt])
+  @@map("usage_events")
+}

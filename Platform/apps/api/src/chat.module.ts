@@ -3,6 +3,7 @@ import { IdentityModule } from './identity.module';
 import { WalletModule } from './wallet.module';
 import { PricingModule } from './pricing.module';
 import { HealthModule } from './health.module';
+import { UsageModule } from './usage.module';
 import { ChatController } from './interfaces/http/controllers/chat.controller';
 import { SendChatMessageUseCase } from './application/use-cases/send-chat-message.use-case';
 import { GetConversationUseCase } from './application/use-cases/get-conversation.use-case';
@@ -17,10 +18,10 @@ import { FallbackChatCompletionAdapter } from './infrastructure/providers/fallba
  * every other Sprint 1 bounded context in one request: IdentityModule (the
  * guard), WalletModule (balance check + debit), PricingModule (cost ->
  * price), HealthModule (ProviderRegistryAdapter's fallback chain + cost
- * rates).
+ * rates), UsageModule (recording the completed, billed exchange).
  */
 @Module({
-  imports: [IdentityModule, WalletModule, PricingModule, HealthModule],
+  imports: [IdentityModule, WalletModule, PricingModule, HealthModule, UsageModule],
   controllers: [ChatController],
   providers: [
     SendChatMessageUseCase,

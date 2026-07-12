@@ -16,6 +16,7 @@ src/
 ├── wallet.module.ts      # Billing bounded context — ledger-based wallet
 ├── pricing.module.ts     # Billing bounded context — rule-based pricing engine (no controller)
 ├── chat.module.ts        # Conversation bounded context — send message / get conversation
+├── usage.module.ts       # Usage Tracking bounded context — usage history (read-only)
 ├── app.module.ts
 └── main.ts
 ```
@@ -35,9 +36,10 @@ Requires `.env` at the `Platform/` root (copy from `.env.example`). Swagger docs
 - **Identity** (`identity.module.ts`): register/login/refresh/logout, real argon2id password hashing + real Ed25519 JWTs. See `docs/adr/0010-auth-token-strategy.md`. `AccountRepositoryPort`/`RefreshTokenRepositoryPort` → Prisma-backed adapters; `PasswordHasherPort` → `Argon2PasswordHasherAdapter`; `TokenIssuerPort`/`AuthGuardPort` → `jose`-backed Ed25519 adapters sharing one `JwtKeyProvider`. **Note:** cross-module guard sharing requires exporting both the guard class *and* its own constructor dependency token (`AUTH_GUARD_PORT`) — exporting only the class produced a "Nest can't resolve dependencies" boot error even with the consuming module correctly importing this one. See the comment on `identity.module.ts`'s `exports` array.
 - **Billing** (`wallet.module.ts`): ledger-based wallet — credit/reserve/settle/rollback, real Prisma transactions. See `docs/adr/0008-wallet-ledger-pattern.md`. Only `GET /v1/wallet` is public; the other four use cases are real and DI-wired but deliberately not exposed via HTTP yet (see `wallet.controller.ts`'s doc comment).
 - **Billing — Pricing** (`pricing.module.ts`): rule-based pricing engine — ordered `PricingPipeline` (base markup → floor), config-driven multiplier/floor, basis-points integer math with ceiling rounding. See `docs/adr/0009-pricing-engine-pattern.md`. No controller — `PricingEnginePort` is invoked by other use cases (Chat's settlement step), not called directly by a client.
-- **Conversation** (`chat.module.ts`): `ChatController` → `SendChatMessageUseCase`/`GetConversationUseCase` → `ConversationRepositoryPort` (→ `PrismaConversationRepository`), `ChatCompletionPort` (→ `FallbackChatCompletionAdapter`, wrapping `ProviderRegistryAdapter.getFallbackChain()`), `ProviderCostSourcePort`, `PricingEnginePort`, `WalletRepositoryPort`. Ties every other Sprint 1 bounded context together in one request. See `docs/adr/0014-chat-orchestration.md` for why it debits the wallet after the call instead of pre-reserving an estimate (no fake token-count guessing), and how a client-supplied `messageId` guards against a network retry double-charging.
+- **Conversation** (`chat.module.ts`): `ChatController` → `SendChatMessageUseCase`/`GetConversationUseCase` → `ConversationRepositoryPort` (→ `PrismaConversationRepository`), `ChatCompletionPort` (→ `FallbackChatCompletionAdapter`, wrapping `ProviderRegistryAdapter.getFallbackChain()`), `ProviderCostSourcePort`, `PricingEnginePort`, `WalletRepositoryPort`, `UsageEventRepositoryPort`. Ties every other Sprint 1 bounded context together in one request. See `docs/adr/0014-chat-orchestration.md` for why it debits the wallet after the call instead of pre-reserving an estimate (no fake token-count guessing), and how a client-supplied `messageId` guards against a network retry double-charging.
+- **Usage Tracking** (`usage.module.ts`): `UsageController` → `ListUsageEventsUseCase` → `UsageEventRepositoryPort` (→ `PrismaUsageEventRepository`). Read-only — `UsageEvent` rows are written exclusively by `SendChatMessageUseCase` (`chat.module.ts` imports `UsageModule` for the exported port). See `docs/adr/0015-usage-tracking.md`.
 
-See `docs/architecture/domain-boundaries.md` for what's planned next (usage tracking) and why it's sequenced last.
+Sprint 1 (Authentication, Wallet, Pricing, Provider Integration, Chat, Usage Tracking) is now complete — see `docs/architecture/domain-boundaries.md` for the full bounded-context table.
 
 ## Dependencies
 
@@ -57,6 +59,7 @@ See `docs/architecture/domain-boundaries.md` for what's planned next (usage trac
 | GET | `/v1/wallet` | Bearer-protected — the current account's wallet balance |
 | POST | `/v1/chat` | Bearer-protected — send a message (starts a new conversation if `conversationId` is omitted); 402/404/409/503 on balance/conversation/duplicate/provider failures |
 | GET | `/v1/chat/conversations/:id` | Bearer-protected — a conversation's full message history |
+| GET | `/v1/usage` | Bearer-protected — the current account's usage history, newest first (`limit`, `before` query params) |
 | GET | `/v1/docs` | Swagger UI (OpenAPI, auto-generated) |
 
 ## Example (verified output — see `PROGRESS_REPORT.md`)

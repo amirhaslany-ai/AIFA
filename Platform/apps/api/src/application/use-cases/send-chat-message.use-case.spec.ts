@@ -3,6 +3,7 @@ import { SendChatMessageUseCase } from './send-chat-message.use-case';
 import { CreditWalletUseCase } from './credit-wallet.use-case';
 import { InMemoryConversationRepository } from '../../test-support/in-memory-conversation.repository';
 import { InMemoryWalletRepository } from '../../test-support/in-memory-wallet.repository';
+import { InMemoryUsageEventRepository } from '../../test-support/in-memory-usage-event.repository';
 import { ConversationNotFoundError } from '../../domain/errors/conversation-not-found.error';
 import { DuplicateMessageError } from '../../domain/errors/duplicate-message.error';
 import { InsufficientBalanceError } from '../../domain/errors/insufficient-balance.error';
@@ -43,6 +44,7 @@ class FakePricingEngine implements PricingEnginePort {
 function buildUseCase(chatCompletion: ChatCompletionPort) {
   const wallets = new InMemoryWalletRepository();
   const conversations = new InMemoryConversationRepository();
+  const usageEvents = new InMemoryUsageEventRepository();
   const credit = new CreditWalletUseCase(wallets, fixedClock);
   const sendMessage = new SendChatMessageUseCase(
     conversations,
@@ -50,9 +52,10 @@ function buildUseCase(chatCompletion: ChatCompletionPort) {
     chatCompletion,
     new FakeProviderCostSource(),
     new FakePricingEngine(),
+    usageEvents,
     fixedClock,
   );
-  return { wallets, conversations, credit, sendMessage };
+  return { wallets, conversations, usageEvents, credit, sendMessage };
 }
 
 describe('SendChatMessageUseCase', () => {
@@ -62,7 +65,7 @@ describe('SendChatMessageUseCase', () => {
       content: 'hello there',
       usage: { promptTokens: 1000, completionTokens: 500 },
     });
-    const { credit, sendMessage, wallets } = buildUseCase(chatCompletion);
+    const { credit, sendMessage, wallets, usageEvents } = buildUseCase(chatCompletion);
     await credit.execute({ accountId: 'acc-1', amountMinorUnits: 10_000n, currency: 'USD', referenceId: 'topup-1' });
 
     const result = await sendMessage.execute({ accountId: 'acc-1', content: 'hi there' });
@@ -76,6 +79,16 @@ describe('SendChatMessageUseCase', () => {
 
     const wallet = await wallets.findByAccountId('acc-1');
     expect(wallet?.getBalance().minorUnits).toBe(10_000n - 7n);
+
+    const recorded = await usageEvents.listByAccountId('acc-1', { limit: 10 });
+    expect(recorded).toHaveLength(1);
+    expect(recorded[0]).toMatchObject({
+      providerId: 'stub-primary',
+      promptTokens: 1000,
+      completionTokens: 500,
+      costMinorUnits: 5n,
+      priceMinorUnits: 7n,
+    });
   });
 
   it('continues an existing conversation, sending the full message history to the provider', async () => {
@@ -138,7 +151,7 @@ describe('SendChatMessageUseCase', () => {
         throw new Error('all providers unavailable');
       },
     };
-    const { credit, sendMessage, wallets } = buildUseCase(failingCompletion);
+    const { credit, sendMessage, wallets, usageEvents } = buildUseCase(failingCompletion);
     await credit.execute({ accountId: 'acc-1', amountMinorUnits: 10_000n, currency: 'USD', referenceId: 'topup-1' });
 
     await expect(sendMessage.execute({ accountId: 'acc-1', content: 'hi' })).rejects.toThrow(
@@ -147,5 +160,6 @@ describe('SendChatMessageUseCase', () => {
 
     const wallet = await wallets.findByAccountId('acc-1');
     expect(wallet?.getBalance().minorUnits).toBe(10_000n);
+    expect(await usageEvents.listByAccountId('acc-1', { limit: 10 })).toHaveLength(0);
   });
 });

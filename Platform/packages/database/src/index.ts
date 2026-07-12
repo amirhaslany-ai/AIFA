@@ -26,6 +26,7 @@ export type {
   LedgerEntry,
   Conversation,
   Message,
+  UsageEvent,
 } from '@prisma/client';
 
 /**

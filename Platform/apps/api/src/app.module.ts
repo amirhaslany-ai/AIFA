@@ -4,10 +4,11 @@ import { IdentityModule } from './identity.module';
 import { WalletModule } from './wallet.module';
 import { PricingModule } from './pricing.module';
 import { ChatModule } from './chat.module';
+import { UsageModule } from './usage.module';
 import { RequestIdMiddleware } from './interfaces/http/middleware/request-id.middleware';
 
 @Module({
-  imports: [HealthModule, IdentityModule, WalletModule, PricingModule, ChatModule],
+  imports: [HealthModule, IdentityModule, WalletModule, PricingModule, ChatModule, UsageModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

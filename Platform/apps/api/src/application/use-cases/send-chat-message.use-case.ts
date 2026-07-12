@@ -4,6 +4,7 @@ import { calculateCostMinorUnits } from '@aifa/ai-provider-sdk';
 import { Conversation } from '../../domain/conversation.entity';
 import { Message } from '../../domain/message';
 import { Money } from '../../domain/money';
+import { UsageEvent } from '../../domain/usage-event';
 import { ConversationNotFoundError } from '../../domain/errors/conversation-not-found.error';
 import { DuplicateMessageError } from '../../domain/errors/duplicate-message.error';
 import { InsufficientBalanceError } from '../../domain/errors/insufficient-balance.error';
@@ -12,6 +13,7 @@ import { WALLET_REPOSITORY_PORT, type WalletRepositoryPort } from '../ports/wall
 import { CHAT_COMPLETION_PORT, type ChatCompletionPort } from '../ports/chat-completion.port';
 import { PROVIDER_COST_SOURCE_PORT, type ProviderCostSourcePort } from '../ports/provider-cost-source.port';
 import { PRICING_ENGINE_PORT, type PricingEnginePort } from '../ports/pricing-engine.port';
+import { USAGE_EVENT_REPOSITORY_PORT, type UsageEventRepositoryPort } from '../ports/usage-event-repository.port';
 import { CLOCK_PORT, type ClockPort } from '../ports/clock.port';
 import { requireWallet } from '../require-wallet';
 
@@ -38,8 +40,9 @@ const ZERO_COST_RATES = { costPerInputTokenMicros: 0n, costPerOutputTokenMicros:
 /**
  * Ties together every Sprint 1 bounded context (docs/adr/0014-chat-orchestration.md):
  * Identity (accountId, via the caller's authenticated session), Provider
- * Access (ChatCompletionPort), Billing/Pricing (PricingEnginePort), and
- * Billing/Wallet (debit). Deliberately does NOT pre-reserve an estimated
+ * Access (ChatCompletionPort), Billing/Pricing (PricingEnginePort),
+ * Billing/Wallet (debit), and Usage Tracking (UsageEventRepositoryPort,
+ * docs/adr/0015-usage-tracking.md). Deliberately does NOT pre-reserve an estimated
  * cost — that would require guessing a token count before the call, which
  * would violate the "no fake data" principle this codebase holds elsewhere.
  * Instead it requires a strictly positive balance before calling a
@@ -55,6 +58,7 @@ export class SendChatMessageUseCase {
     @Inject(CHAT_COMPLETION_PORT) private readonly chatCompletion: ChatCompletionPort,
     @Inject(PROVIDER_COST_SOURCE_PORT) private readonly providerCosts: ProviderCostSourcePort,
     @Inject(PRICING_ENGINE_PORT) private readonly pricing: PricingEnginePort,
+    @Inject(USAGE_EVENT_REPOSITORY_PORT) private readonly usageEvents: UsageEventRepositoryPort,
     @Inject(CLOCK_PORT) private readonly clock: ClockPort,
   ) {}
 
@@ -107,6 +111,26 @@ export class SendChatMessageUseCase {
       this.clock.now(),
     );
     const balance = await this.wallets.appendLedgerEntries(wallet.id, [debitEntry], wallet.getBalance());
+
+    // Recorded after the debit succeeds, keyed by the same userMessageId the
+    // duplicate-messageId check already guards — a retry never reaches this
+    // line twice for the same exchange, so no separate idempotency handling
+    // is needed here (docs/adr/0015-usage-tracking.md).
+    await this.usageEvents.record(
+      UsageEvent.create({
+        id: randomUUID(),
+        accountId: input.accountId,
+        conversationId: conversation.id,
+        userMessageId,
+        providerId: completion.providerId,
+        promptTokens: usage.promptTokens,
+        completionTokens: usage.completionTokens,
+        costMinorUnits,
+        priceMinorUnits: priceResult.priceMinorUnits,
+        currency,
+        createdAt: this.clock.now(),
+      }),
+    );
 
     return {
       conversationId: conversation.id,

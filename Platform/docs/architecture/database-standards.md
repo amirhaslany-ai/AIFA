@@ -6,7 +6,7 @@ Companion to `database-architecture.md` (ownership/consumption rules). This docu
 
 ```mermaid
 erDiagram
-    %% --- Implemented (Sprint 1: Identity, Provider Access, Wallet, Conversation) ---
+    %% --- Implemented (Sprint 1: Identity, Provider Access, Wallet, Conversation, Usage Tracking) ---
     ACCOUNT {
         uuid id PK
         string email UK
@@ -68,13 +68,26 @@ erDiagram
         text content
         timestamp created_at
     }
+    USAGE_EVENT {
+        uuid id PK
+        uuid account_id "plain field, no FK"
+        uuid conversation_id "plain field, no FK"
+        uuid user_message_id UK "defense-in-depth idempotency backstop"
+        string provider_id
+        int prompt_tokens
+        int completion_tokens
+        bigint cost_minor_units
+        bigint price_minor_units
+        string currency
+        timestamp created_at
+    }
     ACCOUNT ||--o{ REFRESH_TOKEN : "owns"
     ACCOUNT ||--o| WALLET : "owns"
     WALLET ||--o{ LEDGER_ENTRY : "records"
     CONVERSATION ||--o{ MESSAGE : "contains"
 ```
 
-`ACCOUNT`, `REFRESH_TOKEN` (`docs/adr/0010-auth-token-strategy.md`), `AI_PROVIDER_CONFIG` (`docs/adr/0005`/`0007`), `WALLET`, `LEDGER_ENTRY` (`docs/adr/0008-wallet-ledger-pattern.md`), `CONVERSATION`, `MESSAGE` (`docs/adr/0014-chat-orchestration.md`) are all implemented. `CONVERSATION.account_id` deliberately has no FK arrow to `ACCOUNT` in this diagram — same cross-aggregate-by-id-only convention as `WALLET.account_id`.
+`ACCOUNT`, `REFRESH_TOKEN` (`docs/adr/0010-auth-token-strategy.md`), `AI_PROVIDER_CONFIG` (`docs/adr/0005`/`0007`), `WALLET`, `LEDGER_ENTRY` (`docs/adr/0008-wallet-ledger-pattern.md`), `CONVERSATION`, `MESSAGE` (`docs/adr/0014-chat-orchestration.md`), `USAGE_EVENT` (`docs/adr/0015-usage-tracking.md`) are all implemented. `CONVERSATION.account_id` and `USAGE_EVENT.account_id`/`conversation_id` deliberately have no FK arrow in this diagram — same cross-aggregate-by-id-only convention as `WALLET.account_id`.
 
 ## Naming standards
 
