@@ -1,16 +1,16 @@
 # Security Architecture
 
-Secrets and environment handling is covered in `secrets-config-management.md` — this document covers everything else: authentication tokens, rate limiting, encryption, PII, headers, and a threat model. Most of this is design-only (no auth implementation exists this milestone, per mission scope) but is documented now so the eventual implementation has an agreed shape.
+Secrets and environment handling is covered in `secrets-config-management.md` — this document covers everything else: authentication tokens, rate limiting, encryption, PII, headers, and a threat model. Rate limiting, encryption-at-rest, and headers remain design-only; JWT/session strategy is now implemented (Sprint 1) — see `docs/adr/0010-auth-token-strategy.md` for the full decision record, including a token-transport revision made during implementation (below).
 
-## JWT strategy (design — not implemented)
+## JWT strategy (implemented)
 
-- **Access token:** JWT, signed with an asymmetric key (RS256/EdDSA, not HS256 — asymmetric lets `apps/web`'s server-side code or a future separate service verify tokens without holding the signing key), short-lived (target: 15 minutes). Claims: `sub` (account id), `iat`, `exp`, nothing sensitive (JWTs are base64, not encrypted — never put PII beyond an id in claims).
-- **Refresh token:** opaque (not a JWT), long-lived (target: 30 days), stored httpOnly + Secure + SameSite=Lax cookie, never accessible to client-side JS. Persisted server-side (hashed, not plaintext — same principle as password storage) so a single refresh token can be revoked without invalidating every session.
-- **Rotation:** every refresh-token use issues a new refresh token and invalidates the old one (rotation-on-use) — limits the damage window if a refresh token is ever exfiltrated, since a replayed old token after rotation is detectable (a reuse-detection signal that should trigger revoking the entire token family, target design).
+- **Access token:** JWT, signed with EdDSA (Ed25519), 15-minute default lifetime (`AUTH_ACCESS_TOKEN_TTL_SECONDS`). Claims: `sub` (account id), `iat`, `exp`, nothing else.
+- **Refresh token:** opaque (not a JWT), 30-day lifetime, SHA-256-hashed at rest (raw value never persisted). **Returned in the JSON response body, not an httpOnly cookie** — revised from the original design during implementation; see `docs/adr/0010-auth-token-strategy.md`'s "Token transport" section for why (this is an API-first product per ADR-0006; a cookie is meaningless to non-browser clients, and a first-party browser client should get its own BFF-managed cookie rather than the core API being cookie-based).
+- **Rotation:** every refresh-token use issues a new pair and revokes the old refresh token (rotation-on-use). Reuse of an already-rotated token revokes the entire session family, not just that token (`RefreshSessionUseCase`, tested explicitly).
 
-## Session strategy (design)
+## Session strategy (implemented)
 
-Stateless for the access token (any `apps/api` instance can verify a JWT without a shared session store — matters once there's more than one instance). The refresh-token table (target: a `RefreshToken` entity, not yet in the schema) is the only server-side session state, queried only on refresh, not on every request — keeps the hot path (most requests, using the access token) fast and stateless.
+Stateless for the access token (any `apps/api` instance can verify a JWT without a shared session store). The `RefreshToken` table is the only server-side session state, queried only on refresh, not on every request.
 
 ## Key rotation
 
@@ -48,10 +48,10 @@ Target middleware (via `helmet` or NestJS's equivalent, not yet added as a depen
 | Threat | Current mitigation | Gap |
 |---|---|---|
 | Secrets committed to git | `.gitignore` excludes `.env*`; `.env.example` never has real values | No automated secret-scanning in CI yet (target: add a pre-commit or CI secret-scan step, e.g. gitleaks, once the repo has real secrets to protect) |
-| SQL injection | Prisma's parameterized queries by default (no raw SQL in this codebase) | None identified — stays true only as long as `$queryRaw`/`$executeRaw` are avoided; flag any future use for review |
+| SQL injection | Prisma's parameterized queries throughout; the one `$queryRaw` use (`prisma.health-indicator.ts`) is a literal `SELECT 1` with no interpolated values — safe by construction, not by discipline alone | Flag any future `$queryRaw`/`$executeRaw` use with interpolated values for review — Prisma's tagged-template form auto-parameterizes, `$queryRawUnsafe`/string-concatenation would not |
 | Provider outage cascading to full outage | `CircuitBreaker` + `FallbackChain` (ADR-0005, implemented and tested) | None at foundation level |
 | Over-billing due to a lost/duplicate ledger write | Ledger idempotency via `referenceId` uniqueness (ADR-0008, design-only) | Not implemented — this is a design mitigation, not yet a running one |
-| Token theft (XSS exfiltrating a refresh token) | httpOnly cookie design (JWT strategy above) | Not implemented; also depends on `apps/web` never rendering unsanitized user content, which isn't yet a concern with zero product UI |
+| Token theft (XSS exfiltrating a raw refresh token from a browser client) | Refresh tokens are hashed at rest server-side (a leaked DB doesn't expose usable tokens); rotation-on-use + reuse detection limits a stolen token's usable window | `apps/web` has no auth UI yet, so no browser client stores a raw token today — but the core API returns tokens in the JSON body (ADR-0010's revised transport decision), so whoever builds `apps/web`'s auth UI must implement the documented BFF-cookie pattern, not store the raw token in client-readable state |
 | Denial of service via request flooding | Rate limiting design (above) | Not implemented; no CDN/WAF layer chosen yet (infra decision, deferred with the rest of `infra/README.md`'s staging/production gap) |
 
 This table should grow as real features land — a threat model for features that don't exist yet is necessarily incomplete by design, not an oversight.

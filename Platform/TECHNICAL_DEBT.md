@@ -2,12 +2,9 @@
 
 Itemized from `ARCHITECTURE_REVIEW.md`. Each item states what it costs to fix now vs. later — the point of writing this down is so "later" is a chosen tradeoff, not a forgotten one.
 
-## 1. `User` model should probably be renamed `Account`
+## 1. ~~`User` model should probably be renamed `Account`~~ — RESOLVED
 
-**What:** `packages/database/prisma/schema.prisma`'s `User` model conflicts with `ddd-tactical-design.md`/`database-standards.md`'s recommended domain name `Account`.
-**Cost now:** trivial — rename the model, re-run `prisma generate`, no data exists yet, no code reads the model yet.
-**Cost later:** a real migration (rename is non-destructive but still needs care), plus updating any code written against `User` in the meantime (the Identity context's implementation, if built against the current name first).
-**Recommendation:** rename before implementing Identity, not after. Not done in this pass because it's a naming/product decision (does "account" vs. "user" carry an implication about future org/team support that's worth confirming with the founder first) rather than a pure engineering fix — flagged, not silently changed.
+Done as part of implementing Identity (Sprint 1): the model is `Account` in `schema.prisma`, the domain entity is `Account` (`apps/api/src/domain/account.entity.ts`), and the initial migration was generated against the new name — there was never a `User`-named migration to reconcile.
 
 ## 2. Import-boundary rules are documented, not enforced
 

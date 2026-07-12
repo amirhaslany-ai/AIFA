@@ -23,6 +23,18 @@ export const configSchema = z.object({
     port: z.coerce.number().int().positive().default(3000),
   }),
 
+  auth: z.object({
+    /**
+     * PEM-encoded Ed25519 keypair for signing access tokens (docs/adr/0010-auth-token-strategy.md).
+     * Optional: if unset, an ephemeral keypair is generated per-process at
+     * boot (dev-only — tokens won't verify across a restart). Real
+     * deployments must set both.
+     */
+    jwtPrivateKeyPem: z.string().optional(),
+    jwtPublicKeyPem: z.string().optional(),
+    accessTokenTtlSeconds: z.coerce.number().int().positive().default(900),
+  }),
+
   database: z.object({
     url: z
       .string({ required_error: 'DATABASE_URL is required' })

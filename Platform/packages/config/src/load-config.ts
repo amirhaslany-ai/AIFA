@@ -15,6 +15,11 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     web: {
       port: env.WEB_PORT,
     },
+    auth: {
+      jwtPrivateKeyPem: env.AUTH_JWT_PRIVATE_KEY_PEM || undefined,
+      jwtPublicKeyPem: env.AUTH_JWT_PUBLIC_KEY_PEM || undefined,
+      accessTokenTtlSeconds: env.AUTH_ACCESS_TOKEN_TTL_SECONDS,
+    },
     database: {
       url: env.DATABASE_URL,
     },

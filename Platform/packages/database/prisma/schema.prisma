@@ -1,5 +1,5 @@
-// Foundation-milestone schema — architecture only, see README.md for scope.
 // docs/architecture/database-architecture.md documents the ownership rules.
+// docs/architecture/database-standards.md documents naming/migration conventions.
 
 generator client {
   provider = "prisma-client-js"
@@ -10,13 +10,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// Identity bounded context (docs/architecture/domain-boundaries.md).
+// Named `Account`, not `User`, per docs/architecture/ddd-tactical-design.md and
+// TECHNICAL_DEBT.md #1 — executed now, before any code depended on the old name.
+model Account {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  @@map("users")
+  refreshTokens RefreshToken[]
+
+  @@map("accounts")
+}
+
+// docs/adr/0010-auth-token-strategy.md: opaque, hashed, rotated-on-use refresh
+// tokens. `tokenHash` is the only persisted form — the raw token is never
+// stored, only ever returned to the client once at issuance/rotation time.
+model RefreshToken {
+  id          String    @id @default(uuid())
+  accountId   String
+  account     Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  tokenHash   String    @unique
+  familyId    String
+  revokedAt   DateTime?
+  replacedBy  String?
+  expiresAt   DateTime
+  createdAt   DateTime  @default(now())
+
+  @@index([accountId])
+  @@index([familyId])
+  @@map("refresh_tokens")
 }
 
 model AiProviderConfig {

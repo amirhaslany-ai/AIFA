@@ -6,11 +6,13 @@ The AIFA platform backend — NestJS, hexagonal architecture. See `docs/architec
 
 ```
 src/
-├── domain/            # entities, domain errors — no framework imports
-├── application/        # use cases + ports (interfaces)
-├── infrastructure/      # port implementations (providers, clock, persistence — persistence not yet added)
-├── interfaces/http/     # controllers, DTOs, filters, middleware
-├── health.module.ts     # the one fully-wired vertical slice this milestone
+├── domain/            # entities, value objects, domain errors — no framework imports
+├── application/        # use cases, ports (interfaces), cross-use-case services
+├── infrastructure/      # port implementations (providers, clock, persistence, identity)
+├── interfaces/http/     # controllers, DTOs, filters, middleware, guards, decorators
+├── test-support/        # in-memory port fakes + real-crypto test helpers (test-only, not shipped)
+├── health.module.ts     # Platform/System bounded context
+├── identity.module.ts   # Identity bounded context — register/login/refresh/logout
 ├── app.module.ts
 └── main.ts
 ```
@@ -23,13 +25,16 @@ pnpm --filter api dev
 
 Requires `.env` at the `Platform/` root (copy from `.env.example`). Swagger docs available at `/v1/docs` once running.
 
-## The `HealthModule` slice
+## Bounded contexts
 
-Demonstrates the full dependency rule end to end: `HealthController` (interfaces) → `GetSystemHealthUseCase` (application) → `ProviderHealthSourcePort` + `ClockPort` (application ports) → `ProviderRegistryAdapter` + `SystemClockAdapter` (infrastructure). No other bounded context exists yet — see `docs/architecture/domain-boundaries.md` for what's planned next (Identity, Provider Access, Billing, Conversation) and why they're sequenced that way.
+- **Platform/System** (`health.module.ts`): `HealthController` → `GetSystemHealthUseCase` → `ProviderHealthSourcePort`/`DependencyHealthSourcePort`/`ClockPort` → `ProviderRegistryAdapter`/`DependencyHealthAdapter`/`SystemClockAdapter`.
+- **Identity** (`identity.module.ts`): register/login/refresh/logout, real argon2id password hashing + real Ed25519 JWTs. See `docs/adr/0010-auth-token-strategy.md`. `AccountRepositoryPort`/`RefreshTokenRepositoryPort` → Prisma-backed adapters; `PasswordHasherPort` → `Argon2PasswordHasherAdapter`; `TokenIssuerPort`/`AuthGuardPort` → `jose`-backed Ed25519 adapters sharing one `JwtKeyProvider`.
+
+See `docs/architecture/domain-boundaries.md` for what's planned next (Provider Access, Billing, Conversation) and why they're sequenced that way.
 
 ## Dependencies
 
-`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk`, `@aifa/database` (workspace packages) — NestJS (`@nestjs/common`, `core`, `platform-express`, `swagger`, `terminus`), `class-validator`/`class-transformer`, `dotenv`, `ioredis`.
+`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk`, `@aifa/database` (workspace packages) — NestJS (`@nestjs/common`, `core`, `platform-express`, `swagger`, `terminus`), `class-validator`/`class-transformer`, `dotenv`, `ioredis`, `jose`, `@node-rs/argon2`.
 
 ## Public API (HTTP endpoints)
 
@@ -37,6 +42,11 @@ Demonstrates the full dependency rule end to end: `HealthController` (interfaces
 |---|---|---|
 | GET | `/v1/health` | Liveness — always `{"status":"ok"}` if the process can respond |
 | GET | `/v1/health/ready` | Readiness — real database (Prisma), Redis, and `ProviderRegistry` checks. Returns HTTP 503 when `status` is `"down"`. |
+| POST | `/v1/auth/register` | Create an account, returns an access + refresh token pair |
+| POST | `/v1/auth/login` | Authenticate with email + password |
+| POST | `/v1/auth/refresh` | Rotate a refresh token for a new pair (old one revoked; reuse revokes the whole session family) |
+| POST | `/v1/auth/logout` | Revoke a session (idempotent) |
+| GET | `/v1/auth/me` | Bearer-protected — returns `{ accountId }` for the current token |
 | GET | `/v1/docs` | Swagger UI (OpenAPI, auto-generated) |
 
 ## Example (verified output — see `PROGRESS_REPORT.md`)

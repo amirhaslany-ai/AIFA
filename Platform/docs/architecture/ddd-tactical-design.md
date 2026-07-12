@@ -19,11 +19,11 @@
 ### Platform/System (implemented this milestone)
 No aggregate — `HealthModule` is infrastructure-adjacent (system introspection), not a domain concept with business invariants. This is why it skips the aggregate/repository pattern entirely; forcing DDD ceremony onto a health check would be over-engineering.
 
-### Identity (not implemented — target design)
-- **Aggregate root:** `Account` (not `User` — see note below). Invariants: an account has exactly one primary email, cannot be deleted while it holds a non-zero wallet balance (cross-context rule enforced at the application layer, since Wallet is a different aggregate/context — see Context Mapping below).
-- **Value objects:** `EmailAddress` (validates format), `AccountId`.
-- **Repository:** `AccountRepository` (port), backed by the `User` Prisma model — note the deliberate naming split: `AccountId` note below.
-- **Note on `User` vs `Account`:** `packages/database/prisma/schema.prisma`'s `User` table was named before this document existed. Recommend renaming the domain concept to `Account` (an "account" can later encompass org/team membership; "user" strongly implies a single natural person, foreclosing that later) — flagged as a decision for whoever implements Identity, not made unilaterally here since it touches a already-created (if unused) table. See `TECHNICAL_DEBT.md`.
+### Identity (implemented — Sprint 1)
+- **Aggregate root:** `Account` (`apps/api/src/domain/account.entity.ts`). Invariant enforced: unique email (via `Email` value object + a DB unique constraint). The "cannot be deleted while it holds a non-zero wallet balance" cross-context invariant is deferred until Wallet exists — not enforceable yet, correctly not implemented.
+- **Value objects:** `Email` (`apps/api/src/domain/email.ts`) — validates format, normalizes case.
+- **Repository:** `AccountRepositoryPort` → `PrismaAccountRepository`, backed by the `Account` Prisma model.
+- **Auth mechanics:** `RefreshToken` (persistence-only record, not a domain entity — it has no behavior of its own, only rotation/revocation state read and written by `RefreshTokenRepositoryPort`). See `docs/adr/0010-auth-token-strategy.md`.
 
 ### Provider Access (abstraction implemented; routing/metering not implemented)
 - **Aggregate root:** none needed for the registry itself (it's a runtime object, not a persisted business entity) — `AiProviderConfig` (the persisted configuration) is a simple entity, not an aggregate, since it has no internal sub-objects and no invariants beyond field validation.

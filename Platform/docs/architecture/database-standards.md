@@ -6,12 +6,23 @@ Companion to `database-architecture.md` (ownership/consumption rules). This docu
 
 ```mermaid
 erDiagram
-    %% --- Implemented this milestone ---
+    %% --- Implemented (Sprint 1: Identity) ---
     ACCOUNT {
         uuid id PK
         string email UK
+        string password_hash
         timestamp created_at
         timestamp updated_at
+    }
+    REFRESH_TOKEN {
+        uuid id PK
+        uuid account_id FK
+        string token_hash UK
+        uuid family_id
+        timestamp revoked_at
+        uuid replaced_by
+        timestamp expires_at
+        timestamp created_at
     }
     AI_PROVIDER_CONFIG {
         uuid id PK
@@ -22,6 +33,7 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    ACCOUNT ||--o{ REFRESH_TOKEN : "owns"
 
     %% --- Target design, NOT implemented (see wallet-architecture.md / pricing-architecture.md) ---
     WALLET {
@@ -60,7 +72,7 @@ erDiagram
     CONVERSATION ||--o{ MESSAGE : "contains (target)"
 ```
 
-`ACCOUNT` corresponds to the currently-implemented `User` Prisma model — the rename to `Account` is a recommended-but-not-yet-made change, see `ddd-tactical-design.md` and `TECHNICAL_DEBT.md`.
+`ACCOUNT` and `REFRESH_TOKEN` are implemented (`docs/adr/0010-auth-token-strategy.md`). `WALLET`, `LEDGER_ENTRY`, `CONVERSATION`, `MESSAGE` remain target design.
 
 ## Naming standards
 

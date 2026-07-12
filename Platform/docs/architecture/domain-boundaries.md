@@ -5,7 +5,7 @@ Bounded contexts identified for the aggregator platform, per DDD. Only the first
 | Context | Owns | Status |
 |---|---|---|
 | **Platform/System** | Health checks, system-level config, cross-cutting concerns | Scaffolded (`HealthModule`) |
-| **Identity** | User accounts, authentication, sessions | Named only — no auth implementation this milestone |
+| **Identity** | Accounts, authentication, sessions | Implemented (`identity.module.ts`) — register/login/refresh/logout, real argon2id + Ed25519 JWTs |
 | **Provider Access** | AI provider registry, routing, fallback/circuit-breaking, usage metering | Abstraction scaffolded (`packages/ai-provider-sdk`); no real provider calls |
 | **Billing** | Wallet, credits, pricing, transactions | Named only — explicitly out of scope this milestone |
 | **Conversation** | Chat sessions, message history, model-selection-per-conversation | Named only — depends on Identity + Provider Access existing first |

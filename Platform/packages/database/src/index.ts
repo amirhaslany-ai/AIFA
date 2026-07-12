@@ -17,4 +17,4 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export { PrismaClient } from '@prisma/client';
-export type { User, AiProviderConfig } from '@prisma/client';
+export type { Account, RefreshToken, AiProviderConfig } from '@prisma/client';

@@ -35,22 +35,27 @@ The cursor is an opaque, base64-encoded pointer (implementation detail: last-see
 - Filtering: query params named after the field (`?status=active`), combined with implicit AND. No query language (no `filter[status][eq]=active` style) unless a real consumer need justifies the added complexity — not guessed here.
 - Sorting: `?sort=createdAt` (ascending default), `?sort=-createdAt` (descending, leading hyphen) — one sort key at a time until a real multi-key-sort need appears.
 
-## Authentication flow design (seam only — no identity provider implemented)
-
-Target flow, to be implemented when Identity (see `domain-boundaries.md`) is built:
+## Authentication flow (implemented — Sprint 1)
 
 ```
-Client → POST /v1/auth/session (credentials or OAuth callback)
-       ← { accessToken (JWT, short-lived), refreshToken (opaque, long-lived, httpOnly cookie) }
+Client → POST /v1/auth/register or /v1/auth/login (email + password)
+       ← { accessToken (Ed25519 JWT, 15 min), refreshToken (opaque, 30 days), refreshTokenExpiresAt }
 
-Client → GET /v1/conversations
+Client → GET /v1/auth/me (or any future protected route)
          Authorization: Bearer <accessToken>
-       → NestJS AuthGuard validates JWT signature + expiry (see security-architecture.md)
-       → request.user populated from JWT claims
+       → JwtAuthGuard (interfaces/http/guards/jwt-auth.guard.ts) verifies via AuthGuardPort
+       → request.principal = { accountId } (see CurrentAccount decorator)
        → controller/use case proceeds
+
+Client → POST /v1/auth/refresh { refreshToken }
+       ← a new { accessToken, refreshToken } pair — the old refresh token is
+         revoked (rotation-on-use); presenting it again revokes the whole
+         session family (reuse detection) — see docs/adr/0010-auth-token-strategy.md
+
+Client → POST /v1/auth/logout { refreshToken } → 204, idempotent
 ```
 
-The `application/ports/auth-guard.port.ts` seam (already present in `apps/api`) is where this guard's interface lives; the concrete implementation (JWT verification, refresh rotation) is deferred — see `security-architecture.md`'s JWT/session strategy for the token design this flow assumes.
+`application/ports/auth-guard.port.ts` (the seam) is now backed by a real implementation: `infrastructure/identity/jwt-auth-guard.adapter.ts`. Password hashing is real argon2id (`@node-rs/argon2`); token signing is real Ed25519 via `jose`. No OAuth/social login exists — email+password only, since that's the one auth method this environment could build *and* fully verify without third-party provider credentials.
 
 ## Authorization flow design (seam only)
 

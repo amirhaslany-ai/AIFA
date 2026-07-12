@@ -1,16 +1,24 @@
 # ADR-0010: Short-lived asymmetric-JWT access tokens + rotating opaque refresh tokens
 
-**Status:** Accepted (design-only — not implemented)
-**Date:** 2026-07-12
-**Related:** `docs/architecture/security-architecture.md`
+**Status:** Accepted and implemented (Sprint 1 — see `apps/api/src/identity.module.ts` and its dependencies)
+**Date:** 2026-07-12, transport decision revised 2026-07-12 (same day, during implementation — see "Token transport" below)
+**Related:** `docs/architecture/security-architecture.md`, `docs/architecture/api-standards.md`
 
 ## Context
 
-Authentication implementation is out of scope for this foundation milestone, but the API/frontend boundary (`api-standards.md`'s auth flow design) and the `application/ports/auth-guard.port.ts` seam already assume *some* token shape. Deferring this decision entirely would leave a structural gap in an otherwise-complete foundation.
+The API/frontend boundary (`api-standards.md`'s auth flow) and the `application/ports/auth-guard.port.ts` seam already assumed *some* token shape before implementation began. This ADR fixes that shape.
 
 ## Decision
 
-Access tokens are short-lived (15 min target) JWTs signed with an asymmetric algorithm (RS256 or EdDSA). Refresh tokens are opaque, long-lived, stored httpOnly/Secure/SameSite cookies, persisted hashed server-side, and rotated on every use (old token invalidated, reuse triggers full family revocation).
+Access tokens are short-lived (15 min default, `AUTH_ACCESS_TOKEN_TTL_SECONDS`) JWTs signed with EdDSA (Ed25519). Refresh tokens are opaque (256-bit random, SHA-256-hashed at rest — the raw value is never persisted), 30-day lifetime, rotated on every use (old token row marked revoked, a new row continues the same `familyId`), with reuse detection: presenting an already-rotated token revokes the entire session family, not just that token.
+
+## Token transport (revised from the original design)
+
+The original design (written before implementation) specified refresh tokens as httpOnly cookies. **The actual implementation returns both tokens in the JSON response body** (`AuthSessionResponseDto`), not a cookie. This was a deliberate revision made during implementation, not an oversight:
+
+- ADR-0006 established this platform as an API-first product ("usable like an API product... comparable to OpenRouter") — an httpOnly cookie is meaningless to a non-browser client (mobile app, server-to-server caller, third-party integrator), which is exactly the audience ADR-0006 optimizes for.
+- A browser-based first-party client (`apps/web`) should not store the raw refresh token in `localStorage` or client-readable state — the recommended pattern (not yet implemented, `apps/web` has no auth UI yet) is a Backend-for-Frontend: a Next.js route handler (matching the existing pattern in `apps/web/src/app/api/health/route.ts`) calls `/v1/auth/*` server-side and sets its *own* httpOnly cookie scoped to `apps/web`'s origin, never exposing the raw refresh token to client-side JS. This keeps the XSS-resistance property ADR-0010 originally wanted, without making the core API cookie-based (and therefore useless to non-browser clients).
+- Implementing real cookie issuance from `apps/api` would additionally require `cookie-parser`, CSRF protection (cookies are sent automatically, unlike a Bearer header), and `SameSite`/cross-origin cookie configuration between two different ports/origins in dev — real complexity with no benefit to the API-first use case, and actively worse for non-browser clients.
 
 ## Rationale
 
@@ -27,5 +35,7 @@ Access tokens are short-lived (15 min target) JWTs signed with an asymmetric alg
 
 ## Consequences
 
-- No `RefreshToken` table exists in `schema.prisma` yet — required before this can be implemented (see `database-standards.md`'s ER diagram note — not yet added, since no code reads it).
-- Whoever implements Identity must implement rotation + reuse detection together, not access-token issuance alone — issuing tokens without the revocation-on-reuse mechanic would silently violate this ADR's threat model.
+- `RefreshToken` exists in `schema.prisma` with `tokenHash` (unique), `familyId`, `revokedAt`, `replacedBy`, `expiresAt`.
+- Rotation and reuse detection are implemented together, not access-token issuance alone (`RefreshSessionUseCase` — see its unit tests for the reuse-detection scenario specifically: presenting a rotated-away token revokes the whole family, and a subsequently-legitimate token in that family is then also rejected).
+- No httpOnly cookie exists anywhere in this API — see "Token transport" above. If `apps/web` ever needs a first-party browser session, it needs its own BFF layer; this is not built yet (no auth UI exists in `apps/web`).
+- No OAuth/social login exists — email + password only. Real OAuth requires third-party provider credentials (Google/GitHub client id+secret) that don't exist in this environment; email+password was chosen specifically because it's the one auth method fully buildable and verifiable without external dependencies.

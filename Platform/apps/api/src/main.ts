@@ -10,6 +10,7 @@ import { config as loadDotenv } from 'dotenv';
 loadDotenv({ path: join(__dirname, '../../../.env') });
 
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { loadConfig } from '@aifa/config';
 import { createLogger } from '@aifa/logger';
@@ -23,6 +24,13 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('v1');
   app.useGlobalFilters(new DomainErrorFilter(logger));
+
+  // 04_PATCH_LIST.md P2-1: class-validator/class-transformer were installed
+  // but no global pipe ever enforced DTO validation — request bodies were
+  // accepted unchecked. whitelist strips unknown properties rather than
+  // erroring on them (lenient-by-default is friendlier for API evolution);
+  // forbidNonWhitelisted would reject them instead, if that's ever preferred.
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   // apps/web and apps/api are separate origins by design (docs/architecture/frontend-architecture.md).
   // Without this, browser-side calls from apps/web are silently blocked by the

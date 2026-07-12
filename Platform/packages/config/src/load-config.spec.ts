@@ -42,4 +42,15 @@ describe('loadConfig', () => {
       'https://admin.example.com',
     ]);
   });
+
+  it('defaults auth.jwt keys to undefined and access-token TTL to 900s', () => {
+    const config = loadConfig({
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      REDIS_URL: 'redis://localhost:6379',
+    });
+
+    expect(config.auth.jwtPrivateKeyPem).toBeUndefined();
+    expect(config.auth.jwtPublicKeyPem).toBeUndefined();
+    expect(config.auth.accessTokenTtlSeconds).toBe(900);
+  });
 });

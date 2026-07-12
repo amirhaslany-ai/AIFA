@@ -35,9 +35,16 @@ export default tseslint.config(
   // therefore targets a mutually exclusive subtree of apps/api/src/ and bundles every
   // restriction that layer needs into its own single `no-restricted-imports` entry.
   // (Verified: an earlier 4-block version with overlapping `files` silently dropped the
-  // domain/application/interfaces rules, keeping only the last block's vendor-SDK rule.) ---
+  // domain/application/interfaces rules, keeping only the last block's vendor-SDK rule.)
+  //
+  // `*.spec.ts` is excluded from every block below: these boundary rules protect
+  // production architecture, not tests — a test legitimately constructs concrete
+  // adapters directly to exercise real behavior (docs/architecture/testing-architecture.md).
+  // (Verified: without this exclusion, tests that build a real Argon2/JWT adapter
+  // to test use cases against real crypto were rejected by this same rule.) ---
   {
     files: ['apps/api/src/domain/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [
@@ -52,6 +59,7 @@ export default tseslint.config(
   },
   {
     files: ['apps/api/src/application/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [
@@ -64,6 +72,7 @@ export default tseslint.config(
   },
   {
     files: ['apps/api/src/interfaces/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [
@@ -77,7 +86,7 @@ export default tseslint.config(
     // infrastructure/ minus infrastructure/providers/: everything here still may not
     // import a vendor AI SDK — only the providers/ adapters may (ADR-0005).
     files: ['apps/api/src/infrastructure/**/*.ts'],
-    ignores: ['apps/api/src/infrastructure/providers/**/*.ts'],
+    ignores: ['apps/api/src/infrastructure/providers/**/*.ts', '**/*.spec.ts'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [

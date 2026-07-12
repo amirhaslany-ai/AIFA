@@ -7,8 +7,11 @@ import {
 } from '@nestjs/common';
 import type { Response } from 'express';
 import type { Logger } from '@aifa/logger';
-import { AllProvidersUnavailableError, CircuitOpenError } from '@aifa/ai-provider-sdk';
+import { AllProvidersUnavailableError, CircuitOpenError, ProviderUnavailableError } from '@aifa/ai-provider-sdk';
 import { DomainError } from '../../../domain/errors/domain-error';
+import { AccountAlreadyExistsError } from '../../../domain/errors/account-already-exists.error';
+import { InvalidCredentialsError } from '../../../domain/errors/invalid-credentials.error';
+import { InvalidRefreshTokenError } from '../../../domain/errors/invalid-refresh-token.error';
 import type { RequestWithId } from '../middleware/request-id.middleware';
 
 /**
@@ -44,12 +47,27 @@ export class DomainErrorFilter implements ExceptionFilter {
       return { status, code: HttpStatus[status] ?? 'HTTP_ERROR', message: exception.message };
     }
 
-    if (exception instanceof AllProvidersUnavailableError || exception instanceof CircuitOpenError) {
+    if (
+      exception instanceof AllProvidersUnavailableError ||
+      exception instanceof CircuitOpenError ||
+      exception instanceof ProviderUnavailableError
+    ) {
+      // 04_PATCH_LIST.md P2-7: ProviderUnavailableError (thrown by
+      // ProviderRegistry.get() for an unknown id) previously fell through to
+      // a generic 500 — it belongs with the other provider-unavailable cases.
       return {
         status: HttpStatus.SERVICE_UNAVAILABLE,
         code: 'PROVIDER_UNAVAILABLE',
         message: exception.message,
       };
+    }
+
+    if (exception instanceof AccountAlreadyExistsError) {
+      return { status: HttpStatus.CONFLICT, code: exception.code, message: exception.message };
+    }
+
+    if (exception instanceof InvalidCredentialsError || exception instanceof InvalidRefreshTokenError) {
+      return { status: HttpStatus.UNAUTHORIZED, code: exception.code, message: exception.message };
     }
 
     if (exception instanceof DomainError) {
