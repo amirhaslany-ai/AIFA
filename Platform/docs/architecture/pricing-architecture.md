@@ -1,6 +1,6 @@
-# Pricing Architecture (Design Only — Not Implemented)
+# Pricing Architecture (Implemented — Sprint 1)
 
-**Scope note:** design only, per the foundation mission's explicit constraint — no `Pricing` module or rule engine exists in code.
+**Status:** implemented — `apps/api/src/pricing.module.ts`, `domain/pricing/`. No HTTP surface (Pricing is invoked by other use cases, not called directly by a client — see `pricing.module.ts`'s doc comment). No campaign/discount rules exist yet — the pipeline is base markup + floor only; inventing fake campaign data was deliberately avoided.
 
 ## Relationship to Wallet and AI Provider Layer
 

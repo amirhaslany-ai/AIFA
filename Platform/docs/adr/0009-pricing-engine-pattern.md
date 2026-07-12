@@ -1,6 +1,6 @@
 # ADR-0009: Pricing as an ordered rule pipeline, separate from cost and ledger
 
-**Status:** Accepted (design-only — not implemented)
+**Status:** Accepted and implemented (Sprint 1 — `apps/api/src/domain/pricing/`, `apps/api/src/infrastructure/pricing/rule-based-pricing-engine.adapter.ts`, `apps/api/src/pricing.module.ts`)
 **Date:** 2026-07-12
 **Related:** `docs/architecture/pricing-architecture.md`, ADR-0007 (AI provider cost layer), ADR-0008 (wallet ledger)
 
@@ -25,5 +25,7 @@ Pricing is a separate concern from both the AI Provider Layer (which only report
 
 ## Consequences
 
-- No `PricingEngine`, `Campaign`, or rule tables exist yet — this is the target shape for whenever Billing is implemented.
-- Any future implementation that computes a customer price without going through this pipeline (e.g. a hardcoded multiplier in a controller) violates this ADR.
+- Implemented as `PricingPipeline` (`domain/pricing/pricing-pipeline.ts`) running an ordered `PricingRule[]`: `BaseMarkupRule` then `FloorRule`. Every rule that fires appends its id to `appliedRules`, satisfying the audit-trail requirement above.
+- Basis-points integer math throughout (`baseMarkupBasisPoints: 13000` = 1.3x), never floats — avoids floating-point drift in a billing-critical path. Marked-up prices round up (ceiling division), so the platform never undercharges by a fractional minor unit.
+- Markup multiplier and floor are read from `@aifa/config` (`PRICING_BASE_MARKUP_BASIS_POINTS`, `PRICING_MINIMUM_PRICE_MINOR_UNITS`), not hardcoded — matches this ADR's "reproducible after the fact" and "no hardcoded multiplier" intent.
+- `Campaign`, discount rules, and per-plan multiplier lookups are still not implemented — no fake campaign data was invented to fill this gap. Any future implementation that computes a customer price without going through `PricingPipeline` (e.g. a hardcoded multiplier in a controller) violates this ADR.

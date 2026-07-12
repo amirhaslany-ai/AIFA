@@ -7,7 +7,7 @@ Bounded contexts identified for the aggregator platform, per DDD. Only the first
 | **Platform/System** | Health checks, system-level config, cross-cutting concerns | Scaffolded (`HealthModule`) |
 | **Identity** | Accounts, authentication, sessions | Implemented (`identity.module.ts`) — register/login/refresh/logout, real argon2id + Ed25519 JWTs |
 | **Provider Access** | AI provider registry, routing, fallback/circuit-breaking, usage metering | Abstraction scaffolded (`packages/ai-provider-sdk`); no real provider calls |
-| **Billing** | Wallet, credits, pricing, transactions | Wallet implemented (`wallet.module.ts`) — ledger-based credit/reserve/settle/rollback; Pricing not yet implemented |
+| **Billing** | Wallet, credits, pricing, transactions | Wallet implemented (`wallet.module.ts`) — ledger-based credit/reserve/settle/rollback; Pricing implemented (`pricing.module.ts`) — base markup + floor rule pipeline, no HTTP surface, no campaign/discount rules yet |
 | **Conversation** | Chat sessions, message history, model-selection-per-conversation | Named only — depends on Identity + Provider Access existing first |
 
 ## Rules

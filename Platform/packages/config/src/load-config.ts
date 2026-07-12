@@ -20,6 +20,10 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       jwtPublicKeyPem: env.AUTH_JWT_PUBLIC_KEY_PEM || undefined,
       accessTokenTtlSeconds: env.AUTH_ACCESS_TOKEN_TTL_SECONDS,
     },
+    pricing: {
+      baseMarkupBasisPoints: env.PRICING_BASE_MARKUP_BASIS_POINTS,
+      minimumPriceMinorUnits: env.PRICING_MINIMUM_PRICE_MINOR_UNITS,
+    },
     database: {
       url: env.DATABASE_URL,
     },

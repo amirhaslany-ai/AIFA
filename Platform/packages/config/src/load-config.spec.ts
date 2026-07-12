@@ -53,4 +53,14 @@ describe('loadConfig', () => {
     expect(config.auth.jwtPublicKeyPem).toBeUndefined();
     expect(config.auth.accessTokenTtlSeconds).toBe(900);
   });
+
+  it('defaults pricing to 1.3x markup and no floor', () => {
+    const config = loadConfig({
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      REDIS_URL: 'redis://localhost:6379',
+    });
+
+    expect(config.pricing.baseMarkupBasisPoints).toBe(13_000);
+    expect(config.pricing.minimumPriceMinorUnits).toBe(0n);
+  });
 });

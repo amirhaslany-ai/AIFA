@@ -35,6 +35,19 @@ export const configSchema = z.object({
     accessTokenTtlSeconds: z.coerce.number().int().positive().default(900),
   }),
 
+  pricing: z.object({
+    /**
+     * Basis points (10000 = 1.00x / no markup). Default 13000 = 1.30x —
+     * docs/architecture/pricing-architecture.md's base markup rule. An
+     * integer, not a float multiplier, so price computation stays exact
+     * integer arithmetic (docs/adr/0008-wallet-ledger-pattern.md's "never a
+     * float" principle applies to pricing too, not just the ledger).
+     */
+    baseMarkupBasisPoints: z.coerce.number().int().positive().default(13_000),
+    /** Minimum price per call, in minor units. 0 = no floor enforced (the default — a real floor value is a product decision, not guessed here). */
+    minimumPriceMinorUnits: z.coerce.bigint().default(0n),
+  }),
+
   database: z.object({
     url: z
       .string({ required_error: 'DATABASE_URL is required' })

@@ -14,6 +14,7 @@ src/
 ├── health.module.ts     # Platform/System bounded context
 ├── identity.module.ts   # Identity bounded context — register/login/refresh/logout
 ├── wallet.module.ts      # Billing bounded context — ledger-based wallet
+├── pricing.module.ts     # Billing bounded context — rule-based pricing engine (no controller)
 ├── app.module.ts
 └── main.ts
 ```
@@ -31,8 +32,9 @@ Requires `.env` at the `Platform/` root (copy from `.env.example`). Swagger docs
 - **Platform/System** (`health.module.ts`): `HealthController` → `GetSystemHealthUseCase` → `ProviderHealthSourcePort`/`DependencyHealthSourcePort`/`ClockPort` → `ProviderRegistryAdapter`/`DependencyHealthAdapter`/`SystemClockAdapter`.
 - **Identity** (`identity.module.ts`): register/login/refresh/logout, real argon2id password hashing + real Ed25519 JWTs. See `docs/adr/0010-auth-token-strategy.md`. `AccountRepositoryPort`/`RefreshTokenRepositoryPort` → Prisma-backed adapters; `PasswordHasherPort` → `Argon2PasswordHasherAdapter`; `TokenIssuerPort`/`AuthGuardPort` → `jose`-backed Ed25519 adapters sharing one `JwtKeyProvider`. **Note:** cross-module guard sharing requires exporting both the guard class *and* its own constructor dependency token (`AUTH_GUARD_PORT`) — exporting only the class produced a "Nest can't resolve dependencies" boot error even with the consuming module correctly importing this one. See the comment on `identity.module.ts`'s `exports` array.
 - **Billing** (`wallet.module.ts`): ledger-based wallet — credit/reserve/settle/rollback, real Prisma transactions. See `docs/adr/0008-wallet-ledger-pattern.md`. Only `GET /v1/wallet` is public; the other four use cases are real and DI-wired but deliberately not exposed via HTTP yet (see `wallet.controller.ts`'s doc comment).
+- **Billing — Pricing** (`pricing.module.ts`): rule-based pricing engine — ordered `PricingPipeline` (base markup → floor), config-driven multiplier/floor, basis-points integer math with ceiling rounding. See `docs/adr/0009-pricing-engine-pattern.md`. No controller — `PricingEnginePort` is invoked by other use cases (the future Chat settlement flow), not called directly by a client.
 
-See `docs/architecture/domain-boundaries.md` for what's planned next (Provider Access routing, Pricing, Conversation) and why they're sequenced that way.
+See `docs/architecture/domain-boundaries.md` for what's planned next (Provider Access routing, Conversation) and why they're sequenced that way.
 
 ## Dependencies
 
