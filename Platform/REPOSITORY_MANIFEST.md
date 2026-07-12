@@ -68,42 +68,34 @@ Platform/
 
 ## Dependency graph
 
+Edges below are the actual `dependencies` declared in each `package.json`, cross-checked against `turbo run build --dry-run` and against whether the dependency is actually imported in `src/`:
+
 ```
-@aifa/types  ◄───────────────┐
-     ▲                        │
-     │                        │
-@aifa/config  ◄──────┐         │
-     ▲                │         │
-     │                │         │
-@aifa/logger  ◄───┐    │         │
-     ▲             │    │         │
-     │             │    │         │
-@aifa/database ────┘    │         │
-     ▲                   │         │
-     │                   │         │
-@aifa/ai-provider-sdk ───┴─────────┤
-     ▲                              │
-     │                              │
-   apps/api  ◄──── depends on all five packages above
-     ▲
-     │ (HTTP only — no code-level dependency)
-   apps/web  ◄──── depends on @aifa/types, @aifa/config, @aifa/logger only (NOT @aifa/database or @aifa/ai-provider-sdk)
+@aifa/types            (no internal deps)
+@aifa/config           → zod                     (external only; no internal deps)
+@aifa/logger           → pino                    (external only; no internal deps)
+@aifa/database         → @aifa/types, @prisma/client
+@aifa/ai-provider-sdk  → @aifa/types, @aifa/logger*
+apps/api               → @aifa/types, @aifa/config, @aifa/logger, @aifa/ai-provider-sdk, @aifa/database
+apps/web               → @aifa/types, @aifa/config*, @aifa/logger*   (NOT @aifa/database, NOT @aifa/ai-provider-sdk)
 ```
 
-No package depends on another package that depends back on it (verified: `turbo prune` succeeds cleanly for both apps, which requires an acyclic graph). `apps/web` does not depend on `@aifa/database` or `@aifa/ai-provider-sdk` — it has no direct database or AI-provider access, by design (all data access goes through `apps/api`'s HTTP API, though no such calls are actually implemented yet — see `CURRENT_IMPLEMENTATION_STATUS.md`).
+`*` = **declared but not imported in `src/`** (verified by grep):
+- `@aifa/ai-provider-sdk` declares `@aifa/logger` but never imports it — a declared-but-unused dependency (see `FINAL_REVIEW/01_IMPLEMENTATION_GAP_REPORT.md` finding B1). An earlier version of this graph incorrectly omitted this edge; corrected here.
+- `apps/web` declares `@aifa/config` and `@aifa/logger` but uses neither in route code (`apps/web/src/`) — only `next.config.mjs` touches env, directly via `process.env`.
+
+No package depends on another package that depends back on it (verified: `turbo prune` succeeds cleanly for both apps, which requires an acyclic graph). `apps/web` has no direct database or AI-provider access, by design (all data access is intended to go through `apps/api`'s HTTP API, though no such calls are actually implemented yet — see `CURRENT_IMPLEMENTATION_STATUS.md`).
 
 ## Build order
 
 Determined by `turbo.json`'s `dependsOn: ["^build"]` (build every upstream workspace dependency first):
 
-1. `@aifa/types` (no internal deps)
-2. `@aifa/config`, `@aifa/logger` (depend only on `@aifa/types`, build in parallel)
-3. `@aifa/database` (depends on `@aifa/types`)
-4. `@aifa/ai-provider-sdk` (depends on `@aifa/types`)
-5. `apps/api` (depends on all five packages above)
-6. `apps/web` (depends on `@aifa/types`, `@aifa/config`, `@aifa/logger` only)
+1. `@aifa/types`, `@aifa/config`, `@aifa/logger` (no internal-package deps — build in parallel)
+2. `@aifa/database` (depends on `@aifa/types`), `@aifa/ai-provider-sdk` (depends on `@aifa/types` + `@aifa/logger`)
+3. `apps/api` (depends on all five packages above)
+4. `apps/web` (depends on `@aifa/types`, `@aifa/config`, `@aifa/logger`)
 
-`apps/api` and `apps/web` can build in parallel once step 4 completes, since neither depends on the other.
+`apps/api` and `apps/web` can build in parallel once step 2 completes, since neither depends on the other.
 
 ## Startup order
 
