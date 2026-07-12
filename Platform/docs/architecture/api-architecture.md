@@ -34,7 +34,7 @@ A `Bearer` token boundary is reserved (`Authorization` header, validated by a Ne
 
 ## Health/readiness
 
-`GET /v1/health` — liveness (process is up). `GET /v1/health/ready` — readiness (dependencies — DB, Redis, provider registry — are reachable), backed by `@nestjs/terminus`. Used by Docker healthchecks and, later, orchestrator readiness probes.
+`GET /v1/health` — liveness (process is up). `GET /v1/health/ready` — readiness (dependencies — DB, Redis, provider registry — are reachable), backed by `@nestjs/terminus`. Returns HTTP 503 (not 200) when `status` is `"down"` (database unreachable, or every provider unavailable) — the HTTP status code itself signals unreadiness, not just the JSON body, since most orchestrators check the former. Used by Docker healthchecks and, later, orchestrator readiness probes.
 
 ## Rate limiting
 

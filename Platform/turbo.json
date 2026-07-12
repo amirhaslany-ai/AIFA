@@ -16,6 +16,14 @@
     "typecheck": {
       "dependsOn": ["^build"]
     },
+    "web#typecheck": {
+      // apps/web's tsconfig.json includes Next.js's generated .next/types/**/*.ts.
+      // Without also depending on this package's own `build` (not just ^build,
+      // which only covers upstream workspace deps), `typecheck` and `build` can
+      // run concurrently for web and race on .next/ — verified: reproduces as
+      // an intermittent typecheck failure when running build+typecheck together.
+      "dependsOn": ["^build", "build"]
+    },
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]

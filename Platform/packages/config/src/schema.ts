@@ -6,6 +6,17 @@ export const configSchema = z.object({
   api: z.object({
     port: z.coerce.number().int().positive().default(3001),
     baseUrl: z.string().url().default('http://localhost:3001'),
+    /**
+     * Comma-separated allowlist of origins permitted to call this API with
+     * credentials (04_PATCH_LIST.md P1-4 — apps/web and apps/api are separate
+     * origins by design; without this, browser calls from apps/web are
+     * silently blocked by the same-origin policy the moment client-side
+     * fetching is added).
+     */
+    corsAllowedOrigins: z
+      .string()
+      .default('http://localhost:3000')
+      .transform((value) => value.split(',').map((origin) => origin.trim()).filter(Boolean)),
   }),
 
   web: z.object({

@@ -24,6 +24,12 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix('v1');
   app.useGlobalFilters(new DomainErrorFilter(logger));
 
+  // apps/web and apps/api are separate origins by design (docs/architecture/frontend-architecture.md).
+  // Without this, browser-side calls from apps/web are silently blocked by the
+  // same-origin policy (04_PATCH_LIST.md P1-4). Allowlist, not a wildcard —
+  // `credentials: true` requires an explicit origin list per the CORS spec anyway.
+  app.enableCors({ origin: config.api.corsAllowedOrigins, credentials: true });
+
   const swaggerConfig = new DocumentBuilder()
     .setTitle('AIFA Platform API')
     .setDescription(

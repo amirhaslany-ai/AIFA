@@ -14,7 +14,7 @@ Vendor-neutral, official, CNCF-graduated standard — avoids locking the archite
 
 ## Health checks (implemented this milestone)
 
-`GET /v1/health` and `/v1/health/ready` (see `api-architecture.md`) are the only observability surface that actually exists in code right now — via `@nestjs/terminus`, checking process liveness and DB/Redis/provider-registry reachability respectively. Docker Compose's healthcheck stanzas (`infra/docker/docker-compose.yml`) poll `/v1/health/ready`.
+`GET /v1/health` and `/v1/health/ready` (see `api-architecture.md`) are the only observability surface that actually exists in code right now. `/v1/health` is a trivial liveness check (no dependency access). `/v1/health/ready` is backed by `@nestjs/terminus`'s `HealthIndicator` (custom `PrismaHealthIndicator`/`RedisHealthIndicator`, `apps/api/src/infrastructure/health/`) and checks DB/Redis/provider-registry reachability; it returns HTTP 503 (not 200) when the database is unreachable, so an orchestrator's readiness probe correctly stops routing traffic. Docker Compose's healthcheck stanzas (`infra/docker/docker-compose.yml`) poll `/v1/health/ready`.
 
 ## Alerting
 

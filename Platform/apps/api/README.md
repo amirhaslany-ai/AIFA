@@ -29,14 +29,14 @@ Demonstrates the full dependency rule end to end: `HealthController` (interfaces
 
 ## Dependencies
 
-`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk` (workspace packages) — NestJS (`@nestjs/common`, `core`, `platform-express`, `swagger`, `terminus`), `class-validator`/`class-transformer`, `dotenv`.
+`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk`, `@aifa/database` (workspace packages) — NestJS (`@nestjs/common`, `core`, `platform-express`, `swagger`, `terminus`), `class-validator`/`class-transformer`, `dotenv`, `ioredis`.
 
 ## Public API (HTTP endpoints)
 
 | Method | Path | Purpose |
 |---|---|---|
 | GET | `/v1/health` | Liveness — always `{"status":"ok"}` if the process can respond |
-| GET | `/v1/health/ready` | Readiness — real `ProviderRegistry` health, per-provider |
+| GET | `/v1/health/ready` | Readiness — real database (Prisma), Redis, and `ProviderRegistry` checks. Returns HTTP 503 when `status` is `"down"`. |
 | GET | `/v1/docs` | Swagger UI (OpenAPI, auto-generated) |
 
 ## Example (verified output — see `PROGRESS_REPORT.md`)
@@ -45,6 +45,8 @@ Demonstrates the full dependency rule end to end: `HealthController` (interfaces
 $ curl http://localhost:3001/v1/health
 {"status":"ok"}
 
-$ curl http://localhost:3001/v1/health/ready
-{"status":"ok","providers":[{"providerId":"stub-primary","status":"healthy","checkedAt":"..."},{"providerId":"stub-secondary","status":"healthy","checkedAt":"..."}],"checkedAt":"..."}
+$ curl -w '\n%{http_code}\n' http://localhost:3001/v1/health/ready
+# with no reachable Postgres/Redis (verified in this sandbox — no live DB available):
+{"status":"down","providers":[{"providerId":"stub-primary","status":"healthy","checkedAt":"..."},{"providerId":"stub-secondary","status":"healthy","checkedAt":"..."}],"dependencies":[{"name":"database","status":"unavailable","checkedAt":"..."},{"name":"redis","status":"unavailable","checkedAt":"..."}],"checkedAt":"..."}
+503
 ```

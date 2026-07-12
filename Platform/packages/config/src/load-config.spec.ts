@@ -27,5 +27,19 @@ describe('loadConfig', () => {
 
     expect(config.api.port).toBe(3001);
     expect(config.observability.logLevel).toBe('info');
+    expect(config.api.corsAllowedOrigins).toEqual(['http://localhost:3000']);
+  });
+
+  it('parses a comma-separated CORS allowlist into an array, trimming whitespace', () => {
+    const config = loadConfig({
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      REDIS_URL: 'redis://localhost:6379',
+      CORS_ALLOWED_ORIGINS: 'https://app.example.com, https://admin.example.com',
+    });
+
+    expect(config.api.corsAllowedOrigins).toEqual([
+      'https://app.example.com',
+      'https://admin.example.com',
+    ]);
   });
 });

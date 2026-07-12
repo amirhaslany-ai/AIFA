@@ -41,4 +41,29 @@ describe('CircuitBreaker', () => {
     // Still fails (provider always fails) but should attempt the call, not short-circuit.
     await expect(breaker.chat({ messages: [] })).rejects.not.toThrowError(CircuitOpenError);
   });
+
+  it('healthCheck reports unavailable without calling the provider once open', async () => {
+    let liveCallCount = 0;
+    const provider = new StubAdapter('p', { alwaysFail: true });
+    const originalHealthCheck = provider.healthCheck.bind(provider);
+    provider.healthCheck = async () => {
+      liveCallCount += 1;
+      return originalHealthCheck();
+    };
+
+    const breaker = new CircuitBreaker(provider, { failureThreshold: 1, cooldownMs: 1000, now: () => 0 });
+
+    await expect(breaker.chat({ messages: [] })).rejects.toThrow(); // trips the circuit open
+
+    const health = await breaker.healthCheck();
+
+    expect(health.status).toBe('unavailable');
+    expect(liveCallCount).toBe(0); // never delegated to the underlying provider
+  });
+
+  it('healthCheck delegates to the provider while closed', async () => {
+    const breaker = new CircuitBreaker(new StubAdapter('p'));
+    const health = await breaker.healthCheck();
+    expect(health.status).toBe('healthy');
+  });
 });

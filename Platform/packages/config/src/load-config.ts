@@ -10,6 +10,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     api: {
       port: env.API_PORT,
       baseUrl: env.API_BASE_URL,
+      corsAllowedOrigins: env.CORS_ALLOWED_ORIGINS,
     },
     web: {
       port: env.WEB_PORT,

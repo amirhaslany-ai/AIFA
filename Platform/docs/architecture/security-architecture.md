@@ -35,6 +35,10 @@ The JWT signing keypair should support rotation without invalidating in-flight t
 - Logging (`logging-strategy.md`) already forbids logging secrets and full request bodies by default — extend this explicitly to PII: an account's email should appear in logs only as a hashed/truncated reference in non-debug environments, full value only at `debug` level in non-production.
 - No PII export/deletion (GDPR-style "right to be forgotten") flow is designed yet — depends on which jurisdictions the platform serves, an open question (mirrors Content Studio's own unresolved locale question) — flagged for founder input once relevant, not guessed.
 
+## CORS (trust boundary between apps/web and apps/api)
+
+`apps/web` and `apps/api` are separate origins by design (`frontend-architecture.md`). `apps/api`'s `main.ts` calls `app.enableCors({ origin: <allowlist>, credentials: true })`, where the allowlist is `CORS_ALLOWED_ORIGINS` (`@aifa/config`, comma-separated, defaults to `http://localhost:3000` for local dev) — never a wildcard, since `credentials: true` requires an explicit origin per the CORS spec anyway. Production deployments must set this to the real `apps/web` origin(s); the default is local-dev-only. Fixed as part of `04_PATCH_LIST.md` P1-4 — previously no CORS policy existed at all, which meant client-side browser calls from `apps/web` to `apps/api` were silently blocked, not deliberately closed.
+
 ## Security headers
 
 Target middleware (via `helmet` or NestJS's equivalent, not yet added as a dependency): `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY` (or a `Content-Security-Policy frame-ancestors` equivalent), `Referrer-Policy: strict-origin-when-cross-origin`. Not implemented this milestone since it's a one-line addition best done alongside the first real deployment (adding it to a not-yet-deployed API has no immediate value and risks bit-rotting before it's ever tested against a real client).

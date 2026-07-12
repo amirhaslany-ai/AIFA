@@ -17,10 +17,21 @@ RUN turbo prune api --docker
 
 FROM base AS deps
 COPY --from=pruner /repo/out/json/ .
+# turbo prune's install-stage output (out/json) is package.json files only — it
+# does NOT include packages/database/prisma/schema.prisma, but @aifa/database's
+# postinstall (`prisma generate`) requires it to exist at install time. Without
+# this, `pnpm install` fails here (verified: reproduces exactly this way).
+COPY --from=pruner /repo/out/full/packages/database/prisma ./packages/database/prisma
 RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
 COPY --from=pruner /repo/out/full/ .
+# turbo prune's out/full does NOT include shared root config files like
+# tsconfig.base.json (only apps/, packages/, package.json, pnpm-workspace.yaml,
+# turbo.json) — but every package/app's tsconfig.json extends it via a relative
+# path. Without this, every `tsc` build in this stage fails with TS5083
+# (verified: reproduces exactly this way in a clean pruned install).
+COPY --from=pruner /repo/tsconfig.base.json ./tsconfig.base.json
 RUN pnpm turbo run build --filter=api
 
 FROM base AS runtime

@@ -58,6 +58,14 @@ export class CircuitBreaker implements AiProvider {
   }
 
   async healthCheck(): Promise<ProviderHealth> {
+    this.evaluateCooldown();
+
+    // An open circuit IS the cheap health signal (docs/architecture/ai-provider-layer.md's
+    // caching strategy) — report unavailable without a live call to a known-bad provider.
+    if (this.state === 'open') {
+      return { providerId: this.id, status: 'unavailable', checkedAt: new Date(this.now()).toISOString() };
+    }
+
     return this.provider.healthCheck();
   }
 

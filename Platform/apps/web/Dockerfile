@@ -17,6 +17,10 @@ RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
 COPY --from=pruner /repo/out/full/ .
+# See apps/api/Dockerfile's comment on the same line — turbo prune's out/full
+# never includes root-level shared config (tsconfig.base.json), which every
+# package's tsconfig.json extends via a relative path.
+COPY --from=pruner /repo/tsconfig.base.json ./tsconfig.base.json
 RUN pnpm turbo run build --filter=web
 
 FROM base AS runtime
