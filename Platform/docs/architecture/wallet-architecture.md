@@ -1,6 +1,6 @@
-# Wallet Architecture (Design Only — Not Implemented)
+# Wallet Architecture (Implemented — Sprint 1)
 
-**Scope note:** per the foundation mission's explicit constraint, this is architecture design only. No `Wallet` module, table beyond the ER-diagram sketch in `database-standards.md`, or business logic exists in code. This document exists so implementation can start without re-deriving these decisions.
+**Status:** implemented — `apps/api/src/wallet.module.ts`, `domain/wallet.entity.ts`, `domain/money.ts`. Only `GET /v1/wallet` (balance) is exposed via HTTP; credit/reserve/settle/rollback are real, tested use cases not yet reachable via a public endpoint — see `wallet.controller.ts`'s doc comment for exactly why (exposing them before a payment webhook or Chat exists to call them for real reasons would be a "free money" / bill-your-own-amount vulnerability, not a missing feature).
 
 ## Why a ledger, not a balance column
 

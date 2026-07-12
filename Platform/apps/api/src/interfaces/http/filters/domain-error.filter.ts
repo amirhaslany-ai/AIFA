@@ -12,6 +12,8 @@ import { DomainError } from '../../../domain/errors/domain-error';
 import { AccountAlreadyExistsError } from '../../../domain/errors/account-already-exists.error';
 import { InvalidCredentialsError } from '../../../domain/errors/invalid-credentials.error';
 import { InvalidRefreshTokenError } from '../../../domain/errors/invalid-refresh-token.error';
+import { InsufficientBalanceError } from '../../../domain/errors/insufficient-balance.error';
+import { WalletNotFoundError } from '../../../domain/errors/wallet-not-found.error';
 import type { RequestWithId } from '../middleware/request-id.middleware';
 
 /**
@@ -68,6 +70,14 @@ export class DomainErrorFilter implements ExceptionFilter {
 
     if (exception instanceof InvalidCredentialsError || exception instanceof InvalidRefreshTokenError) {
       return { status: HttpStatus.UNAUTHORIZED, code: exception.code, message: exception.message };
+    }
+
+    if (exception instanceof InsufficientBalanceError) {
+      return { status: HttpStatus.PAYMENT_REQUIRED, code: exception.code, message: exception.message };
+    }
+
+    if (exception instanceof WalletNotFoundError) {
+      return { status: HttpStatus.NOT_FOUND, code: exception.code, message: exception.message };
     }
 
     if (exception instanceof DomainError) {

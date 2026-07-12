@@ -13,6 +13,7 @@ src/
 ├── test-support/        # in-memory port fakes + real-crypto test helpers (test-only, not shipped)
 ├── health.module.ts     # Platform/System bounded context
 ├── identity.module.ts   # Identity bounded context — register/login/refresh/logout
+├── wallet.module.ts      # Billing bounded context — ledger-based wallet
 ├── app.module.ts
 └── main.ts
 ```
@@ -28,9 +29,10 @@ Requires `.env` at the `Platform/` root (copy from `.env.example`). Swagger docs
 ## Bounded contexts
 
 - **Platform/System** (`health.module.ts`): `HealthController` → `GetSystemHealthUseCase` → `ProviderHealthSourcePort`/`DependencyHealthSourcePort`/`ClockPort` → `ProviderRegistryAdapter`/`DependencyHealthAdapter`/`SystemClockAdapter`.
-- **Identity** (`identity.module.ts`): register/login/refresh/logout, real argon2id password hashing + real Ed25519 JWTs. See `docs/adr/0010-auth-token-strategy.md`. `AccountRepositoryPort`/`RefreshTokenRepositoryPort` → Prisma-backed adapters; `PasswordHasherPort` → `Argon2PasswordHasherAdapter`; `TokenIssuerPort`/`AuthGuardPort` → `jose`-backed Ed25519 adapters sharing one `JwtKeyProvider`.
+- **Identity** (`identity.module.ts`): register/login/refresh/logout, real argon2id password hashing + real Ed25519 JWTs. See `docs/adr/0010-auth-token-strategy.md`. `AccountRepositoryPort`/`RefreshTokenRepositoryPort` → Prisma-backed adapters; `PasswordHasherPort` → `Argon2PasswordHasherAdapter`; `TokenIssuerPort`/`AuthGuardPort` → `jose`-backed Ed25519 adapters sharing one `JwtKeyProvider`. **Note:** cross-module guard sharing requires exporting both the guard class *and* its own constructor dependency token (`AUTH_GUARD_PORT`) — exporting only the class produced a "Nest can't resolve dependencies" boot error even with the consuming module correctly importing this one. See the comment on `identity.module.ts`'s `exports` array.
+- **Billing** (`wallet.module.ts`): ledger-based wallet — credit/reserve/settle/rollback, real Prisma transactions. See `docs/adr/0008-wallet-ledger-pattern.md`. Only `GET /v1/wallet` is public; the other four use cases are real and DI-wired but deliberately not exposed via HTTP yet (see `wallet.controller.ts`'s doc comment).
 
-See `docs/architecture/domain-boundaries.md` for what's planned next (Provider Access, Billing, Conversation) and why they're sequenced that way.
+See `docs/architecture/domain-boundaries.md` for what's planned next (Provider Access routing, Pricing, Conversation) and why they're sequenced that way.
 
 ## Dependencies
 
@@ -47,6 +49,7 @@ See `docs/architecture/domain-boundaries.md` for what's planned next (Provider A
 | POST | `/v1/auth/refresh` | Rotate a refresh token for a new pair (old one revoked; reuse revokes the whole session family) |
 | POST | `/v1/auth/logout` | Revoke a session (idempotent) |
 | GET | `/v1/auth/me` | Bearer-protected — returns `{ accountId }` for the current token |
+| GET | `/v1/wallet` | Bearer-protected — the current account's wallet balance |
 | GET | `/v1/docs` | Swagger UI (OpenAPI, auto-generated) |
 
 ## Example (verified output — see `PROGRESS_REPORT.md`)

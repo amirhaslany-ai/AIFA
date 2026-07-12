@@ -1,6 +1,6 @@
 # ADR-0008: Wallet uses an append-only ledger, not a mutable balance column
 
-**Status:** Accepted (design-only — not implemented)
+**Status:** Accepted and implemented (Sprint 1 — `apps/api/src/domain/wallet.entity.ts`, `packages/database/prisma/schema.prisma`)
 **Date:** 2026-07-12
 **Related:** `docs/architecture/wallet-architecture.md`
 
@@ -25,5 +25,7 @@ Model the wallet as an aggregate root with an append-only `LedgerEntry` value ob
 
 ## Consequences
 
-- No `Wallet`/`LedgerEntry` tables exist in `packages/database/prisma/schema.prisma` yet — this ADR fixes the model for whenever they're added, not a schema change made now.
+- `Wallet`/`LedgerEntry` exist in `packages/database/prisma/schema.prisma`, unique on `(walletId, referenceId, type)` — deliberately not just `(walletId, referenceId)`, since a reservation and its eventual release/rollback share one referenceId (the originating request id) but are different types and must coexist as separate rows.
+- Idempotency turned out to need care beyond the unique constraint alone: the balance *cache* must only update when a ledger entry was genuinely newly applied, and callers must use the repository's returned balance, not their own pre-computed one — both found as real, reproducing test failures during implementation (a retried operation was silently double-counting the reported balance even though the ledger row itself was correctly deduplicated). See `apps/api/src/infrastructure/persistence/prisma-wallet.repository.ts` and `application/ports/wallet-repository.port.ts`'s doc comments for the full story.
+- `reserve()` additionally needs an idempotency check *before* running the domain's balance-check, not just recovery after — otherwise a retry of an already-successful reservation could spuriously throw `InsufficientBalanceError` against the already-reduced current balance. `credit`/`settle`/`rollback` have no such blocking precondition, so this only applies to reserve.
 - Every future write path touching a wallet must go through the reservation → settlement/rollback flow (`wallet-architecture.md`) — a direct "just debit the balance" shortcut anywhere in the codebase would violate this ADR and should be caught in code review.

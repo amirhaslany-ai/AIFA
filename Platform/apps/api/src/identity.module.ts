@@ -42,6 +42,13 @@ import { SystemClockAdapter } from './infrastructure/clock/system-clock.adapter'
     { provide: AUTH_GUARD_PORT, useClass: JwtAuthGuardAdapter },
     { provide: CLOCK_PORT, useClass: SystemClockAdapter },
   ],
-  exports: [JwtAuthGuard],
+  // Both must be exported, not just JwtAuthGuard: a cross-module @UseGuards()
+  // consumer (WalletModule) re-resolves the guard's own constructor
+  // dependencies (AUTH_GUARD_PORT) rather than reusing a fully-built
+  // singleton — exporting the class alone produced "Nest can't resolve
+  // dependencies of the JwtAuthGuard... Symbol(AuthGuardPort)" even with
+  // WalletModule importing this module. Confirmed by reproducing the boot
+  // failure and fixing it by adding AUTH_GUARD_PORT here.
+  exports: [JwtAuthGuard, AUTH_GUARD_PORT],
 })
 export class IdentityModule {}

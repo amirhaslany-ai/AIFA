@@ -8,8 +8,9 @@ See `prisma/schema.prisma`:
 - `Account` — Identity bounded context's aggregate root (`email`, `passwordHash`). Named `Account`, not `User` (see `docs/architecture/ddd-tactical-design.md`).
 - `RefreshToken` — opaque, hashed, rotation-tracked refresh-token records (`tokenHash`, `familyId`, `revokedAt`, `replacedBy`) backing `docs/adr/0010-auth-token-strategy.md`.
 - `AiProviderConfig` — runtime configuration for `ProviderRegistry` (which providers are enabled, fallback priority), read by `apps/api`'s `ProviderRegistryAdapter` on boot (`onModuleInit`). If the table has no enabled rows (or the database is unreachable), the adapter falls back to a small bootstrap-default provider set and logs a warning — it does not crash the app, and it does not silently treat the fallback as a second competing source of truth (see `docs/adr/0005-ai-provider-abstraction.md`).
+- `Wallet` / `LedgerEntry` — Billing bounded context (`docs/adr/0008-wallet-ledger-pattern.md`). The ledger is authoritative; `Wallet.balanceMinorUnits` is a reconcilable cache. Unique on `(walletId, referenceId, type)`.
 
-No `Wallet`/`Transaction`/`Subscription` tables yet — those belong to the Wallet/Pricing Sprint 1 features, not yet implemented; model from real requirements when that work starts, not guessed here.
+No `Transaction`(pricing)/`Subscription` tables yet — those belong to the not-yet-implemented Pricing feature; model from real requirements when that work starts, not guessed here.
 
 ## Dependencies
 
@@ -19,7 +20,8 @@ No `Wallet`/`Transaction`/`Subscription` tables yet — those belong to the Wall
 
 - `prisma` — the singleton `PrismaClient` instance.
 - `PrismaClient` — re-exported class (rarely needed directly; prefer the `prisma` singleton).
-- `Account`, `RefreshToken`, `AiProviderConfig` — re-exported generated model types.
+- `isUniqueConstraintViolation(error)` — detects a Prisma unique-constraint violation (P2002) without leaking `@prisma/client`'s error types into consumers; used for ledger-entry idempotency.
+- `Account`, `RefreshToken`, `AiProviderConfig`, `Wallet`, `LedgerEntry`, `LedgerEntryType` — re-exported generated model types.
 
 ## Example
 

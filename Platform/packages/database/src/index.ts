@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 /**
  * Singleton Prisma client (apps/api is a long-running process, not
@@ -17,4 +17,17 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export { PrismaClient } from '@prisma/client';
-export type { Account, RefreshToken, AiProviderConfig } from '@prisma/client';
+export { LedgerEntryType } from '@prisma/client';
+export type { Account, RefreshToken, AiProviderConfig, Wallet, LedgerEntry } from '@prisma/client';
+
+/**
+ * Keeps Prisma's specific error shape encapsulated in this package —
+ * apps/api's infrastructure/persistence/* checks "was this a duplicate?"
+ * without importing @prisma/client's error classes directly (P2002 = unique
+ * constraint violation). Used for ledger-entry idempotency
+ * (docs/adr/0008-wallet-ledger-pattern.md): a retried operation's duplicate
+ * (walletId, referenceId, type) is a safe no-op, not an error.
+ */
+export function isUniqueConstraintViolation(error: unknown): boolean {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002';
+}

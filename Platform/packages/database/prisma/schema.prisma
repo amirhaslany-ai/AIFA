@@ -55,3 +55,48 @@ model AiProviderConfig {
 
   @@map("ai_provider_configs")
 }
+
+// Billing bounded context (docs/architecture/wallet-architecture.md, ADR-0008).
+// The ledger (LedgerEntry) is authoritative; balanceMinorUnits here is a cache,
+// always reconcilable against SUM(ledger_entries.amount) for this wallet.
+model Wallet {
+  id                String   @id @default(uuid())
+  accountId         String   @unique
+  currency          String
+  balanceMinorUnits BigInt   @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  ledgerEntries LedgerEntry[]
+
+  @@map("wallets")
+}
+
+enum LedgerEntryType {
+  CREDIT
+  DEBIT
+  RESERVATION
+  RESERVATION_RELEASE
+  ROLLBACK
+}
+
+// Append-only — never updated or deleted (docs/adr/0008-wallet-ledger-pattern.md).
+// amountMinorUnits is always a positive magnitude; `type` carries direction.
+// Unique on (walletId, referenceId, type) rather than just (walletId,
+// referenceId): a reservation and its eventual release/rollback intentionally
+// share one referenceId (the originating request id) but are different types,
+// so they must coexist as separate rows — only a retry of the *same*
+// operation (same id AND type) should collide and no-op.
+model LedgerEntry {
+  id               String          @id @default(uuid())
+  walletId         String
+  wallet           Wallet          @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  type             LedgerEntryType
+  amountMinorUnits BigInt
+  referenceId      String
+  createdAt        DateTime        @default(now())
+
+  @@unique([walletId, referenceId, type])
+  @@index([walletId])
+  @@map("ledger_entries")
+}

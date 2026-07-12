@@ -6,7 +6,7 @@ Companion to `database-architecture.md` (ownership/consumption rules). This docu
 
 ```mermaid
 erDiagram
-    %% --- Implemented (Sprint 1: Identity) ---
+    %% --- Implemented (Sprint 1: Identity + Wallet) ---
     ACCOUNT {
         uuid id PK
         string email UK
@@ -33,24 +33,27 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    ACCOUNT ||--o{ REFRESH_TOKEN : "owns"
-
-    %% --- Target design, NOT implemented (see wallet-architecture.md / pricing-architecture.md) ---
     WALLET {
         uuid id PK
-        uuid account_id FK
-        bigint balance_minor_units
+        uuid account_id FK "unique — one wallet per account"
+        bigint balance_minor_units "cache; ledger is authoritative"
         string currency
         timestamp created_at
+        timestamp updated_at
     }
     LEDGER_ENTRY {
         uuid id PK
         uuid wallet_id FK
-        string type "credit | debit | reservation | rollback"
-        bigint amount_minor_units
-        uuid reference_id "idempotency key"
+        string type "CREDIT | DEBIT | RESERVATION | RESERVATION_RELEASE | ROLLBACK"
+        bigint amount_minor_units "always positive magnitude; type carries direction"
+        string reference_id "idempotency key, unique with wallet_id+type"
         timestamp created_at
     }
+    ACCOUNT ||--o{ REFRESH_TOKEN : "owns"
+    ACCOUNT ||--o| WALLET : "owns"
+    WALLET ||--o{ LEDGER_ENTRY : "records"
+
+    %% --- Target design, NOT implemented (see pricing-architecture.md) ---
     CONVERSATION {
         uuid id PK
         uuid account_id FK
@@ -66,13 +69,11 @@ erDiagram
         timestamp created_at
     }
 
-    ACCOUNT ||--o{ WALLET : "owns (target)"
-    WALLET ||--o{ LEDGER_ENTRY : "records (target)"
     ACCOUNT ||--o{ CONVERSATION : "owns (target)"
     CONVERSATION ||--o{ MESSAGE : "contains (target)"
 ```
 
-`ACCOUNT` and `REFRESH_TOKEN` are implemented (`docs/adr/0010-auth-token-strategy.md`). `WALLET`, `LEDGER_ENTRY`, `CONVERSATION`, `MESSAGE` remain target design.
+`ACCOUNT`, `REFRESH_TOKEN` (`docs/adr/0010-auth-token-strategy.md`), `WALLET`, `LEDGER_ENTRY` (`docs/adr/0008-wallet-ledger-pattern.md`) are implemented. `CONVERSATION`, `MESSAGE` remain target design.
 
 ## Naming standards
 
