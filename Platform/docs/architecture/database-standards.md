@@ -6,7 +6,7 @@ Companion to `database-architecture.md` (ownership/consumption rules). This docu
 
 ```mermaid
 erDiagram
-    %% --- Implemented (Sprint 1: Identity + Wallet) ---
+    %% --- Implemented (Sprint 1: Identity, Provider Access, Wallet, Conversation) ---
     ACCOUNT {
         uuid id PK
         string email UK
@@ -30,6 +30,11 @@ erDiagram
         string display_name
         boolean is_enabled
         int priority
+        string base_url "nullable — unset means StubAdapter"
+        string model "nullable"
+        string api_key_env_var "nullable; NAME of an env var, never the secret"
+        bigint cost_per_input_token_micros
+        bigint cost_per_output_token_micros
         timestamp created_at
         timestamp updated_at
     }
@@ -49,31 +54,27 @@ erDiagram
         string reference_id "idempotency key, unique with wallet_id+type"
         timestamp created_at
     }
-    ACCOUNT ||--o{ REFRESH_TOKEN : "owns"
-    ACCOUNT ||--o| WALLET : "owns"
-    WALLET ||--o{ LEDGER_ENTRY : "records"
-
-    %% --- Target design, NOT implemented (see pricing-architecture.md) ---
     CONVERSATION {
         uuid id PK
-        uuid account_id FK
-        string title
+        uuid account_id "plain field, no FK — cross-aggregate reference by id only"
         timestamp created_at
+        timestamp updated_at
     }
     MESSAGE {
         uuid id PK
         uuid conversation_id FK
-        string role
+        int sequence "autoincrement; deterministic ordering, not createdAt"
+        string role "SYSTEM | USER | ASSISTANT"
         text content
-        string provider_id
         timestamp created_at
     }
-
-    ACCOUNT ||--o{ CONVERSATION : "owns (target)"
-    CONVERSATION ||--o{ MESSAGE : "contains (target)"
+    ACCOUNT ||--o{ REFRESH_TOKEN : "owns"
+    ACCOUNT ||--o| WALLET : "owns"
+    WALLET ||--o{ LEDGER_ENTRY : "records"
+    CONVERSATION ||--o{ MESSAGE : "contains"
 ```
 
-`ACCOUNT`, `REFRESH_TOKEN` (`docs/adr/0010-auth-token-strategy.md`), `WALLET`, `LEDGER_ENTRY` (`docs/adr/0008-wallet-ledger-pattern.md`) are implemented. `CONVERSATION`, `MESSAGE` remain target design.
+`ACCOUNT`, `REFRESH_TOKEN` (`docs/adr/0010-auth-token-strategy.md`), `AI_PROVIDER_CONFIG` (`docs/adr/0005`/`0007`), `WALLET`, `LEDGER_ENTRY` (`docs/adr/0008-wallet-ledger-pattern.md`), `CONVERSATION`, `MESSAGE` (`docs/adr/0014-chat-orchestration.md`) are all implemented. `CONVERSATION.account_id` deliberately has no FK arrow to `ACCOUNT` in this diagram — same cross-aggregate-by-id-only convention as `WALLET.account_id`.
 
 ## Naming standards
 

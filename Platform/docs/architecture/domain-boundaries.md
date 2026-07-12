@@ -8,7 +8,7 @@ Bounded contexts identified for the aggregator platform, per DDD. Only the first
 | **Identity** | Accounts, authentication, sessions | Implemented (`identity.module.ts`) — register/login/refresh/logout, real argon2id + Ed25519 JWTs |
 | **Provider Access** | AI provider registry, routing, fallback/circuit-breaking, usage metering | Registry/fallback/circuit-breaker implemented (`packages/ai-provider-sdk`); real HTTP adapter implemented (`OpenAiCompatibleAdapter`) and cost layer implemented (`ai-provider-sdk/src/cost.ts`) — no real vendor API key in this sandbox, so verified via injected-fetch unit tests, not a live vendor call; no streaming/capability-matrix/retry-policy yet |
 | **Billing** | Wallet, credits, pricing, transactions | Wallet implemented (`wallet.module.ts`) — ledger-based credit/reserve/settle/rollback; Pricing implemented (`pricing.module.ts`) — base markup + floor rule pipeline, no HTTP surface, no campaign/discount rules yet |
-| **Conversation** | Chat sessions, message history, model-selection-per-conversation | Named only — depends on Identity + Provider Access existing first |
+| **Conversation** | Chat sessions, message history, model-selection-per-conversation | Implemented (`chat.module.ts`) — `Conversation`/`Message` aggregate, `SendChatMessageUseCase` ties Identity + Provider Access + Pricing + Wallet together per request (docs/adr/0014-chat-orchestration.md); no model-selection-per-conversation yet (the client can't request a specific provider, only the fallback chain's priority order) |
 
 ## Rules
 

@@ -14,6 +14,8 @@ import { InvalidCredentialsError } from '../../../domain/errors/invalid-credenti
 import { InvalidRefreshTokenError } from '../../../domain/errors/invalid-refresh-token.error';
 import { InsufficientBalanceError } from '../../../domain/errors/insufficient-balance.error';
 import { WalletNotFoundError } from '../../../domain/errors/wallet-not-found.error';
+import { ConversationNotFoundError } from '../../../domain/errors/conversation-not-found.error';
+import { DuplicateMessageError } from '../../../domain/errors/duplicate-message.error';
 import type { RequestWithId } from '../middleware/request-id.middleware';
 
 /**
@@ -76,8 +78,12 @@ export class DomainErrorFilter implements ExceptionFilter {
       return { status: HttpStatus.PAYMENT_REQUIRED, code: exception.code, message: exception.message };
     }
 
-    if (exception instanceof WalletNotFoundError) {
+    if (exception instanceof WalletNotFoundError || exception instanceof ConversationNotFoundError) {
       return { status: HttpStatus.NOT_FOUND, code: exception.code, message: exception.message };
+    }
+
+    if (exception instanceof DuplicateMessageError) {
+      return { status: HttpStatus.CONFLICT, code: exception.code, message: exception.message };
     }
 
     if (exception instanceof DomainError) {

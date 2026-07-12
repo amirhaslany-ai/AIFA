@@ -35,6 +35,10 @@ import { RedisHealthIndicator } from './infrastructure/health/redis.health-indic
     PrismaHealthIndicator,
     RedisHealthIndicator,
   ],
-  exports: [PROVIDER_COST_SOURCE_PORT],
+  // ProviderRegistryAdapter itself is exported (not just its port tokens) so
+  // ChatModule's FallbackChatCompletionAdapter can call getFallbackChain() —
+  // a capability that's deliberately not on either narrow port, since only
+  // Chat needs the resilience-wrapped chat() call, not a health/cost read.
+  exports: [PROVIDER_COST_SOURCE_PORT, ProviderRegistryAdapter],
 })
 export class HealthModule {}

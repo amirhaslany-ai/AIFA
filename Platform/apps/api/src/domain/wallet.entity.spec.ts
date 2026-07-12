@@ -81,6 +81,24 @@ describe('Wallet', () => {
     expect(wallet.getBalance().minorUnits).toBe(850n);
   });
 
+  it('debit charges a known cost directly, with no prior reservation required', () => {
+    const wallet = openWallet();
+    wallet.credit(Money.of(1000n, 'USD'), 'topup-1', now);
+
+    const entry = wallet.debit(Money.of(150n, 'USD'), 'chat-debit-1', now);
+
+    expect(entry).toMatchObject({ type: 'debit', referenceId: 'chat-debit-1' });
+    expect(wallet.getBalance().minorUnits).toBe(850n);
+  });
+
+  it('debit never throws even if it would push the balance negative (the call already happened)', () => {
+    const wallet = openWallet();
+    wallet.credit(Money.of(100n, 'USD'), 'topup-1', now);
+
+    expect(() => wallet.debit(Money.of(150n, 'USD'), 'chat-debit-1', now)).not.toThrow();
+    expect(wallet.getBalance().minorUnits).toBe(-50n);
+  });
+
   it('rollback fully restores a reservation with no charge', () => {
     const wallet = openWallet();
     wallet.credit(Money.of(1000n, 'USD'), 'topup-1', now);

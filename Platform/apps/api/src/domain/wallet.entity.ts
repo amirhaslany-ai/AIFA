@@ -75,6 +75,18 @@ export class Wallet {
     return this.applyEntry('rollback', amount, referenceId, now);
   }
 
+  /**
+   * Charges a known cost with no prior reservation — for callers (Chat,
+   * docs/adr/0014-chat-orchestration.md) whose real cost is only known after
+   * the call already happened, and who deliberately skip pre-call reservation
+   * rather than guess a token count to estimate one. Never blocks: the call
+   * already occurred and must be accounted for regardless, same as the debit
+   * half of settle().
+   */
+  debit(amount: Money, referenceId: string, now: Date): LedgerEntryDraft {
+    return this.applyEntry('debit', amount, referenceId, now, { skipBalanceCheck: true });
+  }
+
   private applyEntry(
     type: LedgerEntryType,
     amount: Money,

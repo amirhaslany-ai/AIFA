@@ -31,6 +31,20 @@ import { SystemClockAdapter } from './infrastructure/clock/system-clock.adapter'
     { provide: WALLET_REPOSITORY_PORT, useClass: PrismaWalletRepository },
     { provide: CLOCK_PORT, useClass: SystemClockAdapter },
   ],
-  exports: [CreditWalletUseCase, ReserveFundsUseCase, SettleReservationUseCase, RollbackReservationUseCase],
+  // WALLET_REPOSITORY_PORT and CLOCK_PORT are also exported (not just the use
+  // cases) so ChatModule's SendChatMessageUseCase can read the balance
+  // pre-check and call Wallet.debit() directly — Chat's debit-after-call
+  // flow doesn't fit any of the four existing use cases above (see
+  // docs/adr/0014-chat-orchestration.md), so it composes the port itself
+  // rather than getting a new single-purpose DebitWalletUseCase that would
+  // only ever have one caller.
+  exports: [
+    CreditWalletUseCase,
+    ReserveFundsUseCase,
+    SettleReservationUseCase,
+    RollbackReservationUseCase,
+    WALLET_REPOSITORY_PORT,
+    CLOCK_PORT,
+  ],
 })
 export class WalletModule {}

@@ -17,8 +17,16 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export { PrismaClient } from '@prisma/client';
-export { LedgerEntryType } from '@prisma/client';
-export type { Account, RefreshToken, AiProviderConfig, Wallet, LedgerEntry } from '@prisma/client';
+export { LedgerEntryType, MessageRole } from '@prisma/client';
+export type {
+  Account,
+  RefreshToken,
+  AiProviderConfig,
+  Wallet,
+  LedgerEntry,
+  Conversation,
+  Message,
+} from '@prisma/client';
 
 /**
  * Keeps Prisma's specific error shape encapsulated in this package —
