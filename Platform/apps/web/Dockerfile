@@ -1,0 +1,29 @@
+# Foundation-milestone Dockerfile — builds and runs apps/web from the monorepo root context
+# (docker build -f apps/web/Dockerfile . from Platform/). See infra/README.md and
+# apps/api/Dockerfile's header comment for why `turbo prune` is used here.
+
+FROM node:20.11-slim AS base
+WORKDIR /repo
+RUN corepack enable
+
+FROM base AS pruner
+RUN npm install -g turbo@2.1.0
+COPY . .
+RUN turbo prune web --docker
+
+FROM base AS deps
+COPY --from=pruner /repo/out/json/ .
+RUN pnpm install --frozen-lockfile
+
+FROM deps AS build
+COPY --from=pruner /repo/out/full/ .
+RUN pnpm turbo run build --filter=web
+
+FROM base AS runtime
+ENV NODE_ENV=production
+COPY --from=build /repo/apps/web/.next ./apps/web/.next
+COPY --from=build /repo/apps/web/public ./apps/web/public
+COPY --from=build /repo/node_modules ./node_modules
+COPY --from=build /repo/apps/web/package.json ./apps/web/package.json
+EXPOSE 3000
+CMD ["node_modules/.bin/next", "start", "apps/web", "-p", "3000"]
