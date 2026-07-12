@@ -8,3 +8,4 @@ export {
   AllProvidersUnavailableError,
   CircuitOpenError,
 } from './errors';
+export { calculateCostMinorUnits, type TokenUsage, type CostRates } from './cost';

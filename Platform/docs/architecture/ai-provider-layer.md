@@ -40,15 +40,17 @@ No use case, controller, or domain file changes when a provider is added, remove
 - A single provider's failure trips its `CircuitBreaker` (after N consecutive failures) and the `FallbackChain` moves to the next configured provider.
 - Only if **every** configured provider fails does the use case receive an error — and it receives a domain-level `AllProvidersUnavailableError`, not a vendor-specific exception, so `apps/api`'s error handling (see `api-architecture.md`) never branches on vendor error types.
 
-## What's stubbed vs. real this milestone
+## What's stubbed vs. real (Sprint 1)
 
-The registry, fallback chain, circuit breaker, and port interfaces are real, tested code. Vendor adapters (`openai.adapter.ts`, etc.) are stub implementations that satisfy the `AiProvider` interface and return a deterministic placeholder response — no real API key, network call, or billing implication exists yet, per the mission's explicit "do not build AI providers implementation" constraint.
+The registry, fallback chain, circuit breaker, and port interfaces are real, tested code. `StubAdapter` (`packages/ai-provider-sdk/src/adapters/stub.adapter.ts`) is still used for the bootstrap-default providers (`stub-primary`/`stub-secondary`) and any `AiProviderConfig` row missing `baseUrl`/`model`/`apiKeyEnvVar`. `OpenAiCompatibleAdapter` (`apps/api/src/infrastructure/providers/openai-compatible.adapter.ts`) is a real HTTP adapter — real `fetch` calls, real bearer auth, a real per-call timeout (`AbortController`) — selected by `ProviderRegistryAdapter` only when a config row is fully configured *and* its named API-key env var actually holds a value at boot; otherwise that row falls back to `StubAdapter` with a warning, never crashing the app. No real vendor API key exists in this codebase's development/CI sandbox, so the adapter's logic (request shape, auth header, response parsing, error/timeout handling) is verified by unit tests against an injected `fetch` double, not a live call to a real vendor.
+
+The cost layer (`packages/ai-provider-sdk/src/cost.ts`'s `calculateCostMinorUnits`) is also real: given `ChatResult.usage` and a provider's `costPerInputTokenMicros`/`costPerOutputTokenMicros` (now real columns on `AiProviderConfig`), it computes what a call cost the platform — stopping there, never computing customer price (Pricing's job, ADR-0009). `ProviderCostSourcePort`/`ProviderRegistryAdapter.getCostRates()` expose the configured rates to a future consumer; the Chat use case (Sprint 1 Feature 5, not built yet) is what will actually call `calculateCostMinorUnits` and feed the result into `PricingEnginePort` — so there's no end-to-end HTTP path exercising the cost layer today, only the unit-tested pure function and the rate lookup.
 
 ---
 
-## Design-only extensions (Phase 2)
+## Design-only extensions (Phase 2, updated Sprint 1)
 
-Everything below is architecture/interface design for capabilities the current `StubAdapter` doesn't need yet. None of it is implemented — each section states the target shape so a real adapter has a contract to implement against, per ADR-0007.
+Everything below is architecture/interface design for capabilities the current adapters don't need yet. Streaming, the capability matrix, retry policy, and response caching are all still unimplemented — each section states the target shape so a future adapter/use case has a contract to implement against, per ADR-0007. (The cost layer, originally the last item in this list, is implemented now — see "What's stubbed vs. real" above.)
 
 ### Provider capability matrix
 
@@ -111,10 +113,6 @@ Two distinct cache opportunities, not to be conflated:
 2. **Provider health cache**: already effectively implemented — `CircuitBreaker`'s state *is* a health cache (avoids a real health-check network call on every request). A separate explicit `healthCheck()` result cache (short TTL, e.g. 10s) is a reasonable future addition if health checks become expensive, not needed at current scale.
 
 Cache storage: Redis (already in the stack — `infra/docker/docker-compose.yml`), keyed by a hash of the normalized request, namespaced per provider so a cache-invalidation bug in one provider's integration can't poison another's.
-
-### Provider cost layer
-
-Each adapter's response should report actual token usage (`ChatResult.usage`, already on the type) — the cost layer multiplies that by a per-provider, per-model cost table (source: `AiProviderConfig` gains `costPerInputTokenMicros`/`costPerOutputTokenMicros` columns, target design, not yet in the schema) to produce a cost-in-smallest-currency-unit figure attached to the response. This figure is what `pricing-architecture.md`'s markup layer and `wallet-architecture.md`'s ledger consume — the AI provider layer's job stops at "here's what this call cost us," never "here's what to charge the customer" (that's Pricing's job, kept as a separate concern per single-responsibility).
 
 ### Future provider onboarding (checklist)
 

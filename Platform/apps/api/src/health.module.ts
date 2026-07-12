@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { HealthController } from './interfaces/http/controllers/health.controller';
 import { GetSystemHealthUseCase } from './application/use-cases/get-system-health.use-case';
 import { PROVIDER_HEALTH_SOURCE_PORT } from './application/ports/provider-health-source.port';
+import { PROVIDER_COST_SOURCE_PORT } from './application/ports/provider-cost-source.port';
 import { DEPENDENCY_HEALTH_SOURCE_PORT } from './application/ports/dependency-health-source.port';
 import { CLOCK_PORT } from './application/ports/clock.port';
 import { ProviderRegistryAdapter } from './infrastructure/providers/provider-registry.adapter';
@@ -21,11 +22,19 @@ import { RedisHealthIndicator } from './infrastructure/health/redis.health-indic
   controllers: [HealthController],
   providers: [
     GetSystemHealthUseCase,
-    { provide: PROVIDER_HEALTH_SOURCE_PORT, useClass: ProviderRegistryAdapter },
+    // Bound once, then aliased to both ports it implements (useExisting) so
+    // PROVIDER_HEALTH_SOURCE_PORT and PROVIDER_COST_SOURCE_PORT resolve to
+    // the same singleton — two `useClass` registrations would each run
+    // onModuleInit independently, duplicating the provider-registry bootstrap
+    // and health-check cache for no benefit.
+    ProviderRegistryAdapter,
+    { provide: PROVIDER_HEALTH_SOURCE_PORT, useExisting: ProviderRegistryAdapter },
+    { provide: PROVIDER_COST_SOURCE_PORT, useExisting: ProviderRegistryAdapter },
     { provide: DEPENDENCY_HEALTH_SOURCE_PORT, useClass: DependencyHealthAdapter },
     { provide: CLOCK_PORT, useClass: SystemClockAdapter },
     PrismaHealthIndicator,
     RedisHealthIndicator,
   ],
+  exports: [PROVIDER_COST_SOURCE_PORT],
 })
 export class HealthModule {}

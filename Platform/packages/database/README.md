@@ -7,10 +7,10 @@ Prisma schema, migrations, and a re-exported generated client. See `docs/archite
 See `prisma/schema.prisma`:
 - `Account` — Identity bounded context's aggregate root (`email`, `passwordHash`). Named `Account`, not `User` (see `docs/architecture/ddd-tactical-design.md`).
 - `RefreshToken` — opaque, hashed, rotation-tracked refresh-token records (`tokenHash`, `familyId`, `revokedAt`, `replacedBy`) backing `docs/adr/0010-auth-token-strategy.md`.
-- `AiProviderConfig` — runtime configuration for `ProviderRegistry` (which providers are enabled, fallback priority), read by `apps/api`'s `ProviderRegistryAdapter` on boot (`onModuleInit`). If the table has no enabled rows (or the database is unreachable), the adapter falls back to a small bootstrap-default provider set and logs a warning — it does not crash the app, and it does not silently treat the fallback as a second competing source of truth (see `docs/adr/0005-ai-provider-abstraction.md`).
+- `AiProviderConfig` — runtime configuration for `ProviderRegistry` (which providers are enabled, fallback priority, and — since Sprint 1 — `baseUrl`/`model`/`apiKeyEnvVar` for a real adapter plus `costPerInputTokenMicros`/`costPerOutputTokenMicros` for the cost layer), read by `apps/api`'s `ProviderRegistryAdapter` on boot (`onModuleInit`). If the table has no enabled rows (or the database is unreachable), the adapter falls back to a small bootstrap-default provider set and logs a warning — it does not crash the app, and it does not silently treat the fallback as a second competing source of truth (see `docs/adr/0005-ai-provider-abstraction.md`). A row missing `baseUrl`/`model`/`apiKeyEnvVar`, or whose named env var is unset, is served by `StubAdapter` instead of a real HTTP call.
 - `Wallet` / `LedgerEntry` — Billing bounded context (`docs/adr/0008-wallet-ledger-pattern.md`). The ledger is authoritative; `Wallet.balanceMinorUnits` is a reconcilable cache. Unique on `(walletId, referenceId, type)`.
 
-No `Transaction`(pricing)/`Subscription` tables yet — those belong to the not-yet-implemented Pricing feature; model from real requirements when that work starts, not guessed here.
+Pricing (`docs/adr/0009-pricing-engine-pattern.md`) is implemented but has no dedicated table — it's a pure computation (`apps/api/src/domain/pricing/`) over a cost figure and config, not persisted state. No `Subscription`/campaign tables yet — those belong to not-yet-implemented Pricing extensions (campaigns/discounts, plan tiers); model from real requirements when that work starts, not guessed here.
 
 ## Dependencies
 

@@ -1,6 +1,6 @@
 # ADR-0007: AI provider layer extensions — capability matrix, streaming, retry, cost
 
-**Status:** Accepted (design-only — not implemented)
+**Status:** Accepted, partially implemented (Sprint 1) — cost layer and a real HTTP adapter now exist (see Consequences); capability matrix, streaming, retry policy, and response caching remain design-only
 **Date:** 2026-07-12
 **Related:** ADR-0005 (original provider abstraction)
 
@@ -32,5 +32,5 @@ Extend the `AiProvider` interface and its decorator chain per `docs/architecture
 
 ## Consequences
 
-- None of this is implemented — `AiProvider`'s actual TypeScript interface in `packages/ai-provider-sdk/src/ai-provider.ts` does **not** yet have `capabilities` or `chatStream`. Adding them is a breaking interface change for the (currently only) `StubAdapter`; do it together with the first real vendor adapter, not speculatively ahead of one.
-- `AiProviderConfig`'s schema will need `costPerInputTokenMicros`/`costPerOutputTokenMicros` columns before the cost layer can be implemented — not added to `schema.prisma` yet since no code reads them (avoids an unused-column smell flagged in `TECHNICAL_DEBT.md` if added too early).
+- **Implemented (Sprint 1):** `AiProviderConfig` gained `costPerInputTokenMicros`/`costPerOutputTokenMicros` columns (migration `20260712180000_add_provider_config_fields`), added now that a real adapter exists to read them — the "not added yet" deferral below is resolved. `packages/ai-provider-sdk/src/cost.ts` exports `calculateCostMinorUnits(usage, rates)`, the pure "what this cost us" computation this ADR specifies — integer micros-per-token math with ceiling division, never floats, mirroring the ledger/pricing precision principle. `ProviderCostSourcePort` (`apps/api/src/application/ports/provider-cost-source.port.ts`), implemented by `ProviderRegistryAdapter`, is how a future use case (Chat, Sprint 1 Feature 5) will read a provider's configured rates without depending on `@aifa/database` directly.
+- **Not implemented:** `AiProvider`'s actual TypeScript interface in `packages/ai-provider-sdk/src/ai-provider.ts` still does **not** have `capabilities` or `chatStream` — no real streaming or capability-aware routing exists yet. `RetryPolicy`, per-provider response caching, and the "no mid-stream fallback" constraint remain design-only, since `OpenAiCompatibleAdapter` (the first real adapter) only needed non-streaming `chat()` and a hard per-call timeout to satisfy Sprint 1's scope — implementing the rest speculatively ahead of a caller that needs them was avoided.

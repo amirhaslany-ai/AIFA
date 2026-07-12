@@ -44,14 +44,29 @@ model RefreshToken {
   @@map("refresh_tokens")
 }
 
+// baseUrl/model/apiKeyEnvVar are all nullable: a row with any of them unset
+// (e.g. the bootstrap "stub-primary"/"stub-secondary" defaults) is served by
+// StubAdapter, never a real HTTP call — see
+// apps/api/src/infrastructure/providers/provider-registry.adapter.ts.
+// apiKeyEnvVar stores the *name* of an env var, never the key itself — the
+// secret stays in process env / secret manager, per
+// docs/architecture/secrets-config-management.md.
+// costPerInputTokenMicros/costPerOutputTokenMicros: the ADR-0007 cost-layer
+// columns, added now that a real adapter exists to read them (ADR-0007's
+// "Consequences" explicitly deferred adding these until then).
 model AiProviderConfig {
-  id          String   @id @default(uuid())
-  providerId  String   @unique
-  displayName String
-  isEnabled   Boolean  @default(true)
-  priority    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                       String   @id @default(uuid())
+  providerId               String   @unique
+  displayName              String
+  isEnabled                Boolean  @default(true)
+  priority                 Int      @default(0)
+  baseUrl                  String?
+  model                    String?
+  apiKeyEnvVar             String?
+  costPerInputTokenMicros  BigInt   @default(0)
+  costPerOutputTokenMicros BigInt   @default(0)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
 
   @@map("ai_provider_configs")
 }
