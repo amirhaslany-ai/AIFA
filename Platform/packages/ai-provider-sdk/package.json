@@ -11,8 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@aifa/types": "workspace:*",
-    "@aifa/logger": "workspace:*"
+    "@aifa/types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.6.0",

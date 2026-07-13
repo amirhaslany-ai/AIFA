@@ -25,9 +25,13 @@ RUN pnpm turbo run build --filter=web
 
 FROM base AS runtime
 ENV NODE_ENV=production
-COPY --from=build /repo/apps/web/.next ./apps/web/.next
-COPY --from=build /repo/apps/web/public ./apps/web/public
-COPY --from=build /repo/node_modules ./node_modules
-COPY --from=build /repo/apps/web/package.json ./apps/web/package.json
+# node:*-slim images ship a built-in unprivileged `node` user (uid/gid 1000) —
+# the runtime stage previously had no USER directive at all, so the container
+# ran as root by default.
+COPY --from=build --chown=node:node /repo/apps/web/.next ./apps/web/.next
+COPY --from=build --chown=node:node /repo/apps/web/public ./apps/web/public
+COPY --from=build --chown=node:node /repo/node_modules ./node_modules
+COPY --from=build --chown=node:node /repo/apps/web/package.json ./apps/web/package.json
+USER node
 EXPOSE 3000
 CMD ["node_modules/.bin/next", "start", "apps/web", "-p", "3000"]

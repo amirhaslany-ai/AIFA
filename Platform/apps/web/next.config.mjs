@@ -12,7 +12,11 @@ loadDotenv({ path: join(__dirname, '../../.env') });
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@aifa/types', '@aifa/config', '@aifa/logger'],
+  // Only @aifa/types is actually imported anywhere in apps/web/src — @aifa/config
+  // and @aifa/logger were declared dependencies with no real usage (this file's own
+  // dotenv loading reads process.env directly, per Next.js convention, rather than
+  // going through @aifa/config); removed alongside their package.json entries.
+  transpilePackages: ['@aifa/types'],
 };
 
 export default nextConfig;

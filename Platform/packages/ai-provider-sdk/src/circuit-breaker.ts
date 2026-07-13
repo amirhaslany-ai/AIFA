@@ -25,6 +25,13 @@ export class CircuitBreaker implements AiProvider {
   private state: CircuitState = 'closed';
   private consecutiveFailures = 0;
   private openedAt = 0;
+  // A classic half-open gate admits exactly one trial request, not every
+  // concurrent request that arrives during the window — without this flag,
+  // every concurrent request hitting evaluateCooldown() right after the
+  // cooldown elapses would see state==='half-open' and pass through,
+  // hammering a provider that just tripped the breaker with a full burst
+  // instead of one probe.
+  private halfOpenTrialInFlight = false;
 
   private readonly failureThreshold: number;
   private readonly cooldownMs: number;
@@ -47,6 +54,13 @@ export class CircuitBreaker implements AiProvider {
       throw new CircuitOpenError(this.id);
     }
 
+    if (this.state === 'half-open') {
+      if (this.halfOpenTrialInFlight) {
+        throw new CircuitOpenError(this.id);
+      }
+      this.halfOpenTrialInFlight = true;
+    }
+
     try {
       const result = await this.provider.chat(request);
       this.onSuccess();
@@ -54,6 +68,8 @@ export class CircuitBreaker implements AiProvider {
     } catch (error) {
       this.onFailure();
       throw error;
+    } finally {
+      this.halfOpenTrialInFlight = false;
     }
   }
 

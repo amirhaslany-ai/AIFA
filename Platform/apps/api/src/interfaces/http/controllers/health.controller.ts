@@ -23,9 +23,9 @@ export class HealthController {
   async readiness(@Res({ passthrough: true }) res: Response): Promise<HealthResponseDto> {
     const health = await this.getSystemHealth.execute();
 
-    // 04_PATCH_LIST.md P1-3: previously always 200 regardless of `status`, so
-    // an orchestrator's readiness probe (which checks the HTTP status code,
-    // not the JSON body) would route traffic here even when truly down.
+    // Previously always 200 regardless of `status`, so an orchestrator's
+    // readiness probe (which checks the HTTP status code, not the JSON body)
+    // would route traffic here even when truly down.
     if (health.status === 'down') {
       res.status(HttpStatus.SERVICE_UNAVAILABLE);
     }

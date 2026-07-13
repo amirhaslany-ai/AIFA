@@ -36,8 +36,12 @@ RUN pnpm turbo run build --filter=api
 
 FROM base AS runtime
 ENV NODE_ENV=production
-COPY --from=build /repo/apps/api/dist ./apps/api/dist
-COPY --from=build /repo/node_modules ./node_modules
-COPY --from=build /repo/apps/api/package.json ./apps/api/package.json
+# node:*-slim images ship a built-in unprivileged `node` user (uid/gid 1000) —
+# the runtime stage previously had no USER directive at all, so the container
+# ran as root by default.
+COPY --from=build --chown=node:node /repo/apps/api/dist ./apps/api/dist
+COPY --from=build --chown=node:node /repo/node_modules ./node_modules
+COPY --from=build --chown=node:node /repo/apps/api/package.json ./apps/api/package.json
+USER node
 EXPOSE 3001
 CMD ["node", "apps/api/dist/main.js"]

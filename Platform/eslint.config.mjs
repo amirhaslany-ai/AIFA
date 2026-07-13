@@ -53,6 +53,7 @@ export default tseslint.config(
           { group: ['**/infrastructure/**'], message: 'domain/ must not import infrastructure/.' },
           { group: ['**/interfaces/**'], message: 'domain/ must not import interfaces/.' },
           { group: ['openai', '@anthropic-ai/*', '@google/generative-ai', '@google-cloud/*'], message: 'Vendor AI SDKs may only be imported inside apps/api/src/infrastructure/providers/ (ADR-0005).' },
+          { group: ['@aifa/database'], message: 'Only infrastructure/persistence/ and infrastructure/providers/ may import @aifa/database (docs/architecture/package-boundaries.md).' },
         ],
       }],
     },
@@ -66,6 +67,7 @@ export default tseslint.config(
           { group: ['**/infrastructure/**'], message: 'application/ must depend on infrastructure/ only through its own ports/ interfaces, never a concrete adapter import.' },
           { group: ['**/interfaces/**'], message: 'application/ must not import interfaces/.' },
           { group: ['openai', '@anthropic-ai/*', '@google/generative-ai', '@google-cloud/*'], message: 'Vendor AI SDKs may only be imported inside apps/api/src/infrastructure/providers/ (ADR-0005).' },
+          { group: ['@aifa/database'], message: 'Only infrastructure/persistence/ and infrastructure/providers/ may import @aifa/database (docs/architecture/package-boundaries.md).' },
         ],
       }],
     },
@@ -78,15 +80,46 @@ export default tseslint.config(
         patterns: [
           { group: ['**/infrastructure/**'], message: 'interfaces/ must call application/ use cases only, never infrastructure/ directly (backend-architecture.md).' },
           { group: ['openai', '@anthropic-ai/*', '@google/generative-ai', '@google-cloud/*'], message: 'Vendor AI SDKs may only be imported inside apps/api/src/infrastructure/providers/ (ADR-0005).' },
+          { group: ['@aifa/database'], message: 'Only infrastructure/persistence/ and infrastructure/providers/ may import @aifa/database (docs/architecture/package-boundaries.md).' },
         ],
       }],
     },
   },
   {
-    // infrastructure/ minus infrastructure/providers/: everything here still may not
-    // import a vendor AI SDK — only the providers/ adapters may (ADR-0005).
+    // infrastructure/ minus infrastructure/{providers,persistence,health}/: everything
+    // here may not import a vendor AI SDK (only providers/ adapters may, ADR-0005) and
+    // may not import @aifa/database (only persistence/, providers/, and health/ may —
+    // docs/architecture/package-boundaries.md; previously documented as
+    // persistence-only, which was itself inaccurate — health/ needs a direct
+    // connectivity check (PrismaHealthIndicator's `SELECT 1`) and providers/ reads
+    // AiProviderConfig directly, so both were already real, legitimate consumers
+    // before this rule existed to enforce anything). Each of those three gets its
+    // own block below instead of an `ignores` entry here, since a file can't be
+    // excluded from only one pattern within a single no-restricted-imports options
+    // object.
     files: ['apps/api/src/infrastructure/**/*.ts'],
-    ignores: ['apps/api/src/infrastructure/providers/**/*.ts', '**/*.spec.ts'],
+    ignores: [
+      'apps/api/src/infrastructure/providers/**/*.ts',
+      'apps/api/src/infrastructure/persistence/**/*.ts',
+      'apps/api/src/infrastructure/health/**/*.ts',
+      '**/*.spec.ts',
+    ],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [
+          { group: ['openai', '@anthropic-ai/*', '@google/generative-ai', '@google-cloud/*'], message: 'Vendor AI SDKs may only be imported inside apps/api/src/infrastructure/providers/ (ADR-0005).' },
+          { group: ['@aifa/database'], message: 'Only infrastructure/persistence/, infrastructure/providers/, and infrastructure/health/ may import @aifa/database (docs/architecture/package-boundaries.md).' },
+        ],
+      }],
+    },
+  },
+  {
+    // infrastructure/persistence/ and infrastructure/health/: both expected,
+    // legitimate consumers of @aifa/database (repositories; PrismaHealthIndicator's
+    // raw connectivity check) — no restriction on it here — but neither may import a
+    // vendor AI SDK (that's providers/'s exclusive allowance).
+    files: ['apps/api/src/infrastructure/persistence/**/*.ts', 'apps/api/src/infrastructure/health/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [

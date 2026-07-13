@@ -63,4 +63,36 @@ describe('loadConfig', () => {
     expect(config.pricing.baseMarkupBasisPoints).toBe(13_000);
     expect(config.pricing.minimumPriceMinorUnits).toBe(0n);
   });
+
+  it('refuses to boot in production without real JWT signing keys', () => {
+    expect(() =>
+      loadConfig({
+        NODE_ENV: 'production',
+        DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+        REDIS_URL: 'redis://localhost:6379',
+      }),
+    ).toThrowError(/AUTH_JWT_PRIVATE_KEY_PEM and AUTH_JWT_PUBLIC_KEY_PEM are required/);
+  });
+
+  it('boots in production when real JWT signing keys are set', () => {
+    const config = loadConfig({
+      NODE_ENV: 'production',
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      REDIS_URL: 'redis://localhost:6379',
+      AUTH_JWT_PRIVATE_KEY_PEM: '-----BEGIN PRIVATE KEY-----\nstub\n-----END PRIVATE KEY-----',
+      AUTH_JWT_PUBLIC_KEY_PEM: '-----BEGIN PUBLIC KEY-----\nstub\n-----END PUBLIC KEY-----',
+    });
+
+    expect(config.nodeEnv).toBe('production');
+  });
+
+  it('allows unset JWT signing keys outside production (ephemeral-keypair convenience)', () => {
+    const config = loadConfig({
+      NODE_ENV: 'development',
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      REDIS_URL: 'redis://localhost:6379',
+    });
+
+    expect(config.auth.jwtPrivateKeyPem).toBeUndefined();
+  });
 });

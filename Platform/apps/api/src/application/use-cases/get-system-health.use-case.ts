@@ -43,7 +43,7 @@ export class GetSystemHealthUseCase {
   ): SystemHealth['status'] {
     // The database being unreachable means the system cannot function
     // regardless of provider health — an orchestrator must not route traffic
-    // here (04_PATCH_LIST.md P1-3: readiness previously ignored this entirely).
+    // here (readiness previously ignored this entirely).
     const databaseDown = dependencies.some((d) => d.name === 'database' && d.status === 'unavailable');
     const allProvidersDown = providers.length > 0 && providers.every((p) => p.status === 'unavailable');
 

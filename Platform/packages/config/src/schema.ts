@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const configSchema = z.object({
+const baseConfigSchema = z.object({
   nodeEnv: z.enum(['development', 'test', 'production']).default('development'),
 
   api: z.object({
@@ -8,10 +8,9 @@ export const configSchema = z.object({
     baseUrl: z.string().url().default('http://localhost:3001'),
     /**
      * Comma-separated allowlist of origins permitted to call this API with
-     * credentials (04_PATCH_LIST.md P1-4 — apps/web and apps/api are separate
-     * origins by design; without this, browser calls from apps/web are
-     * silently blocked by the same-origin policy the moment client-side
-     * fetching is added).
+     * credentials — apps/web and apps/api are separate origins by design;
+     * without this, browser calls from apps/web are silently blocked by the
+     * same-origin policy the moment client-side fetching is added.
      */
     corsAllowedOrigins: z
       .string()
@@ -68,4 +67,26 @@ export const configSchema = z.object({
   }),
 });
 
-export type AppConfig = z.infer<typeof configSchema>;
+/**
+ * A production boot with unset JWT signing keys previously succeeded
+ * silently (JwtKeyProvider only logged a warning and generated an ephemeral
+ * keypair) — every token issued would stop verifying on the next restart,
+ * with no operator-visible failure until users were mass-logged-out.
+ * Fail fast here instead: refuse to boot in production without real keys.
+ * `development`/`test` keep the ephemeral-keypair convenience.
+ */
+export const configSchema = baseConfigSchema.superRefine((config, ctx) => {
+  if (config.nodeEnv !== 'production') return;
+
+  if (!config.auth.jwtPrivateKeyPem || !config.auth.jwtPublicKeyPem) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['auth', 'jwtPrivateKeyPem'],
+      message:
+        'AUTH_JWT_PRIVATE_KEY_PEM and AUTH_JWT_PUBLIC_KEY_PEM are required when NODE_ENV=production ' +
+        '(an ephemeral per-process keypair is a development-only convenience — see .env.example).',
+    });
+  }
+});
+
+export type AppConfig = z.infer<typeof baseConfigSchema>;

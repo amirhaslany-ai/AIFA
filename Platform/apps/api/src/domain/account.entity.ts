@@ -3,7 +3,7 @@ import type { Email } from './email';
 /**
  * Aggregate root for the Identity bounded context (docs/architecture/domain-boundaries.md).
  * See docs/architecture/ddd-tactical-design.md — named `Account`, not `User`,
- * per TECHNICAL_DEBT.md #1 (executed now, before any code depended on the old name).
+ * decided before any code depended on the old name.
  */
 export class Account {
   private constructor(

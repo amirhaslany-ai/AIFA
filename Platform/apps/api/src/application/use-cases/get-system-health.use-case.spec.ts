@@ -68,8 +68,8 @@ describe('GetSystemHealthUseCase', () => {
 
     const result = await useCase.execute();
 
-    // Regression guard for 04_PATCH_LIST.md P1-3: readiness must not report
-    // "ok"/"degraded" while the database is unreachable.
+    // Regression guard: readiness must not report "ok"/"degraded" while the
+    // database is unreachable.
     expect(result.status).toBe('down');
   });
 

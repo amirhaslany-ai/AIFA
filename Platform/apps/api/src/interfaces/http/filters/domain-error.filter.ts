@@ -56,9 +56,9 @@ export class DomainErrorFilter implements ExceptionFilter {
       exception instanceof CircuitOpenError ||
       exception instanceof ProviderUnavailableError
     ) {
-      // 04_PATCH_LIST.md P2-7: ProviderUnavailableError (thrown by
-      // ProviderRegistry.get() for an unknown id) previously fell through to
-      // a generic 500 — it belongs with the other provider-unavailable cases.
+      // ProviderUnavailableError (thrown by ProviderRegistry.get() for an
+      // unknown id) previously fell through to a generic 500 — it belongs
+      // with the other provider-unavailable cases.
       return {
         status: HttpStatus.SERVICE_UNAVAILABLE,
         code: 'PROVIDER_UNAVAILABLE',

@@ -1,4 +1,5 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { RegisterAccountUseCase } from '../../../application/use-cases/register-account.use-case';
 import { LoginUseCase } from '../../../application/use-cases/login.use-case';
@@ -26,6 +27,10 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  // Stricter than the app-wide default (100/min) — brute-force account
+  // creation and credential-stuffing are the highest-value attack against
+  // this specific route, so it gets its own tighter override.
+  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   @ApiOperation({ summary: 'Create an account and start a session.' })
   @ApiResponse({ status: 201, type: AuthSessionResponseDto })
   @HttpCode(HttpStatus.CREATED)
@@ -34,6 +39,9 @@ export class AuthController {
   }
 
   @Post('login')
+  // Stricter than the app-wide default — this endpoint is the primary
+  // brute-force target in the whole API.
+  @Throttle({ default: { ttl: 60_000, limit: 10 } })
   @ApiOperation({ summary: 'Authenticate with email + password.' })
   @ApiResponse({ status: 200, type: AuthSessionResponseDto })
   @HttpCode(HttpStatus.OK)

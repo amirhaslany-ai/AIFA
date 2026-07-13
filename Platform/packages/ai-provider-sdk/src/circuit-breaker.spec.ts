@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CircuitBreaker } from './circuit-breaker';
 import { StubAdapter } from './adapters/stub.adapter';
 import { CircuitOpenError } from './errors';
+import type { AiProvider } from './ai-provider';
 
 describe('CircuitBreaker', () => {
   it('passes through calls while closed', async () => {
@@ -65,5 +66,43 @@ describe('CircuitBreaker', () => {
     const breaker = new CircuitBreaker(new StubAdapter('p'));
     const health = await breaker.healthCheck();
     expect(health.status).toBe('healthy');
+  });
+
+  it('half-open admits only a single in-flight trial, rejecting concurrent requests instead of hammering the provider', async () => {
+    let now = 0;
+    let callCount = 0;
+    let resolveTrial: (() => void) | undefined;
+
+    const provider: AiProvider = {
+      id: 'p',
+      chat: async () => {
+        callCount += 1;
+        if (callCount === 1) {
+          throw new Error('boom'); // trips the circuit open
+        }
+        // The trial call (2nd invocation) hangs until the test resolves it,
+        // simulating a slow provider so a second concurrent call can race it.
+        await new Promise<void>((resolve) => {
+          resolveTrial = resolve;
+        });
+        return { providerId: 'p', message: { role: 'assistant', content: 'ok' } };
+      },
+      healthCheck: async () => ({ providerId: 'p', status: 'healthy', checkedAt: '' }),
+    };
+
+    const breaker = new CircuitBreaker(provider, { failureThreshold: 1, cooldownMs: 1000, now: () => now });
+
+    await expect(breaker.chat({ messages: [] })).rejects.toThrow(); // trips open (call #1)
+
+    now = 1500; // past cooldown -> half-open on next evaluateCooldown()
+
+    const trial = breaker.chat({ messages: [] }); // becomes the single admitted trial
+    const concurrent = breaker.chat({ messages: [] }); // must be rejected, not passed through
+
+    await expect(concurrent).rejects.toThrowError(CircuitOpenError);
+    expect(callCount).toBe(2); // the concurrent request never reached the provider
+
+    resolveTrial?.();
+    await expect(trial).resolves.toMatchObject({ providerId: 'p' });
   });
 });
