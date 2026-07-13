@@ -2,7 +2,9 @@
 
 This file is auto-loaded by Claude Code at the start of every session. It is a **pointer**, not a source of truth — it exists to route any AI model or human contributor to the real governing documents.
 
-## Read these first, in order
+**This repository has grown beyond Content Studio alone.** The reading order and "How to operate" process below govern **Content Studio** (`00_System/`–`10_Orchestrator/`, `System/`) specifically. If your task is in **`Platform/`** (the software product), start at `Platform/README.md` instead — it has its own governance (`Platform/docs/adr/`). If your task is business/product/marketing/research/decisions spanning either or both workstreams, start at `AIFA_Brain/README.md`. See the root [`README.md`](README.md) for the full repository map. See `00_System/DECISIONS.md` D-011/D-020/D-021 for why these areas are structured as separate, non-merging workstreams.
+
+## Read these first, in order (Content Studio)
 
 1. `00_System/AIFA_CONSTITUTION.md` — top-level governance. Highest authority.
 2. `00_System/DECISIONS.md` — every decision already made. Never re-litigate a Locked entry.

@@ -23,7 +23,11 @@ Tracks the incremental build-out of the Content Studio documentation repository.
 - [x] `00_System/AGENT_ENGINEERING_STANDARD.md` and `00_System/CONTENT_PRODUCTION_WORKFLOW.md`
 
 ## Next (in order)
-*(none queued — full documentation build-out per the original TODO queue is complete. Ongoing work runs as maintenance sessions per `00_System/MAINTAINER_DIRECTIVE.md`; substantive progress now depends on founder input on the open 🔶 gaps — see `OPEN_QUESTIONS.md` and the Blocked list below)*
+*(none queued for Content Studio — full documentation build-out per the original TODO queue is complete. Ongoing work runs as maintenance sessions per `00_System/MAINTAINER_DIRECTIVE.md`; substantive progress now depends on founder input on the open 🔶 gaps — see `OPEN_QUESTIONS.md` and the Blocked list below)*
+
+*(the separate `Platform/` workstream — aggregator platform, D-011/D-020 — tracks its own queue; see `Platform/ARCHITECTURE_FREEZE.md`/`POST_FREEZE_BACKLOG.md` rather than this file)*
+
+*(the `AIFA_Brain/` and `Agents/` knowledge layer — D-021 — is structure only; populating it with real content is ongoing, tracked inside `AIFA_Brain/` itself: `12_Decisions/` for decisions, `13_Learnings/` for retrospective notes, `15_Roadmap/` for what's next — not duplicated here)*
 
 ## Blocked / needs founder input before writing
 - Success metrics / cadence targets (`OPEN_QUESTIONS.md` OQ-005; §6 of the Constitution has a placeholder for News only)

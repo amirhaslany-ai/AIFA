@@ -1,6 +1,17 @@
 # Changelog
 
-All notable changes to the AIFA Content Studio documentation are logged here, newest first.
+All notable changes to the AIFA Content Studio documentation are logged here, newest first. (Changes under `Platform/` — the separate aggregator-platform workstream, see D-011/D-020 — keep their own history via `docs/adr/` and git log, per its own delivery cadence; only the fact that the workstream started is logged here. `AIFA_Brain/` and `Agents/`, see D-021, follow the same convention — only major milestones are logged here, day-to-day additions live in `AIFA_Brain/12_Decisions/` and `AIFA_Brain/13_Learnings/`.)
+
+## [0.21] - 2026-07-13
+### Added
+- `AIFA_Brain/`: a company-wide, cross-workstream knowledge base — 17 numbered sections (Index, Product, Business, Marketing, Research, Competitors, AI, Content, Design, Technology, API, Pricing, Decisions, Learnings, Meetings, Roadmap, Archive), each with a README stating purpose/update rules/ownership/relationships, plus a `MASTER_INDEX.md` cross-referencing every major document across Content Studio, `Platform/`, and `AIFA_Brain/` itself. Real structure only — no fabricated business/product content; see D-021.
+- `Agents/`: a framework (standards, communication conventions, shared-memory design, prompt standards, knowledge-access rules) for future AI agents. No agent is implemented.
+- `00_System/DECISIONS.md`: D-021 — records that `AIFA_Brain/` and `Agents/` were added as new top-level sibling folders, following D-020's precedent, without altering Content Studio's or Platform's existing structure.
+
+## [0.20] - 2026-07-12
+### Added
+- `Platform/`: the AIFA aggregator platform workstream started (previously "not yet started" per D-011). Founder approved keeping it as a sibling folder in this repository rather than a separate repo. Full foundation-architecture milestone: monorepo (pnpm + Turborepo), 6 ADRs, 14 architecture docs, 4 shared packages (`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk`), `@aifa/database` (Prisma schema), `apps/api` (NestJS, hexagonal, one wired vertical slice), `apps/web` (Next.js), Docker Compose for local dev, GitHub Actions CI. No business logic (auth, wallet, pricing, real provider calls) — see `Platform/PROGRESS_REPORT.md` for full detail and remaining work.
+- `00_System/DECISIONS.md`: D-020 — records that D-011's aggregator-platform workstream now has a concrete home at `Platform/`.
 
 ## [0.19] - 2026-07-10
 ### Added (founder uploads, logged retroactively)
