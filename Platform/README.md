@@ -2,7 +2,7 @@
 
 The AIFA aggregator platform: a multi-model AI product (comparable to OpenRouter/Poe/SYNTX for the Persian market). This folder is a separate workstream from **AIFA Content Studio** (the repository root's `01_Core`–`10_Orchestrator`) — see [`docs/adr/0001-platform-separation.md`](docs/adr/0001-platform-separation.md) and `00_System/DECISIONS.md` D-011/D-020 for why the two live side by side in one repository.
 
-**Scope of this milestone:** foundation architecture only. No business logic (auth, wallet, pricing, real AI provider implementations) is built yet — this is the structure those systems will be built into. See `PROGRESS_REPORT.md` for what exists today versus what's deliberately deferred.
+**Status:** the foundation architecture is complete, and Sprint 1 (Authentication, Wallet, Pricing, Provider Access, Conversation/Chat, Usage Tracking) is implemented — six real bounded contexts, tested, wired end-to-end. This has never run against a live database, a live AI vendor, or real traffic — see `CURRENT_IMPLEMENTATION_STATUS.md` at this folder's root for the honest, per-subsystem breakdown, and `HANDOVER/` / `FINAL_REVIEW/` for the full architecture-review package.
 
 ## Start here
 

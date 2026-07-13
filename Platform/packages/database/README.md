@@ -1,6 +1,6 @@
 # @aifa/database
 
-Prisma schema, migrations, and a re-exported generated client. See `docs/architecture/database-architecture.md` for the full ownership/consumption rules — in short: only `apps/api/src/infrastructure/persistence/*` may import from this package; no use case or controller talks to Prisma directly.
+Prisma schema, migrations, and a re-exported generated client. See `docs/architecture/database-architecture.md` and `docs/architecture/package-boundaries.md` for the full ownership/consumption rules — in short: only `apps/api/src/infrastructure/persistence/*` (repositories), `infrastructure/providers/*` (`AiProviderConfig` reads), and `infrastructure/health/*` (`PrismaHealthIndicator`'s connectivity check) may import from this package — machine-enforced via `eslint.config.mjs`. No use case or controller talks to Prisma directly.
 
 ## Schema
 

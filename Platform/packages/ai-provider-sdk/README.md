@@ -12,16 +12,16 @@ The provider-agnostic AI abstraction layer. See `docs/adr/0005-ai-provider-abstr
 
 ## Scope note (read before extending)
 
-This package's registry, fallback chain, circuit breaker, and port interfaces are real, tested logic. The adapters in `src/adapters/` are illustrative stubs that satisfy the `AiProvider` interface and return a deterministic canned response. Wiring a real vendor SDK into an adapter is explicitly out of scope for this foundation milestone (see repo-root mission scope / `PROGRESS_REPORT.md`) — do it by editing the relevant adapter file only; nothing else in this package or in `apps/api`'s application layer should need to change.
+This package's registry, fallback chain, circuit breaker, and port interfaces are real, tested logic. `src/adapters/stub.adapter.ts` is a deterministic, no-network placeholder — still used for the bootstrap-default providers and any `AiProviderConfig` row missing full configuration. A real adapter now exists (Sprint 1) — `OpenAiCompatibleAdapter` — but it lives in `apps/api/src/infrastructure/providers/`, not in this package's `src/adapters/`, per the location convention `ai-provider-layer.md` documents: this package holds the provider-agnostic abstraction (registry/fallback/circuit-breaker/cost calc), `apps/api` holds the concrete vendor adapters that implement `AiProvider` against it. No real vendor API key has ever been used against the real adapter in this codebase's history — it's verified only via an injected-`fetch` unit test double.
 
 ## Adding a provider
 
-1. Add `src/adapters/<vendor>.adapter.ts` implementing `AiProvider`.
-2. Register an instance in wherever the registry is bootstrapped (in `apps/api`, not in this package — this package has no opinion on which providers exist, only how to hold and call them).
+1. Add `<vendor>.adapter.ts` implementing `AiProvider` under `apps/api/src/infrastructure/providers/` (not in this package — see the Scope note above).
+2. Register an instance in wherever the registry is bootstrapped (`apps/api/src/infrastructure/providers/provider-registry.adapter.ts`) — this package has no opinion on which providers exist, only how to hold and call them.
 
 ## Dependencies
 
-`@aifa/types` (shared DTOs), `@aifa/logger` (declared, not yet used internally — reserved for when the registry/circuit-breaker gain their own diagnostic logging).
+`@aifa/types` (shared DTOs) only.
 
 ## Public API
 

@@ -8,6 +8,8 @@
 | `@aifa/ai-provider-sdk` | Provider-agnostic AI abstraction: `AiProvider` port, `ProviderRegistry`, `FallbackChain`, `CircuitBreaker`, adapter stubs | `@aifa/types`, `@aifa/logger` | any concrete business use case; vendor SDKs stay inside individual adapter files only |
 | `@aifa/database` | Prisma schema, migrations, generated client re-export | `@aifa/types` | query logic specific to one bounded context (that belongs in `apps/api`'s repositories) |
 
+**`@aifa/database` consumers, machine-enforced (`eslint.config.mjs`):** only `apps/api/src/infrastructure/persistence/**` (the repositories), `apps/api/src/infrastructure/providers/**` (`AiProviderConfig` reads), and `apps/api/src/infrastructure/health/**` (`PrismaHealthIndicator`'s raw connectivity check) may import it. Every other file — `domain/`, `application/`, `interfaces/`, and the rest of `infrastructure/` — must go through a port instead. This was documented-only until the pre-freeze hardening pass added the ESLint rule (verified to reject a deliberately-introduced violation).
+
 ## Apps
 
 | App | Responsibility | May depend on |

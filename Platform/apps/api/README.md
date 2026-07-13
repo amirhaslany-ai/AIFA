@@ -43,7 +43,7 @@ Sprint 1 (Authentication, Wallet, Pricing, Provider Integration, Chat, Usage Tra
 
 ## Dependencies
 
-`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk`, `@aifa/database` (workspace packages) — NestJS (`@nestjs/common`, `core`, `platform-express`, `swagger`, `terminus`), `class-validator`/`class-transformer`, `dotenv`, `ioredis`, `jose`, `@node-rs/argon2`.
+`@aifa/types`, `@aifa/config`, `@aifa/logger`, `@aifa/ai-provider-sdk`, `@aifa/database` (workspace packages) — NestJS (`@nestjs/common`, `core`, `platform-express`, `swagger`, `terminus`, `throttler`), `class-validator`/`class-transformer`, `dotenv`, `helmet`, `ioredis`, `jose`, `@node-rs/argon2`.
 
 ## Public API (HTTP endpoints)
 
@@ -62,7 +62,7 @@ Sprint 1 (Authentication, Wallet, Pricing, Provider Integration, Chat, Usage Tra
 | GET | `/v1/usage` | Bearer-protected — the current account's usage history, newest first (`limit`, `before` query params) |
 | GET | `/v1/docs` | Swagger UI (OpenAPI, auto-generated) |
 
-## Example (verified output — see `PROGRESS_REPORT.md`)
+## Example (verified output — live-booted during development; see `CURRENT_IMPLEMENTATION_STATUS.md` at the `Platform/` root for what has and hasn't been verified against real infrastructure)
 
 ```bash
 $ curl http://localhost:3001/v1/health

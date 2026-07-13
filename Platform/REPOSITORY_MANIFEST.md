@@ -17,8 +17,12 @@ Platform/
 ├── CURRENT_IMPLEMENTATION_STATUS.md
 ├── REVIEW_NOTES.md
 ├── HANDOVER/                        14-document CTO handover package (prior deliverable)
-├── 01_FINAL_ARCHITECTURE_AUDIT.md … 05_ARCHITECTURE_FREEZE_DECISION.md   STALE — see HANDOVER/06
-├── ARCHITECTURE_REVIEW.md, TECHNICAL_DEBT.md, IMPROVEMENT_PLAN.md, PROGRESS_REPORT.md   STALE — see HANDOVER/06
+├── FINAL_REVIEW/                     Post-Sprint-1 audit pass (implementation gaps, blockers, risk matrix)
+│                                     (the pre-Sprint-1 stale audit set once here — 01_FINAL_ARCHITECTURE_AUDIT.md
+│                                      through 05_ARCHITECTURE_FREEZE_DECISION.md, ARCHITECTURE_REVIEW.md,
+│                                      TECHNICAL_DEBT.md, IMPROVEMENT_PLAN.md, PROGRESS_REPORT.md — was
+│                                      removed during the pre-freeze cleanup pass; see HANDOVER/06 and
+│                                      FINAL_REVIEW/GIT_RELEASE_PLAN.md for what it said and why it's gone)
 ├── apps/
 │   ├── api/           NestJS backend — hexagonal architecture, 6 bounded contexts
 │   └── web/            Next.js frontend — placeholder pages only

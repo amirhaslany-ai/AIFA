@@ -1,6 +1,6 @@
 # Architecture Overview
 
-**Status:** Foundation milestone — architecture only, no business logic. See `PROGRESS_REPORT.md` at the repo root of `Platform/` for what's built vs. deferred.
+**Status:** Foundation architecture complete; Sprint 1 (Authentication, Wallet, Pricing, Provider Access, Conversation/Chat, Usage Tracking) implemented on top of it. See `CURRENT_IMPLEMENTATION_STATUS.md` at the repo root of `Platform/` for the honest, per-subsystem breakdown of what's built vs. deferred.
 
 ## System context
 
@@ -23,9 +23,14 @@
              ▼                                        ▼
   ┌─────────────────────┐                 ┌──────────────────────────┐
   │ packages/database     │                 │ packages/ai-provider-sdk  │
-  │ Prisma + PostgreSQL   │                 │ registry + adapters       │
-  └─────────────────────┘                 │ (OpenAI/Anthropic/... —   │
-                                            │  stubs only this milestone)│
+  │ Prisma + PostgreSQL   │                 │ registry + circuit        │
+  └─────────────────────┘                 │ breaker + fallback chain; │
+                                            │ apps/api/infrastructure/   │
+                                            │ providers/ holds the one   │
+                                            │ real adapter (OpenAI-      │
+                                            │ compatible HTTP), never   │
+                                            │ live-verified against a   │
+                                            │ real vendor               │
                                             └──────────────────────────┘
 ```
 
@@ -53,8 +58,8 @@ Clean Architecture, DDD, SOLID, Hexagonal Architecture, low coupling / high cohe
 | `ddd-tactical-design.md` | Tactical DDD patterns (aggregates, entities, value objects, repositories) per context |
 | `package-boundaries.md` | What each `packages/*` folder is and isn't for |
 | `ai-provider-layer.md` | How the provider abstraction is used from `apps/api` (detail beyond ADR-0005), plus design-only extensions (capability matrix, streaming, retry, cost layer) |
-| `wallet-architecture.md` | Design-only: ledger-based wallet, credit/reservation/settlement/rollback flows |
-| `pricing-architecture.md` | Design-only: pricing engine, rule pipeline, markup/campaign layers |
+| `wallet-architecture.md` | Implemented (Sprint 1): ledger-based wallet, credit/reservation/settlement/rollback/debit flows |
+| `pricing-architecture.md` | Implemented (Sprint 1): base-markup + floor rule pipeline; campaigns/plan tiers still design-only |
 | `security-architecture.md` | JWT/session strategy, key rotation, rate limiting, encryption, PII, threat model |
 | `coding-standards.md` | Lint rules, import boundaries, TS conventions |
 | `naming-conventions.md` | File/package/branch naming rules |
@@ -64,6 +69,6 @@ Clean Architecture, DDD, SOLID, Hexagonal Architecture, low coupling / high cohe
 | `secrets-config-management.md` | How secrets and environment config are handled |
 | `ci-cd-pipeline.md` | What CI runs today and what CD deliberately defers |
 
-## What is explicitly deferred (by mission scope, not forgotten)
+## What is explicitly deferred (by scope, not forgotten)
 
-Authentication implementation, Wallet/billing logic, Pricing logic, real AI provider API integration, production Kubernetes/cloud deployment, and any actual user-facing feature. Each has an architectural seam already in place (an interface, a module boundary, or a documented extension point) so implementation can start without redesigning this foundation.
+Authentication, Wallet, Pricing (base rules), Provider Access, Conversation/Chat, and Usage Tracking are implemented (Sprint 1) — see `CURRENT_IMPLEMENTATION_STATUS.md`. Still deferred: a real product frontend (`apps/web` is a placeholder), campaign/discount pricing and per-plan tiers, a real payment/funding path, streaming and capability-aware provider routing, and any staging/production deployment. Each has an architectural seam already in place (an interface, a module boundary, or a documented extension point) so implementation can start without redesigning this foundation — none of it has been exercised against a live database, a live AI vendor, or real traffic yet.

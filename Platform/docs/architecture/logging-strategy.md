@@ -17,8 +17,8 @@ Structured JSON logs (one log line = one JSON object), via `@aifa/logger` (pino 
 
 - `error`/`fatal`: something failed that a human should look at (unhandled exception, all AI providers unavailable, DB connection lost). Always includes `err` (serialized error/stack).
 - `warn`: degraded-but-recovered (one provider's circuit breaker tripped but fallback succeeded).
-- `info`: significant lifecycle events (server started, provider registry initialized) — not per-request noise.
-- `debug`: per-request detail, enabled via `LOG_LEVEL=debug` locally, not in production by default.
+- `info`: significant lifecycle events (server started, provider registry initialized), plus exactly one summary line per completed request (`RequestLoggingInterceptor` — method/path/status/duration/`requestId`) — deliberately at `info`, not `debug`, so the `requestId`-to-log-lines correlation this doc promises above actually works by default in production, not only when `LOG_LEVEL=debug` is turned on for an investigation. This is the one exception to "not per-request noise": it's a single line, not per-request internals.
+- `debug`: per-request *internal* detail beyond the one-line summary above, enabled via `LOG_LEVEL=debug` locally, not in production by default.
 
 ## What must never be logged
 

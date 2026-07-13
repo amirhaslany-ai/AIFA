@@ -36,6 +36,6 @@ A `Bearer` token boundary is reserved (`Authorization` header, validated by a Ne
 
 `GET /v1/health` — liveness (process is up). `GET /v1/health/ready` — readiness (dependencies — DB, Redis, provider registry — are reachable), backed by `@nestjs/terminus`. Returns HTTP 503 (not 200) when `status` is `"down"` (database unreachable, or every provider unavailable) — the HTTP status code itself signals unreadiness, not just the JSON body, since most orchestrators check the former. Used by Docker healthchecks and, later, orchestrator readiness probes.
 
-## Rate limiting
+## Rate limiting (implemented)
 
-Not implemented this milestone. Reserved seam: a Nest guard/interceptor reading limits from `packages/config`, backed by Redis counters — documented here so the eventual implementation has a clear, single intended location (`infrastructure/rate-limit/`) instead of being bolted on ad hoc.
+`@nestjs/throttler`'s `ThrottlerGuard`, applied globally (`APP_GUARD` in `app.module.ts`): 100 req/min per IP by default, with a stricter 10 req/min override on `POST /v1/auth/register` and `POST /v1/auth/login`. In-process counters, not yet Redis-backed — see `docs/architecture/security-architecture.md`'s rate-limiting section for the known multi-replica bypass limitation.
