@@ -7,9 +7,9 @@
 | **Updated** | 2026-07-13 |
 | **Owner** | AIFA_Brain maintainers (see `00_Index/README.md`) |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `README.md`, `00_Index/NAVIGATION.md` |
+| **Related Docs** | `README.md`, `00_Index/NAVIGATION.md`, `00_Index/KNOWLEDGE_SYNC_POLICY.md` |
 | **Tags** | `index, navigation, governance` |
 
 The single entry point to every major document in this repository, organized by category. Rebuilt/extended whenever a document is added anywhere it should be discoverable from (see `README.md`'s update rules). Links are relative to this file's location (`AIFA_Brain/`).
@@ -20,6 +20,7 @@ The single entry point to every major document in this repository, organized by 
 
 | Doc | What it is |
 |---|---|
+| [`00_Index/KNOWLEDGE_SYNC_POLICY.md`](00_Index/KNOWLEDGE_SYNC_POLICY.md) | **Locked founder policy** — GitHub is the single source of truth; what "done" means for every task (record → cross-link → commit → push at milestones). Decision `G-001`. |
 | [`../CLAUDE.md`](../CLAUDE.md) | Repo-root entry pointer — routes any AI model to the right governing documents for whichever workstream it's working in. |
 | [`../00_System/AIFA_CONSTITUTION.md`](../00_System/AIFA_CONSTITUTION.md) | Highest-authority governance document — Content Studio scope, principles, core rules. |
 | [`../00_System/DECISIONS.md`](../00_System/DECISIONS.md) | The company's Decisions Log — every settled decision since the repository began, including D-011 (Content Studio/Platform separation), D-020 (Platform's placement), D-021 (this folder's placement). |

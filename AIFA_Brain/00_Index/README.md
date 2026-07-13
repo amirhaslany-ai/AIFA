@@ -9,17 +9,18 @@
 | **Status** | Active |
 | **Version** | 1.0 |
 | **Dependencies** | none |
-| **Related Docs** | `../README.md`, `../MASTER_INDEX.md` |
+| **Related Docs** | `../README.md`, `../MASTER_INDEX.md`, `KNOWLEDGE_SYNC_POLICY.md` |
 | **Tags** | `index, governance, standards` |
 
 ## Purpose
 
-The rules this knowledge base runs on: the metadata every document must carry, and how navigation between the 17 sections works. This folder doesn't hold product/business/research content itself — it holds the system that keeps the content in the other 16 folders coherent as they grow.
+The rules this knowledge base runs on: the metadata every document must carry, how navigation between the 17 sections works, and the standing policy that keeps GitHub the single source of truth. This folder doesn't hold product/business/research content itself — it holds the system that keeps the content in the other 16 folders coherent, current, and pushed as they grow.
 
 ## What's here
 
 - **`METADATA_STANDARD.md`** — the required metadata block (Title/Created/Updated/Owner/Status/Version/Dependencies/Related Docs/Tags), what each field means, and how to fill it correctly.
 - **`NAVIGATION.md`** — how the folders relate to each other, and the cross-referencing convention (relative links, no duplication).
+- **`KNOWLEDGE_SYNC_POLICY.md`** — the **Locked** founder policy that GitHub is the single source of truth: what "done" means for every task (record → cross-link → commit → push at milestones). Recorded as decision `G-001` in `../12_Decisions/DECISION_LOG.md`.
 
 ## Update rules
 

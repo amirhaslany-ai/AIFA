@@ -1,0 +1,29 @@
+# Root .gitignore — repository-wide ignores.
+# Per AIFA_Brain/00_Index/KNOWLEDGE_SYNC_POLICY.md (GitHub is the single source of
+# truth), the repo must stay clean and complete: generated artifacts, local tool
+# config, and OS junk must never be accidentally committed. Workstream-specific
+# build output (node_modules, dist, .next, .turbo, etc.) is ignored by
+# Platform/.gitignore; this file covers repo-root and cross-cutting cases.
+
+# Generated review/deliverable archives (regenerable, never source)
+*.zip
+*.rar
+*.7z
+
+# Local tooling / editor config
+.claude/
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment files (real secrets never committed; *.example is tracked explicitly)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
