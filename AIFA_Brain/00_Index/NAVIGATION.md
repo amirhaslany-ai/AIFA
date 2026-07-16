@@ -4,12 +4,12 @@
 |---|---|
 | **Title** | Navigation |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | AIFA_Brain maintainers |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | `METADATA_STANDARD.md` |
-| **Related Docs** | `README.md`, `../MASTER_INDEX.md` |
+| **Related Docs** | `README.md`, `../MASTER_INDEX.md`, `../04_Research/Market_Intelligence/README.md` |
 | **Tags** | `index, navigation` |
 
 ## Summary
@@ -30,7 +30,8 @@ How to find things, how folders relate to each other, and the linking convention
 
 ## How the 17 sections relate to each other (the parts that aren't obvious from the names alone)
 
-- **`04_Research/` vs. `05_Competitors/`**: competitor-specific intelligence lives in `05_Competitors/`, not duplicated as a sixth "Competitor Research" subfolder inside `04_Research/` — the two are cross-referenced, not merged, because competitive intelligence tends to be maintained on a different cadence (continuously updated per-competitor) than the other research types (point-in-time studies).
+- **`04_Research/Market_Intelligence/` (the cohesive foundation) vs. the five template sub-areas**: the Market Intelligence Foundation is a completed, internally cross-referenced 12-document study kept together as one unit (its documents cite each other by phase — splitting them would break those references). The five template-driven sub-areas (`Market_Research/`, `User_Research/`, `Technology_Research/`, `Pricing_Research/`, `API_Research/`) are for *new, point-in-time* studies. Findings in the foundation that belong to another section (UX → `User_Research/`, pricing/margin → `11_Pricing/`, competitors → `05_Competitors/`, routing → `09_Technology/`/`06_AI/`) are **cross-linked, not copied**.
+- **`04_Research/` vs. `05_Competitors/`**: competitor-specific intelligence lives in `05_Competitors/`, not duplicated as a sixth "Competitor Research" subfolder inside `04_Research/` — the two are cross-referenced, not merged, because competitive intelligence tends to be maintained on a different cadence (continuously updated per-competitor) than the other research types (point-in-time studies). The per-competitor profiles in `05_Competitors/` are distilled from the foundation's Phase 2 and Phase 7 documents.
 - **`02_Business/` vs. `11_Pricing/`**: pricing is business-critical enough to get its own top-level folder rather than being buried as a `02_Business/` subfolder. `02_Business/Business_Model/` should link to `11_Pricing/` rather than restating pricing decisions.
 - **`03_Marketing/` (company-level) vs. Content Studio's `06_Marketing/` (content-promotion-level)**: these are genuinely different scopes wearing similar names — company positioning/campaigns vs. how to promote Shima's individual videos. Cross-reference, don't confuse.
 - **`06_AI/`, `09_Technology/`, `10_API/` (strategy) vs. `Platform/docs/architecture/` (implementation)**: the `AIFA_Brain/` versions are about *what the company decides*, the `Platform/` versions are about *how the code implements it*. A pricing/business decision in `06_AI/` might drive an ADR in `Platform/docs/adr/`; the two should link to each other, not merge.

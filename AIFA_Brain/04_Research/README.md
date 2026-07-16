@@ -4,12 +4,12 @@
 |---|---|
 | **Title** | 04_Research — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `../MASTER_INDEX.md`, `../05_Competitors/README.md`, `../../02_Research/README.md` (Content Studio) |
+| **Related Docs** | [`../MASTER_INDEX.md`](../MASTER_INDEX.md), [`Market_Intelligence/README.md`](Market_Intelligence/README.md), [`../05_Competitors/README.md`](../05_Competitors/README.md), `../../02_Research/README.md` (Content Studio) |
 | **Tags** | `research` |
 
 ## Purpose
@@ -22,11 +22,14 @@ Competitor-specific research lives in `../05_Competitors/`, not as a sixth subfo
 
 | Folder | Covers |
 |---|---|
+| [`Market_Intelligence/`](Market_Intelligence/README.md) | **The Market Intelligence Foundation** — the completed 12-document, eight-phase competitive/market intelligence study (executive report, phases 2–8, consistency audit, executive synthesis, and an independent due-diligence review). The single largest body of research in AIFA_Brain. Start at its [README](Market_Intelligence/README.md). |
 | [`Market_Research/`](Market_Research/README.md) | Market size, trends, opportunity assessment. |
 | [`User_Research/`](User_Research/README.md) | Who the users are, their needs, interviews/surveys. |
 | [`Technology_Research/`](Technology_Research/README.md) | Technology landscape evaluation — broader than the AI-vendor-specific research in `../06_AI/`. |
 | [`Pricing_Research/`](Pricing_Research/README.md) | What comparable products charge and why. |
 | [`API_Research/`](API_Research/README.md) | How comparable API products structure their offering, docs, and partner experience. |
+
+> **Note:** `Market_Intelligence/` is a cohesive, internally cross-referenced foundation kept as one unit (its documents cite each other by phase). The five template-driven sub-areas above are for *new, point-in-time* studies; findings in the foundation that belong to a sub-area (e.g. UX → `User_Research/`, pricing → `Pricing_Research/`) are cross-linked, not copied.
 
 ## Update rules
 

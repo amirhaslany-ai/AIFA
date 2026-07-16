@@ -4,19 +4,21 @@
 |---|---|
 | **Title** | 09_Technology — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `../../Platform/docs/architecture/00-overview.md`, `../../Platform/REPOSITORY_MANIFEST.md`, `../06_AI/README.md` |
+| **Related Docs** | [`../04_Research/Market_Intelligence/06_Technology_Intelligence.md`](../04_Research/Market_Intelligence/06_Technology_Intelligence.md), `../../Platform/docs/architecture/00-overview.md`, `../../Platform/REPOSITORY_MANIFEST.md`, `../06_AI/README.md` |
 | **Tags** | `technology, strategy, infrastructure` |
 
 ## Purpose
 
 Company-level technology strategy that spans or precedes engineering decisions: build-vs-buy calls, hosting/infrastructure strategy (currently undecided — `Platform/HANDOVER/12_OPEN_DECISIONS.md`), technology-vendor relationships, and cross-workstream technical standards. This is the strategy layer; `Platform/docs/architecture/` is the implementation layer for the Platform workstream specifically, and Content Studio's own tooling choices (documented inline in its engine docs) are that workstream's implementation layer.
 
-Currently structure-only. The most immediately relevant open item is Platform's hosting/cloud-provider decision, which `Platform/ARCHITECTURE_FREEZE.md` explicitly left undecided and which blocks several other Platform workstream items.
+The most immediately relevant open item is Platform's hosting/cloud-provider decision, which `Platform/ARCHITECTURE_FREEZE.md` explicitly left undecided and which blocks several other Platform workstream items.
+
+> **Cross-workstream technical requirements are researched.** [`../04_Research/Market_Intelligence/06_Technology_Intelligence.md`](../04_Research/Market_Intelligence/06_Technology_Intelligence.md) derives the architectural requirements for the multi-provider router (price/quality/latency routing, provider failover, caching, no silent substitution) and the asset-light / open-model self-host reserve posture — the "why, for the business" framing this folder exists to hold, grounded in the competitive and supplier evidence.
 
 ## Update rules
 

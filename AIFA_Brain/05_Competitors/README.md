@@ -4,17 +4,19 @@
 |---|---|
 | **Title** | 05_Competitors — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `../MASTER_INDEX.md`, `../04_Research/README.md`, `../01_Product/README.md`, `TEMPLATE_Competitor_Profile.md` |
+| **Related Docs** | [`../MASTER_INDEX.md`](../MASTER_INDEX.md), [`../04_Research/Market_Intelligence/02_Competitors_Phase2.md`](../04_Research/Market_Intelligence/02_Competitors_Phase2.md), [`../04_Research/README.md`](../04_Research/README.md), [`../01_Product/README.md`](../01_Product/README.md), `TEMPLATE_Competitor_Profile.md` |
 | **Tags** | `competitors, competitive-intelligence` |
 
 ## Purpose
 
-One profile per competitor — OpenRouter, Poe, and any other AI-aggregator or adjacent product AIFA competes with or is positioned against. Kept current on an ongoing basis (unlike `../04_Research/`'s more point-in-time studies) since competitive landscapes shift quickly in this space. Currently structure-only; use `TEMPLATE_Competitor_Profile.md` per competitor.
+One profile per competitor — OpenRouter, Poe, and any other AI-aggregator or adjacent product AIFA competes with or is positioned against. Kept current on an ongoing basis (unlike `../04_Research/`'s more point-in-time studies) since competitive landscapes shift quickly in this space. Use `TEMPLATE_Competitor_Profile.md` per competitor.
+
+> **Existing competitive intelligence.** Substantial competitor and supplier profiles already exist in the Market Intelligence Foundation — see [`../04_Research/Market_Intelligence/02_Competitors_Phase2.md`](../04_Research/Market_Intelligence/02_Competitors_Phase2.md) (inference suppliers, AI app-builders, creative/video platforms), the three-ring competitor frame and per-competitor war-gaming in [`../04_Research/Market_Intelligence/07_Strategic_Intelligence.md`](../04_Research/Market_Intelligence/07_Strategic_Intelligence.md), and the landscape summary in [`../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md`](../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md). This folder is the place for *maintained, per-competitor* profiles distilled from that foundation; start with the Ring-1 Persian platforms (Hoosha, GapGPT, ChatQT, Roboo, Vira) and the aggregators (OpenRouter, Poe).
 
 Already-known context worth starting from: `Platform/README.md` positions AIFA explicitly as "comparable to OpenRouter/Poe/SYNTX for the Persian market," and `Platform/docs/adr/0006-api-style.md` / `Platform/FOUNDER_NEXT_STEP.md` reference OpenRouter directly as the competitive frame AIFA's API-first positioning was chosen against — the first profiles here should probably be OpenRouter and Poe.
 

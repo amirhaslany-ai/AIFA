@@ -4,12 +4,12 @@
 |---|---|
 | **Title** | Master Index |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | AIFA_Brain maintainers (see `00_Index/README.md`) |
 | **Status** | Active |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Dependencies** | none |
-| **Related Docs** | `README.md`, `00_Index/NAVIGATION.md`, `00_Index/KNOWLEDGE_SYNC_POLICY.md` |
+| **Related Docs** | `README.md`, `00_Index/NAVIGATION.md`, `00_Index/KNOWLEDGE_SYNC_POLICY.md`, `04_Research/Market_Intelligence/README.md` |
 | **Tags** | `index, navigation, governance` |
 
 The single entry point to every major document in this repository, organized by category. Rebuilt/extended whenever a document is added anywhere it should be discoverable from (see `README.md`'s update rules). Links are relative to this file's location (`AIFA_Brain/`).
@@ -27,6 +27,21 @@ The single entry point to every major document in this repository, organized by 
 | [`../00_System/OPEN_QUESTIONS.md`](../00_System/OPEN_QUESTIONS.md) | What's still unresolved, repository-wide. |
 | [`../00_System/MAINTAINER_DIRECTIVE.md`](../00_System/MAINTAINER_DIRECTIVE.md) | How to run a Content Studio maintenance/audit session. |
 | [`../00_System/CLAUDE_MASTER_PROMPT.md`](../00_System/CLAUDE_MASTER_PROMPT.md) | Operating instructions for any AI model working in Content Studio. |
+
+## Market Intelligence Foundation ⭐ (the largest body of research in AIFA_Brain)
+
+The completed, cross-referenced market/competitive intelligence study — twelve documents in [`04_Research/Market_Intelligence/`](04_Research/Market_Intelligence/README.md). Evidence, not law: its findings become binding only when ratified into a governed document via the amendment path (see doc 10 and doc 00 Part 7).
+
+| Doc | What it is |
+|---|---|
+| [`04_Research/Market_Intelligence/README.md`](04_Research/Market_Intelligence/README.md) | **Section entry point** — reading orders, contents, taxonomy map, known gaps. |
+| [`.../01_Executive_Intelligence_Report.md`](04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md) | **Read first** — the single-document decision entry point synthesizing all phases (opportunities, threats, product/business/technology conclusions, go/no-go). |
+| [`.../00_Master_Index.md`](04_Research/Market_Intelligence/00_Master_Index.md) | The foundation's internal control layer: cross-reference spine + global Confidence / Evidence / Update / Gap / Amendment registers. |
+| [`.../02_Competitors_Phase2.md`](04_Research/Market_Intelligence/02_Competitors_Phase2.md) → [`.../08_Future_Market_Intelligence.md`](04_Research/Market_Intelligence/08_Future_Market_Intelligence.md) | The seven research phases: competitors/suppliers, features (187), UX, pricing/margin model, technology/routing, strategic war-gaming, 2026–2030 scenarios. |
+| [`.../09_Consistency_Audit.md`](04_Research/Market_Intelligence/09_Consistency_Audit.md), [`.../10_Executive_Synthesis.md`](04_Research/Market_Intelligence/10_Executive_Synthesis.md) | Consolidation layer: internal consistency audit, then the executive strategy synthesis that bridges research → governed docs. |
+| [`.../11_Due_Diligence_Review_v1.0_FROZEN.md`](04_Research/Market_Intelligence/11_Due_Diligence_Review_v1.0_FROZEN.md) | **Frozen** independent red-team audit — decision-readiness scoring and the load-bearing unproven assumptions. |
+
+> **Known gap:** Phase 1 ("Market Intelligence V1") was delivered as an in-chat artifact and is not yet in the repository — see the section README's *Known gaps*.
 
 ## AIFA Content Studio (the content-production workstream)
 
@@ -80,7 +95,8 @@ The single entry point to every major document in this repository, organized by 
 | Doc | What it is |
 |---|---|
 | [`04_Research/README.md`](04_Research/README.md) | Research section entry point. |
-| [`04_Research/Market_Research/`](04_Research/Market_Research/README.md), [`User_Research/`](04_Research/User_Research/README.md), [`Technology_Research/`](04_Research/Technology_Research/README.md), [`Pricing_Research/`](04_Research/Pricing_Research/README.md), [`API_Research/`](04_Research/API_Research/README.md) | Five research sub-areas, each with a template. Competitor research lives in `05_Competitors/` instead (see below), not duplicated here. |
+| [`04_Research/Market_Intelligence/`](04_Research/Market_Intelligence/README.md) | **The Market Intelligence Foundation** (see the dedicated section above) — the completed 12-document competitive/market intelligence study. |
+| [`04_Research/Market_Research/`](04_Research/Market_Research/README.md), [`User_Research/`](04_Research/User_Research/README.md), [`Technology_Research/`](04_Research/Technology_Research/README.md), [`Pricing_Research/`](04_Research/Pricing_Research/README.md), [`API_Research/`](04_Research/API_Research/README.md) | Five template-driven sub-areas for new, point-in-time studies. Competitor research lives in `05_Competitors/` instead (see below), not duplicated here. |
 
 ## Competitors
 

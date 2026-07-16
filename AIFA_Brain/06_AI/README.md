@@ -4,19 +4,21 @@
 |---|---|
 | **Title** | 06_AI — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `../../Platform/docs/adr/0005-ai-provider-abstraction.md`, `../../Platform/docs/architecture/ai-provider-layer.md`, `../04_Research/Technology_Research/README.md` |
+| **Related Docs** | [`../04_Research/Market_Intelligence/06_Technology_Intelligence.md`](../04_Research/Market_Intelligence/06_Technology_Intelligence.md), [`../04_Research/Market_Intelligence/02_Competitors_Phase2.md`](../04_Research/Market_Intelligence/02_Competitors_Phase2.md), `../../Platform/docs/adr/0005-ai-provider-abstraction.md`, `../../Platform/docs/architecture/ai-provider-layer.md`, `../04_Research/Technology_Research/README.md` |
 | **Tags** | `ai, strategy, vendors` |
 
 ## Purpose
 
 Company-level AI/ML strategy: which vendors to actually use and why, model-capability tracking as the field moves, vendor relationship/contract notes, and the real cost-rate data that feeds Platform's pricing engine. This is a **business/strategy** scope, distinct from `Platform/`'s AI provider **implementation** (the registry/circuit-breaker/adapter code, and ADR-0005's technical decision to never hardcode a vendor).
 
-Currently structure-only. Platform's `OpenAiCompatibleAdapter` has never been configured against a real vendor (see `Platform/CURRENT_IMPLEMENTATION_STATUS.md`) — the first real document here is the one that decides which vendor(s) to actually turn on first, per `Platform/HANDOVER/12_OPEN_DECISIONS.md`'s "Provider selection" section.
+Platform's `OpenAiCompatibleAdapter` has never been configured against a real vendor (see `Platform/CURRENT_IMPLEMENTATION_STATUS.md`) — the first real document here is the one that decides which vendor(s) to actually turn on first, per `Platform/HANDOVER/12_OPEN_DECISIONS.md`'s "Provider selection" section.
+
+> **Candidate suppliers are already researched.** [`../04_Research/Market_Intelligence/02_Competitors_Phase2.md`](../04_Research/Market_Intelligence/02_Competitors_Phase2.md) profiles the inference-supply layer (Together, Fireworks, Groq, Fal, DeepInfra, Replicate) with sourced per-token/per-image prices and data-retention posture, and [`../04_Research/Market_Intelligence/06_Technology_Intelligence.md`](../04_Research/Market_Intelligence/06_Technology_Intelligence.md) translates those into the routing/failover/latency requirements for AIFA's Intelligence Access boundary (CAP-C7-001). The recommended posture: asset-light, ≥2 suppliers per modality with documented exit paths, and preference for zero-data-retention providers. Those are *research recommendations* — the ratified vendor selection still gets recorded here and in `12_Decisions/BUSINESS_DECISION_LOG.md`.
 
 ## Update rules
 

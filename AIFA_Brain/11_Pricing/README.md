@@ -4,19 +4,21 @@
 |---|---|
 | **Title** | 11_Pricing — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-16 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `../../Platform/docs/architecture/pricing-architecture.md`, `../../Platform/docs/adr/0009-pricing-engine-pattern.md`, `../../Platform/HANDOVER/12_OPEN_DECISIONS.md`, `../06_AI/README.md` |
+| **Related Docs** | [`../04_Research/Market_Intelligence/05_Pricing_Intelligence.md`](../04_Research/Market_Intelligence/05_Pricing_Intelligence.md), `../../Platform/docs/architecture/pricing-architecture.md`, `../../Platform/docs/adr/0009-pricing-engine-pattern.md`, `../../Platform/HANDOVER/12_OPEN_DECISIONS.md`, `../06_AI/README.md` |
 | **Tags** | `pricing, business-model, revenue` |
 
 ## Purpose
 
 The **real** business pricing model: actual markup percentage, plan tiers, discount/campaign structure, and free-tier decisions (if any). This is the business decision layer that Platform's pricing engine is built to execute, not duplicate — Platform's `PricingPipeline` (`Platform/docs/adr/0009-pricing-engine-pattern.md`) is real, tested code that currently runs on engineering defaults (1.3x markup, no floor, explicitly marked as placeholders awaiting exactly the decision this folder exists to hold).
 
-Currently structure-only. This is one of the most concrete, highest-leverage gaps identified across the whole repository: `Platform/HANDOVER/12_OPEN_DECISIONS.md` and `Platform/ARCHITECTURE_FREEZE.md` both flag real pricing as a founder decision blocking real monetization, and `Platform/FOUNDER_NEXT_STEP.md` names "Pricing" explicitly as one of the areas to resolve before more implementation work.
+This is one of the most concrete, highest-leverage gaps identified across the whole repository: `Platform/HANDOVER/12_OPEN_DECISIONS.md` and `Platform/ARCHITECTURE_FREEZE.md` both flag real pricing as a founder decision blocking real monetization, and `Platform/FOUNDER_NEXT_STEP.md` names "Pricing" explicitly as one of the areas to resolve before more implementation work.
+
+> **The evidence base now exists.** [`../04_Research/Market_Intelligence/05_Pricing_Intelligence.md`](../04_Research/Market_Intelligence/05_Pricing_Intelligence.md) contains the full Rial-in/USD-out margin model, credit mechanics, unit economics, and a ~30% disclosed-margin recommendation built on sourced supplier prices and the current FX rate. It is *research* (evidence), not the ratified pricing decision — this folder is where the founder's ratified numbers (markup, tiers, floors, FX-peg buffer) get recorded so an engineer can implement them. Treat every Toman figure in the research as a snapshot: **never hardcode a Toman price; price off an internal FX peg** (see that document's caveat and R-5.4).
 
 ## Update rules
 
