@@ -58,6 +58,10 @@ The foundation feeds the taxonomy sections that link back into it:
 - **Phase 1 — "Market Intelligence V1"** (market overview, Iranian-market deep-dive, Tier-1 competitor profiles, core frameworks) was delivered as an in-chat artifact and **was never exported to a file**. It is therefore *not* in this repository. The phase documents reference it as "V1 §…". Recovering and integrating it as `01b_Market_Intelligence_V1.md` (or renumbering) is the top outstanding item for this section. Until then, the Executive Intelligence Report (01) is the reliable standalone entry point.
 - The ten open research gaps (RG-1…RG-10) and the ~40 governed-document amendments are catalogued in [`00_Master_Index.md`](00_Master_Index.md) Parts 6–7.
 
+## History
+
+This section was integrated into the canonical repository on 2026-07-16. The full record of what changed, what was reorganized, what was preserved, and the accidental deletions that were caught and reverted is in [`MIGRATION_REPORT_2026-07-16.md`](MIGRATION_REPORT_2026-07-16.md).
+
 ## Conventions
 
 Every document carries the standard metadata block ([`../../00_Index/METADATA_STANDARD.md`](../../00_Index/METADATA_STANDARD.md)). The research documents additionally use a consistent labeling scheme in their bodies: **FACT** (sourced) · **INSIGHT** (analysis) · **ASSUMPTION** · **RECOMMENDATION**, with confidence **High / Medium / Low / Unavailable**. The Due Diligence Review (11) is **frozen** — re-audits are filed as new versions, never edits.
