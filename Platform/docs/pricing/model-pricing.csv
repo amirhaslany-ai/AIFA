@@ -1,0 +1,82 @@
+aifa_model_id,aifa_display_name,category,capability,portfolio_status,official_model_name,official_model_id,primary_provider,backup_provider,pricing_record_id,pricing_status,commercial_status,region_status,effective_from,effective_to,verified_at,notes
+gpt-5.6-sol,GPT-5.6 Sol,chat,chat,UNVERIFIED,,,OpenAI,,,,,,,,,ADR-0018
+gpt-5.6-terra,GPT-5.6 Terra,chat,chat,UNVERIFIED,,,OpenAI,,,,,,,,,ADR-0018
+gpt-5.6-luna,GPT-5.6 Luna,chat,chat,UNVERIFIED,,,OpenAI,,,,,,,,,ADR-0018
+gpt-5.5,GPT-5.5,chat,chat,WATCHLIST,,,OpenAI,,,,,,,,,ADR-0018 - optional/under consideration
+claude-fable-5,Claude Fable 5,chat,chat,UNVERIFIED,,,Anthropic,,,,,,,,,ADR-0018
+claude-opus-4.8,Claude Opus 4.8,chat,chat,UNVERIFIED,,,Anthropic,,,,,,,,,ADR-0018
+claude-sonnet-5,Claude Sonnet 5,chat,chat,UNVERIFIED,,,Anthropic,,,,,,,,,ADR-0018
+gemini-3.1-pro-preview,Gemini 3.1 Pro Preview,chat,chat,UNVERIFIED,,,Google,,,,,,,,,ADR-0018
+gemini-3.1-flash-lite,Gemini 3.1 Flash-Lite,chat,chat,UNVERIFIED,,,Google,,,,,,,,,ADR-0018
+grok-4.5,Grok 4.5,chat,chat,UNVERIFIED,,,xAI,,,,,,,,,ADR-0018
+deepseek-v4-pro,DeepSeek V4 Pro,chat,chat,UNVERIFIED,,,DeepSeek,,,,,,,,,ADR-0018
+deepseek-v4-flash,DeepSeek V4 Flash,chat,chat,UNVERIFIED,,,DeepSeek,,,,,,,,,ADR-0018
+qwen-3.6-max-preview,Qwen3.6 Max Preview,chat,chat,UNVERIFIED,,,Alibaba,,,,,,,,,ADR-0018
+glm-5.2,GLM-5.2,chat,chat,UNVERIFIED,,,Zhipu,,,,,,,,,ADR-0018
+chat-package,Chat Package,chat,packaging,AIFA_ALIAS,,,,,,,,,,,,ADR-0018 - commercial bundle not a model
+all-access-package,All Access Package,chat,packaging,AIFA_ALIAS,,,,,,,,,,,,ADR-0018 - commercial bundle spanning all capabilities
+gpt-image-2,GPT Image 2,image,image,UNVERIFIED,,,OpenAI,,,,,,,,,ADR-0019 - Premium tier
+nano-banana-pro,Nano Banana Pro,image,image,UNVERIFIED,,,Google,,,,,,,,,ADR-0019 - Premium tier
+flux-2-max,FLUX.2 Max,image,image,UNVERIFIED,,,Black Forest Labs,,,,,,,,,ADR-0019 - Premium tier
+nano-banana-2,Nano Banana 2,image,image,UNVERIFIED,,,Google,,,,,,,,,ADR-0019 - Professional tier
+flux-2-pro,FLUX.2 Pro,image,image,UNVERIFIED,,,Black Forest Labs,fal,,,,,,,,ADR-0019 - Professional tier; dual provider path
+ideogram-4,Ideogram 4,image,image,UNVERIFIED,,,Ideogram,,,,,,,,,ADR-0019 - Professional tier
+recraft-v4,Recraft V4,image,image,UNVERIFIED,,,Recraft,,,,,,,,,ADR-0019 - Professional tier
+runway-image,Runway Image,image,image,UNVERIFIED,,,Runway,,,,,,,,,ADR-0019 - Professional tier
+seedream-5-lite,Seedream 5 Lite,image,image,INTEGRATION_GATED,,,,,,,,,,,,ADR-0019 - Economy tier; gated on official/approved API existing
+flux-dev,FLUX Dev,image,image,WATCHLIST,,,Black Forest Labs,,,,,,,,,ADR-0019 - Economy tier; optional
+kling-3,Kling 3,video,video,UNVERIFIED,,,Kling,fal,,,,,,,,ADR-0020 - general launch
+seedance-2,Seedance 2,video,video,UNVERIFIED,,,Volcano Engine,,,,,,,,,ADR-0020 - general launch; fallback via an approved gateway (provider unresolved; see GAP-006)
+veo-3.1-fast,Veo 3.1 Fast,video,video,UNVERIFIED,,,Google,,,,,,,,,ADR-0020 - general launch
+wan-2.6-or-2.7,Wan 2.6 or 2.7,video,video,UNVERIFIED,,,Alibaba,,,,,,,,,"ADR-0020 - general launch; exact version unresolved, see GAP-003"
+gemini-omni-flash,Gemini Omni Flash,video,video,UNVERIFIED,,,Google,,,,,,,,,ADR-0020 - general launch and editing mode
+veo-3.1-standard,Veo 3.1 Standard,video,video,UNVERIFIED,,,Google,,,,,,,,,ADR-0020 - Premium tier
+seedance-2-standard,Seedance 2 Standard,video,video,UNVERIFIED,,,Volcano Engine,,,,,,,,,ADR-0020 - Premium tier
+kling-3-hq,Kling 3 HQ,video,video,UNVERIFIED,,,Kling,,,,,,,,,ADR-0020 - Premium tier
+runway-gen-4.5,Runway Gen-4.5,video,video,UNVERIFIED,,,Runway,,,,,,,,,ADR-0020 - Premium tier
+veo-lite,Veo Lite,video,video,UNVERIFIED,,,Google,,,,,,,,,ADR-0020 - Economy tier
+hailuo-2.3-fast,Hailuo 2.3 Fast,video,video,UNVERIFIED,,,MiniMax,,,,,,,,,ADR-0020 - Economy tier
+runway-gen-4-turbo,Runway Gen-4 Turbo,video,video,UNVERIFIED,,,Runway,,,,,,,,,ADR-0020 - Economy tier
+wan-720p,Wan 720p,video,video,UNVERIFIED,,,Alibaba,,,,,,,,,ADR-0020 - Economy tier
+runway-aleph-2,Runway Aleph 2,video,video,UNVERIFIED,,,Runway,,,,,,,,,ADR-0020 - Editing mode
+wan-video-edit,Wan Video Edit / Reference-to-Video,video,video,UNVERIFIED,,,Alibaba,,,,,,,,,ADR-0020 - Editing mode
+runway-act-two,Runway Act-Two,video,video,UNVERIFIED,,,Runway,,,,,,,,,ADR-0020 - Character mode
+kling-motion-control,Kling Motion Control,video,video,UNVERIFIED,,,Kling,,,,,,,,,ADR-0020 - Character mode
+wan-reference-to-video,Wan Reference-to-Video,video,video,UNVERIFIED,,,Alibaba,,,,,,,,,ADR-0020 - Character mode
+luma,Luma,video,video,RESERVE,,,,,,,,,,,,ADR-0020 - reserve/watchlist
+sora,Sora,video,video,RESERVE,,,,,,,,,,,,ADR-0020 - reserve/watchlist
+grok-video,Grok Video,video,video,RESERVE,,,xAI,,,,,,,,,ADR-0020 - reserve/watchlist
+pika,Pika,video,video,RESERVE,,,,,,,,,,,,ADR-0020 - reserve/watchlist
+eleven-v3,Eleven v3,voice,tts,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+eleven-multilingual-v2,Eleven Multilingual v2,voice,tts,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+eleven-flash-v2.5,Eleven Flash v2.5,voice,tts,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021 - default realtime TTS leg
+gemini-3.1-flash-tts,Gemini 3.1 Flash TTS,voice,tts,UNVERIFIED,,,Google,,,,,,,,,ADR-0021 - economy realtime TTS leg
+chirp-3-hd,Chirp 3 HD,voice,tts,UNVERIFIED,,,Google,,,,,,,,,ADR-0021
+cartesia-sonic-3.5,Cartesia Sonic 3.5,voice,tts,RESERVE,,,Cartesia,,,,,,,,,ADR-0021
+scribe-v2,Scribe v2,voice,stt,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+scribe-v2-realtime,Scribe v2 Realtime,voice,stt,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+nova-3,Nova-3,voice,stt,UNVERIFIED,,,Deepgram,,,,,,,,,ADR-0021 - fixed STT leg across all realtime tiers
+flux-stt,Flux,voice,stt,UNVERIFIED,,,Deepgram,,,,,,,,,ADR-0021
+openai-realtime-stt,OpenAI realtime transcription,voice,stt,RESERVE,,,OpenAI,,,,,,,,,ADR-0021
+eleven-instant-voice-cloning,Eleven Instant Voice Cloning,voice,cloning,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+eleven-professional-voice-cloning,Eleven Professional Voice Cloning,voice,cloning,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+google-instant-custom-voice,Google Instant Custom Voice,voice,cloning,RESERVE,,,Google,,,,,,,,,ADR-0021
+eleven-speech-to-speech,ElevenLabs Speech-to-Speech,voice,changer,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+eleven-dubbing,ElevenLabs Dubbing,voice,dubbing,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
+lyria-3-pro,Google Lyria 3 Pro,music,full-song,UNVERIFIED,,,Google,,,,,,,,,ADR-0022
+mureka-9,Mureka 9,music,full-song,UNVERIFIED,,,Mureka,,,,,,,,,ADR-0022
+suno-v5.5,Suno v5.5,music,full-song,INTEGRATION_GATED,,,Suno,,,,,,,,,"ADR-0022 - official API only, see GAP-001"
+eleven-music,Eleven Music,music,full-song,INTEGRATION_GATED,,,ElevenLabs,,,,,,,,,"ADR-0022 - feature-gated, see GAP-002"
+lyria-3-clip,Google Lyria 3 Clip,music,preview,UNVERIFIED,,,Google,,,,,,,,,ADR-0022
+stable-audio-3-instrumental,Stable Audio 3,music,instrumental,UNVERIFIED,,,Stability AI,,,,,,,,,ADR-0022
+eleven-sound-effects,ElevenLabs Sound Effects,music,sfx,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0022
+stable-audio-3-sfx,Stable Audio 3,music,sfx,UNVERIFIED,,,Stability AI,,,,,,,,,ADR-0022
+ace-step-1.5,ACE-Step 1.5,music,reserve,RESERVE,,,,,,,,,,,,ADR-0022
+stable-audio-2.5,Stable Audio 2.5,music,reserve,RESERVE,,,Stability AI,,,,,,,,,ADR-0022
+lyria-2,Lyria 2,music,reserve,RESERVE,,,Google,,,,,,,,,ADR-0022
+udio,Udio,music,reserve,RESERVE,,,,,,,,,,,,ADR-0022
+heygen,HeyGen,avatar,avatar,UNVERIFIED,,,HeyGen,,,,,,,,,ADR-0023 - launch provider
+tavus,Tavus,avatar,avatar,UNVERIFIED,,,Tavus,,,,,,,,,ADR-0023 - launch provider
+hedra,Hedra,avatar,avatar,RESERVE,,,,,,,,,,,,ADR-0023
+synthesia,Synthesia,avatar,avatar,RESERVE,,,,,,,,,,,,ADR-0023
+d-id,D-ID,avatar,avatar,RESERVE,,,,,,,,,,,,ADR-0023

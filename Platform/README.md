@@ -10,6 +10,7 @@ The AIFA aggregator platform: a multi-model AI product (comparable to OpenRouter
 2. [`docs/architecture/00-overview.md`](docs/architecture/00-overview.md) — how the pieces fit together.
 3. This README's [Repository layout](#repository-layout) and [Naming conventions](#naming-conventions) below.
 4. [`CONTRIBUTING.md`](CONTRIBUTING.md) — branch/commit/PR/review process, before opening a PR.
+5. **Working on the product portfolio, providers, or pricing?** Start at [`docs/portfolio/README.md`](docs/portfolio/README.md) (the locked multi-modal product portfolio: chat/image/video/avatar/voice/music), [`docs/providers/README.md`](docs/providers/README.md) (per-vendor reference — skeletons pending the provider pricing audit's research phase), and [`docs/economics/README.md`](docs/economics/README.md) / [`docs/pricing/README.md`](docs/pricing/README.md) (cost/credit-engine methodology and machine-readable pricing data). ADR-0016 onward records the architecture decisions behind this tree.
 
 ## Repository layout
 
@@ -28,7 +29,11 @@ Platform/
 │   └── docker/           # local dev docker-compose + per-app Dockerfiles
 ├── docs/
 │   ├── adr/               # architectural decision records
-│   └── architecture/      # living architecture documentation
+│   ├── architecture/      # living architecture documentation
+│   ├── portfolio/         # locked product portfolio (chat/image/video/avatar/voice/music) — ADR-0018–0023
+│   ├── providers/         # per-vendor reference docs — skeletons pending the pricing audit's research phase
+│   ├── economics/         # cost/credit-engine/margin methodology (requirements, not final numbers)
+│   └── pricing/           # machine-readable pricing datasets (CSV/YAML) — ADR-0025
 └── CONTRIBUTING.md        # branch/commit/PR/review process
 ```
 

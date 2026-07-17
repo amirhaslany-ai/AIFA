@@ -58,6 +58,8 @@ Clean Architecture, DDD, SOLID, Hexagonal Architecture, low coupling / high cohe
 | `ddd-tactical-design.md` | Tactical DDD patterns (aggregates, entities, value objects, repositories) per context |
 | `package-boundaries.md` | What each `packages/*` folder is and isn't for |
 | `ai-provider-layer.md` | How the provider abstraction is used from `apps/api` (detail beyond ADR-0005), plus design-only extensions (capability matrix, streaming, retry, cost layer) |
+| `capability-model-provider.md` | The Capability → Model Family → Variant → Provider → Regional Endpoint routing chain (ADR-0016) that the multi-modal portfolio (`../portfolio/`) is expressed against — design-only, extends `ai-provider-layer.md` beyond chat |
+| `smart-routing.md`, `cost-routing.md`, `privacy-routing.md`, `regional-routing.md`, `fallback-routing.md` | The Smart Router and its four routing engines (ADR-0024) — design/direction only, no implementation |
 | `wallet-architecture.md` | Implemented (Sprint 1): ledger-based wallet, credit/reservation/settlement/rollback/debit flows |
 | `pricing-architecture.md` | Implemented (Sprint 1): base-markup + floor rule pipeline; campaigns/plan tiers still design-only |
 | `security-architecture.md` | JWT/session strategy, key rotation, rate limiting, encryption, PII, threat model |
