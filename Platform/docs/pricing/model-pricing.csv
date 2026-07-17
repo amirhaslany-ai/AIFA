@@ -26,7 +26,7 @@ runway-image,Runway Image,image,image,UNVERIFIED,,,Runway,,,,,,,,,ADR-0019 - Pro
 seedream-5-lite,Seedream 5 Lite,image,image,INTEGRATION_GATED,,,,,,,,,,,,ADR-0019 - Economy tier; gated on official/approved API existing
 flux-dev,FLUX Dev,image,image,WATCHLIST,,,Black Forest Labs,,,,,,,,,ADR-0019 - Economy tier; optional
 kling-3,Kling 3,video,video,UNVERIFIED,,,Kling,fal,,,,,,,,ADR-0020 - general launch
-seedance-2,Seedance 2,video,video,UNVERIFIED,,,Volcano Engine,approved gateway,,,,,,,,ADR-0020 - general launch
+seedance-2,Seedance 2,video,video,UNVERIFIED,,,Volcano Engine,,,,,,,,,ADR-0020 - general launch; fallback via an approved gateway (provider unresolved; see GAP-006)
 veo-3.1-fast,Veo 3.1 Fast,video,video,UNVERIFIED,,,Google,,,,,,,,,ADR-0020 - general launch
 wan-2.6-or-2.7,Wan 2.6 or 2.7,video,video,UNVERIFIED,,,Alibaba,,,,,,,,,"ADR-0020 - general launch; exact version unresolved, see GAP-003"
 gemini-omni-flash,Gemini Omni Flash,video,video,UNVERIFIED,,,Google,,,,,,,,,ADR-0020 - general launch and editing mode

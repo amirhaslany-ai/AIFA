@@ -4,11 +4,19 @@ Validates docs/pricing/*.csv, docs/pricing/assumptions.yaml, and cross-checks
 docs/adr/ numbering and docs/**.md relative links.
 
 Stdlib-only (no PyYAML dependency, since this is a pnpm/Node monorepo with no
-Python toolchain of its own) - assumptions.yaml gets a structural sanity check,
-not a full parse.
+Python toolchain of its own).
+
+YAML-validation limitation (important): assumptions.yaml is NOT parsed. Without
+a YAML library available, this script performs only a structural sanity check
+(required scenario keys are present, and no tab characters are used for
+indentation). A regex/key-presence check is NOT equivalent to parsing: malformed
+YAML that still contains the expected key lines would pass this check. A full
+parse should be added if/when a YAML parser becomes available in the CI
+environment (e.g. `pip install pyyaml` in the workflow, then `yaml.safe_load`).
 
 Run from anywhere: python3 docs/pricing/validate_pricing.py
-Exits non-zero on any failure so it can be wired into CI later.
+Exits non-zero on any failure (missing required dataset, ragged CSV, duplicate
+id/ADR number, broken doc link, or missing scenario key) so it can gate CI.
 """
 import csv
 import os
@@ -21,6 +29,27 @@ ADR_DIR = os.path.join(DOCS_ROOT, "adr")
 
 errors = []
 warnings = []
+
+# The required pricing-dataset manifest (audit mission section 8). Validation
+# MUST fail if any of these is absent, so a missing dataset can never pass
+# silently (even when it is legitimately header-only in this phase).
+REQUIRED_FILES = [
+    "provider-pricing.csv",
+    "model-pricing.csv",
+    "scenario-costs.csv",
+    "sources.csv",
+    "pricing-audit-gaps.csv",
+    "assumptions.yaml",
+]
+
+
+def check_required_files():
+    missing = [fn for fn in REQUIRED_FILES if not os.path.exists(os.path.join(PRICING_DIR, fn))]
+    if missing:
+        for fn in missing:
+            errors.append(f"required pricing dataset missing: {fn}")
+    else:
+        print(f"OK  required-file manifest: all {len(REQUIRED_FILES)} datasets present")
 
 
 def check_csv(filename, required_columns=None, unique_key=None):
@@ -118,12 +147,14 @@ def check_markdown_links():
 
 
 def main():
+    check_required_files()
     check_csv("model-pricing.csv", required_columns=[
         "aifa_model_id", "aifa_display_name", "category", "capability", "portfolio_status",
         "official_model_id", "primary_provider", "backup_provider", "pricing_status",
         "verified_at", "notes",
     ], unique_key="aifa_model_id")
     check_csv("provider-pricing.csv")
+    check_csv("scenario-costs.csv", unique_key="scenario_id")
     check_csv("sources.csv", unique_key="source_id")
     check_csv("pricing-audit-gaps.csv", unique_key="gap_id")
     check_assumptions_yaml()
