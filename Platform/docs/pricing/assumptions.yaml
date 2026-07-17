@@ -1,0 +1,55 @@
+# Standardized comparison scenarios for AIFA's pricing/cost model.
+# These are fixed, product-decided input assumptions (not research findings) —
+# see the audit mission's own defaults. Used by ../economics/cost-model.md and
+# populated into scenario-costs.csv once Phase C provides real provider pricing.
+# Do not add a user-volume or revenue assumption here — this file defines
+# per-scenario *usage shape* only; volume/business assumptions belong in
+# ../economics/budget-scenarios.md as clearly labeled, separately-approved inputs.
+
+chat_standard:
+  request_count: 100
+  input_tokens_per_request: 2000
+  output_tokens_per_request: 1000
+  cache_hit_rate: 0
+
+chat_cached:
+  request_count: 100
+  input_tokens_per_request: 2000
+  output_tokens_per_request: 1000
+  cache_hit_rate: 0.5
+
+image_standard:
+  image_count: 10
+  resolution: "1024x1024"
+  quality: standard
+
+video_standard:
+  output_seconds: 10
+  resolution: 720p
+  audio: provider_default
+
+video_premium:
+  output_seconds: 10
+  resolution: 1080p
+  audio: enabled
+
+avatar_standard:
+  output_minutes: 10
+  mode: prerecorded
+
+avatar_conversational:
+  conversation_minutes: 10
+  concurrency: 1
+
+tts_standard:
+  output_minutes: 10
+  characters_per_minute: 1000
+
+stt_standard:
+  input_minutes: 60
+
+music_standard:
+  output_minutes: 5
+
+sfx_standard:
+  output_seconds: 60
