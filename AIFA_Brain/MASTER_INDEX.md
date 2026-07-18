@@ -4,10 +4,10 @@
 |---|---|
 | **Title** | Master Index |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-16 |
+| **Updated** | 2026-07-18 |
 | **Owner** | AIFA_Brain maintainers (see `00_Index/README.md`) |
 | **Status** | Active |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Dependencies** | none |
 | **Related Docs** | `README.md`, `00_Index/NAVIGATION.md`, `00_Index/KNOWLEDGE_SYNC_POLICY.md`, `04_Research/Market_Intelligence/README.md` |
 | **Tags** | `index, navigation, governance` |
@@ -97,6 +97,7 @@ The completed, cross-referenced market/competitive intelligence study — twelve
 | [`04_Research/README.md`](04_Research/README.md) | Research section entry point. |
 | [`04_Research/Market_Intelligence/`](04_Research/Market_Intelligence/README.md) | **The Market Intelligence Foundation** (see the dedicated section above) — the completed 12-document competitive/market intelligence study. |
 | [`04_Research/Market_Research/`](04_Research/Market_Research/README.md), [`User_Research/`](04_Research/User_Research/README.md), [`Technology_Research/`](04_Research/Technology_Research/README.md), [`Pricing_Research/`](04_Research/Pricing_Research/README.md), [`API_Research/`](04_Research/API_Research/README.md) | Five template-driven sub-areas for new, point-in-time studies. Competitor research lives in `05_Competitors/` instead (see below), not duplicated here. |
+| [`04_Research/Pricing_Research/Provider_Pricing_Audit/`](04_Research/Pricing_Research/Provider_Pricing_Audit/00_Summary.md) | **Provider (supplier-cost) pricing audit** — Phase C/C.5/D chat-portfolio provider research, verification, and ingestion-plan artifacts, plus the Phase D.5 reconciliation summary. Distinct from `Pricing_Research/`'s original competitor-pricing scope (see that folder's README). Production datasets live in `../../Platform/docs/pricing/`; the staging package awaiting Phase E is `../../Platform/docs/pricing/staging/2026-07-18-chat/`. |
 
 ## Competitors
 
