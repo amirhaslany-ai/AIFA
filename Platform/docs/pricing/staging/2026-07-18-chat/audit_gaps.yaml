@@ -1,0 +1,192 @@
+# Phase E staging package -- section E: audit_gaps
+# Batch: 2026-07-18 chat provider-pricing audit (Phase C / C.5 / D / D.5)
+# Superset of what belongs in Platform/docs/pricing/pricing-audit-gaps.csv (production
+# columns: gap_id, priority, provider, model, category, missing_information, reason,
+# required_action, blocks_credit_engine, owner, status -- priority/owner intentionally
+# left for a human to assign, not invented here).
+# Includes GAP-STAGE-0001/0002 (the two REJECTED xAI corrections, preserved explicitly
+# so they cannot silently re-enter through a later copy/import) and GAP-STAGE-0014 (the
+# meta-gap covering the source-URL provenance issue that caps every other record's
+# disposition at PENDING).
+
+- staging_gap_id: GAP-STAGE-0001
+  provider: xAI
+  model: grok-4.5
+  category: pricing
+  missing_information: Batch API discount
+  claimed_value: "50% off standard (Phase C original claim)"
+  phase_c5_evidence_status: CONFLICTING
+  reason: docs.x.ai states models not listed receive no batch discount; grok-4.5 is not listed
+  action_required: "None -- treat as confirmed-absent (0%), not pending. Corrected fact recorded in pricing_facts.yaml."
+  blocks_credit_engine: true
+  staging_disposition: REJECTED
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0002
+  provider: xAI
+  model: grok-4.5
+  category: rate-limit
+  missing_information: Request rate-limit unit
+  claimed_value: 150 requests per MINUTE (Phase C original claim)
+  phase_c5_evidence_status: CONFLICTING
+  reason: "Official value is 150 requests per SECOND; the tokens-per-minute figure (50,000,000) is correct as originally stated"
+  action_required: None -- corrected value recorded in model_facts.yaml.
+  blocks_credit_engine: false
+  staging_disposition: REJECTED
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0003
+  provider: OpenAI
+  model: gpt-5.6-sol/-terra/-luna
+  category: pricing/availability
+  missing_information: "Batch (50%) / Priority tier rows; exact GA date"
+  claimed_value: null
+  phase_c5_evidence_status: SECONDARY_ONLY
+  reason: Not captured on the specific pages fetched this pass
+  action_required: One more official-page fetch pass (Batch/Priority pricing pages; GA-date-bearing announcement)
+  blocks_credit_engine: true
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0004
+  provider: Anthropic
+  model: claude-opus-4-8
+  category: identity
+  missing_information: Release date
+  claimed_value: reported elsewhere as 2026-05-28
+  phase_c5_evidence_status: SECONDARY_ONLY
+  reason: Not on official pages fetched this pass
+  action_required: One more official-page fetch pass
+  blocks_credit_engine: false
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0005
+  provider: Anthropic
+  model: (provider-wide)
+  category: commercial
+  missing_information: General default data-retention effective date
+  claimed_value: "reported elsewhere as 7-day default, effective 2025-09-14"
+  phase_c5_evidence_status: SECONDARY_ONLY
+  reason: Covered-Model 30-day rule is confirmed; the separate general-default date is not confirmed on an official page this pass
+  action_required: One more official-page fetch pass (retention policy page)
+  blocks_credit_engine: false
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0006
+  provider: Anthropic
+  model: (provider-wide)
+  category: commercial/legal
+  missing_information: DPA auto-incorporation / effective date
+  claimed_value: reported elsewhere as effective 2026-01-01
+  phase_c5_evidence_status: UNVERIFIED
+  reason: Not located this pass
+  action_required: "Confirm at trust.anthropic.com specifically -- compliance/legal claim, do not infer from a pricing or product page"
+  blocks_credit_engine: true
+  staging_disposition: "PENDING -- treat as high-caution, not casual follow-up"
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0007
+  provider: Anthropic
+  model: (provider-wide)
+  category: commercial/legal
+  missing_information: "ISO 27001:2022 / ISO 42001 / SOC 2 certification claims"
+  claimed_value: null
+  phase_c5_evidence_status: UNVERIFIED
+  reason: Not verified at Trust Center this pass
+  action_required: Confirm at trust.anthropic.com specifically -- compliance/legal claim
+  blocks_credit_engine: true
+  staging_disposition: "PENDING -- treat as high-caution, not casual follow-up"
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0008
+  provider: Alibaba
+  model: qwen3.6-max-preview
+  category: pricing
+  missing_information: Singapore per-token pricing
+  claimed_value: null
+  phase_c5_evidence_status: SECONDARY_ONLY
+  reason: Not confirmed on alibabacloud.com pricing page this pass
+  action_required: Official pricing-page fetch pass
+  blocks_credit_engine: true
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0009
+  provider: Alibaba
+  model: qwen3.6-max-preview
+  category: pricing
+  missing_information: Beijing per-token pricing
+  claimed_value: null
+  phase_c5_evidence_status: UNVERIFIED
+  reason: No first-party confirmation located at all this pass -- genuinely uncertain whether publicly documented
+  action_required: "Official pricing-page fetch pass, or confirm whether this is published at all"
+  blocks_credit_engine: true
+  staging_disposition: "PENDING -- may resolve to 'not publicly documented' rather than a findable number"
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0010
+  provider: Alibaba
+  model: qwen3.6-max-preview
+  category: model-spec
+  missing_information: "Context window, modality, regional scope, free quota"
+  claimed_value: null
+  phase_c5_evidence_status: SECONDARY_ONLY
+  reason: Not confirmed on an official model page this pass
+  action_required: Official model-card fetch pass
+  blocks_credit_engine: false
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0011
+  provider: Zhipu
+  model: glm-5.2
+  category: model-spec
+  missing_information: Context window / max output tokens
+  claimed_value: null
+  phase_c5_evidence_status: UNVERIFIED
+  reason: Confirmed absent from the official pricing page (not merely unfetched)
+  action_required: Official model-card fetch pass (may live on a page separate from pricing)
+  blocks_credit_engine: false
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0012
+  provider: Zhipu
+  model: glm-5.2
+  category: model-spec/legal
+  missing_information: MIT license / self-hosting claim
+  claimed_value: null
+  phase_c5_evidence_status: SECONDARY_ONLY
+  reason: From secondary sources; not verified on an official model card
+  action_required: Official model-card fetch pass
+  blocks_credit_engine: false
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0013
+  provider: OpenRouter
+  model: qwen3.6-max-preview
+  category: pricing
+  missing_information: Direct-vs-OpenRouter price delta
+  claimed_value: null
+  phase_c5_evidence_status: UNVERIFIED
+  reason: No official direct-price baseline exists yet to compare against (see GAP-STAGE-0008/0009)
+  action_required: Resolve the direct Alibaba baseline first; only then can a delta be asserted
+  blocks_credit_engine: false
+  staging_disposition: PENDING
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
+
+- staging_gap_id: GAP-STAGE-0014
+  provider: (all 7 providers + OpenRouter)
+  model: (all 13 verified models)
+  category: provenance
+  missing_information: Independent confirmation that the cited URLs are the exact pages Phase C.5 verified against
+  claimed_value: null
+  phase_c5_evidence_status: "N/A -- this is a meta-gap about the evidence chain itself, not a single fact"
+  reason: "Phase C.5 supplies no literal URLs anywhere in its text; all URLs in this batch trace only to Phase D, which self-describes as produced without live access and treats file/URL examples as illustrative"
+  action_required: Independently re-fetch and re-confirm each source URL against the specific claims attributed to it
+  blocks_credit_engine: true
+  staging_disposition: "PENDING -- this is the single highest-priority, highest-leverage gap in the entire batch; see 00_Summary.md"
+  production_gaps_csv_mapping: "Maps directly: gap_id/provider/model/category/missing_information/reason/action_required/blocks_credit_engine columns all exist; priority and owner must be assigned by a human (not invented here); status maps per ADR-0026 (CONFLICTING has no direct production status value as it is prohibited from production rather than logged as a pending status -- recommend representing as a plain gap row with reason stating the rejection)"
