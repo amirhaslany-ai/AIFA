@@ -1,0 +1,194 @@
+# Phase E staging package -- section A: sources
+# Batch: 2026-07-18 chat provider-pricing audit (Phase C / C.5 / D / D.5)
+# Maps toward Platform/docs/pricing/sources.csv (source_id, provider, source_type,
+# title, url, published_at, updated_at, accessed_at, official, scope, notes).
+# staging_source_id is a PROPOSED id (STAGE-SRC-####), not yet a production source_id --
+# see mapping_manifest.yaml for the id-assignment approval item.
+# ALL records are capped at staging_disposition: PENDING -- see 00_Summary.md's headline
+# finding: Phase C.5 supplies no URLs; every url above is inherited from Phase D's
+# proposal only and is not independently confirmed within the supplied bundle.
+# This PENDING disposition is a routine engineering/research task (one re-fetch pass per
+# source), not a verification failure or a founder decision -- see PHASE_E_RUNBOOK.md #1
+# and 00_Summary.md's "Three different questions" section.
+
+- staging_source_id: STAGE-SRC-0001
+  provider: OpenAI
+  source_type: pricing_page
+  title: OpenAI API Pricing (GPT-5.6 family)
+  url: "https://developers.openai.com/api/docs/pricing"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "GPT-5.6 Sol/Terra/Luna standard pricing, context/output limits, knowledge cutoff, data-residency uplift"
+  evidence_status_c5: OFFICIAL_VERIFIED (identity/pricing/limits); SECONDARY_ONLY (exact GA date)
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0002
+  provider: OpenAI
+  source_type: model_page
+  title: OpenAI GPT-5.6 Sol model page
+  url: "https://developers.openai.com/api/docs/models/gpt-5.6-sol"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "Long-context (>272K) input 2x / output 1.5x rule"
+  evidence_status_c5: OFFICIAL_VERIFIED
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0003
+  provider: Anthropic
+  source_type: pricing_page
+  title: Anthropic (Claude) API pricing
+  url: "https://platform.claude.com/pricing"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "Claude Fable 5/Opus 4.8/Sonnet 5 pricing, cache multipliers, web search, code execution, inference_geo multiplier"
+  evidence_status_c5: OFFICIAL_VERIFIED (pricing/multipliers); SECONDARY_ONLY (Opus 4.8 release date)
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0004
+  provider: Anthropic
+  source_type: docs
+  title: Anthropic API and data retention documentation
+  url: "https://platform.claude.com/docs/api-and-data-retention"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "Covered-Model 30-day retention rule, ZDR availability for qualifying enterprise"
+  evidence_status_c5: "OFFICIAL_VERIFIED (Covered-Model 30-day + ZDR); UNVERIFIED (general default retention date, DPA, ISO/SOC certifications)"
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0005
+  provider: Anthropic
+  source_type: announcement
+  title: "Anthropic news: Claude Fable 5 / Mythos 5"
+  url: "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: Fable 5 identity as an official Mythos-class model (not a numbered Claude tier)
+  evidence_status_c5: OFFICIAL_VERIFIED
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0006
+  provider: Anthropic
+  source_type: announcement
+  title: "Anthropic news: redeploying Fable 5"
+  url: "https://www.anthropic.com/news/redeploying-fable-5"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: Fable 5 export-control suspension (2026-06-12) / lift (2026-06-30) / global restoration (2026-07-01) timeline; Mythos access remained restricted
+  evidence_status_c5: OFFICIAL_VERIFIED
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0007
+  provider: Google
+  source_type: pricing_page
+  title: Gemini API pricing
+  url: "https://ai.google.dev/gemini-api/docs/pricing"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "Gemini 3.1 Pro Preview (+customtools) and Flash-Lite pricing, cache storage, search grounding, training-use policy"
+  evidence_status_c5: OFFICIAL_VERIFIED
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0008
+  provider: xAI
+  source_type: pricing_page
+  title: xAI Grok API pricing
+  url: "https://docs.x.ai/developers/pricing"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "Grok 4.5 standard + long-context (>200K) pricing, context, rate limits, knowledge cutoff, launch date; source of the two REJECTED corrections"
+  evidence_status_c5: "OFFICIAL_VERIFIED (pricing/limits); CONFLICTING (original 50% batch-discount and requests/minute claims, both corrected here)"
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use. Despite PENDING disposition on the URL, the two CONFLICTING corrections themselves are treated as REJECTED (not merely pending) at the fact level -- see audit_gaps.yaml GAP-STAGE-0001/0002."
+
+- staging_source_id: STAGE-SRC-0009
+  provider: xAI
+  source_type: docs
+  title: xAI security / data-sharing FAQ
+  url: "https://docs.x.ai/developers/faq/security"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: xAI training/data-sharing opt-in program
+  evidence_status_c5: OFFICIAL_VERIFIED
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0010
+  provider: DeepSeek
+  source_type: pricing_page
+  title: DeepSeek API pricing
+  url: "https://api-docs.deepseek.com/quick_start/pricing"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "DeepSeek V4 Pro/Flash cache-hit/miss/output pricing, context/output limits, concurrency, legacy alias deprecation (2026-07-24 15:59 UTC)"
+  evidence_status_c5: OFFICIAL_VERIFIED
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0011
+  provider: Alibaba
+  source_type: model_page
+  title: Alibaba Cloud Model Studio (Qwen)
+  url: "https://www.alibabacloud.com/help/en/model-studio"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: Qwen3.6-Max-Preview official model ID only
+  evidence_status_c5: "OFFICIAL_VERIFIED (ID only); SECONDARY_ONLY (Singapore pricing, context/modality/scope); UNVERIFIED (Beijing pricing)"
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use. Weakest-evidenced provider in this batch even before the URL caveat -- most fields SECONDARY_ONLY/UNVERIFIED at the Phase C.5 level already."
+
+- staging_source_id: STAGE-SRC-0012
+  provider: Zhipu
+  source_type: pricing_page
+  title: Z.ai (Zhipu) GLM pricing
+  url: "https://docs.z.ai/guides/overview/pricing"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: true
+  scope: "GLM-5.2 official ID, input/cached/output pricing, storage (temporarily free)"
+  evidence_status_c5: "OFFICIAL_VERIFIED (ID/pricing); UNVERIFIED (context window, max output); SECONDARY_ONLY (MIT license/self-hosting claim)"
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use."
+
+- staging_source_id: STAGE-SRC-0013
+  provider: OpenRouter
+  source_type: pricing_page
+  title: OpenRouter model pages
+  url: "https://openrouter.ai/models"
+  published_at: ""
+  updated_at: ""
+  accessed_at: 2026-07-18
+  official: false
+  scope: "Routing/channel prices for DeepSeek V4 Flash, GLM-5.2 (observed deltas vs. direct); closed-model list-price parity observations"
+  evidence_status_c5: "OFFICIAL_VERIFIED (as a channel/router disclosure); time-sensitive, requires accessed_at/verified_at on every use"
+  staging_disposition: PENDING
+  notes: "URL sourced from Phase D's proposal only; Phase C.5 (the evidentiary authority) supplies no URL for this claim. Not independently confirmed within the supplied bundle. Requires re-confirmation before production use. OpenRouter is a channel, not the original provider -- official=false reflects that distinction, not lower evidentiary quality."

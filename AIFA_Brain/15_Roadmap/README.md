@@ -4,12 +4,12 @@
 |---|---|
 | **Title** | 15_Roadmap — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-13 |
+| **Updated** | 2026-07-18 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | none |
-| **Related Docs** | `../MASTER_INDEX.md`, `../../Platform/POST_FREEZE_BACKLOG.md`, `../../Platform/FOUNDER_NEXT_STEP.md`, `../01_Product/README.md` |
+| **Related Docs** | `../MASTER_INDEX.md`, `../../Platform/POST_FREEZE_BACKLOG.md`, `../../Platform/FOUNDER_NEXT_STEP.md`, `../01_Product/README.md`, `../../Platform/docs/pricing/staging/2026-07-18-chat/README.md` |
 | **Tags** | `roadmap, planning` |
 
 ## Purpose
@@ -20,6 +20,8 @@ The cross-workstream roadmap — what's next for Content Studio, Platform, and t
 - **Content Studio's own queue**: `TODO.md` at the repo root — currently showing its documentation build-out complete, blocked on founder input on open `🔶` items (see `OPEN_QUESTIONS.md`).
 
 This folder is where those two, plus whatever `01_Product/` and `02_Business/` produce, get sequenced against each other at the company level — e.g. deciding whether founder attention goes to Content Studio's blocked persona/brand questions or Platform's pricing/payment decisions first.
+
+**Pricing-audit status (2026-07-18):** the chat-portfolio provider-pricing research/verification/reconciliation cycle (Phase C → C.5 → D → D.5) is complete and staged — see `../../Platform/docs/pricing/staging/2026-07-18-chat/README.md`. No production pricing row was written yet; the batch is blocked on founder/architecture review (source-URL re-confirmation, two schema-gap approval items) before Phase E can populate `Platform/docs/pricing/*.csv`. This sits upstream of the real-pricing decision `Platform/FOUNDER_NEXT_STEP.md` and `Platform/POST_FREEZE_BACKLOG.md` already flag as a founder bottleneck — not a new bottleneck, but this is where its provider-cost evidence now lives.
 
 ## Update rules
 

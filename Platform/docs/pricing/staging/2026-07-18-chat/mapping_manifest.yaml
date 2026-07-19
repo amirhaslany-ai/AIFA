@@ -1,0 +1,108 @@
+# Phase E staging package -- section F: mapping_manifest
+# Batch: 2026-07-18 chat provider-pricing audit (Phase C / C.5 / D / D.5)
+# One record per package record CLASS (not per individual fact -- see sources.yaml,
+# model_facts.yaml, pricing_facts.yaml, commercial_policy_facts.yaml, audit_gaps.yaml
+# for the individual atomic records each class summarizes).
+# mapping_type: direct (existing column, no transformation) / transformation (existing
+# generic mechanism, e.g. billing_dimension, used non-trivially) / no-fit (approval-required,
+# genuinely missing a destination).
+# automatic_phase_e_eligibility is false for EVERY record class in this batch -- see
+# 00_Summary.md's headline finding (source-URL provenance) and PHASE_E_RUNBOOK.md's
+# stop conditions.
+# IMPORTANT: automatic_phase_e_eligibility=false does NOT mean unverified. Of the 143
+# staged model/pricing/commercial-policy facts, 130 are officially verified per Phase
+# C.5 (see each record's own phase_c5_evidence_status/adr0025_confidence field). Only
+# the 4 classes below with required_founder_or_architecture_approval: true are blocked
+# on a real decision (40 facts total); every other class is blocked purely on the
+# routine source-URL re-confirmation task in PHASE_E_RUNBOOK.md -- an engineering task,
+# not a founder decision. See 00_Summary.md's "Three different questions" section.
+
+- package_record_class: sources (13 records)
+  intended_live_file: Platform/docs/pricing/sources.csv
+  intended_live_columns: "source_id, provider, source_type, title, url, published_at, updated_at, accessed_at, official, scope, notes"
+  mapping_type: direct
+  automatic_phase_e_eligibility: false
+  required_validator_rule: "Extend validator to require a non-empty, resolvable source_id before any provider-pricing.csv/model-pricing.csv row referencing it can be marked confidence != UNVERIFIED"
+  required_founder_or_architecture_approval: false
+  notes: "Direct column fit. NOT auto-eligible: every staging_source_id's url is unconfirmed (see 00_Summary.md headline finding) -- founder/researcher must re-confirm each URL before these become real sources.csv rows. ID scheme (STAGE-SRC-#### vs. production source_id format) also needs a founder decision on the production ID convention itself, since none was previously established (production sources.csv is currently empty)."
+
+- package_record_class: "model_facts -- standard identity fields (official_model_id, context_window equivalents not present)"
+  intended_live_file: Platform/docs/pricing/model-pricing.csv
+  intended_live_columns: "official_model_name, official_model_id (direct fit)"
+  mapping_type: direct
+  automatic_phase_e_eligibility: false
+  required_validator_rule: Extend model-ID validator to accept the 13 newly-verified official_model_id values listed in model_facts.yaml
+  required_founder_or_architecture_approval: false
+  notes: "official_model_name/official_model_id columns exist and fit directly. Blocked from auto-eligibility only by the source-URL gap, not a schema gap."
+
+- package_record_class: "model_facts -- context_window_tokens, max_output_tokens, knowledge_cutoff, availability_status, account_requirements/access-timeline"
+  intended_live_file: Platform/docs/pricing/model-pricing.csv
+  intended_live_columns: NONE OF THESE COLUMNS EXIST
+  mapping_type: no-fit / approval-required
+  automatic_phase_e_eligibility: false
+  required_validator_rule: N/A until columns exist
+  required_founder_or_architecture_approval: true
+  notes: "Genuine schema gap, not a naming mismatch. Phase D proposed exactly these columns but the live schema does not have them (see 00_Summary.md's real-schema reconciliation section). Recommend a founder/architecture decision: (a) add these columns to model-pricing.csv, or (b) accept they live only in provider docs (Platform/docs/providers/*.md) as prose, never structured data. Staged as facts regardless, per the task's 'staging is schema-agnostic' framing."
+
+- package_record_class: "pricing_facts -- standard input/cached_input/output rows (OpenAI, Anthropic, Google standard tier, xAI standard+long-context, DeepSeek, Zhipu)"
+  intended_live_file: Platform/docs/pricing/provider-pricing.csv
+  intended_live_columns: "input_price_per_million, cached_input_price_per_million, output_price_per_million (direct fit)"
+  mapping_type: direct
+  automatic_phase_e_eligibility: false
+  required_validator_rule: None beyond existing column-type checks
+  required_founder_or_architecture_approval: false
+  notes: Cleanest-fitting majority of the pricing_facts records. Blocked from auto-eligibility only by the source-URL gap.
+
+- package_record_class: "pricing_facts -- batch_discount_percent (xAI=0/confirmed-absent, DeepSeek=null/confirmed-absent, Zhipu=null/confirmed-absent)"
+  intended_live_file: Platform/docs/pricing/provider-pricing.csv
+  intended_live_columns: batch_discount_percent (direct fit)
+  mapping_type: direct
+  automatic_phase_e_eligibility: false
+  required_validator_rule: "New rule required (per Phase D's own §6 finding, still valid): distinguish 'confirmed not offered' from 'not yet ingested' so a completeness validator doesn't flag these as errors"
+  required_founder_or_architecture_approval: false
+  notes: "Column exists; the validator behavior needed is new, not the column."
+
+- package_record_class: "pricing_facts -- cache_write_5m (OpenAI derived $ values), web_search / code_execution / cache_storage / search_grounding (Anthropic, Google), inference_geo multiplier, data_residency_uplift"
+  intended_live_file: Platform/docs/pricing/provider-pricing.csv
+  intended_live_columns: billing_dimension + unit_quantity + unit_name + unit_price (transformation via the generic row mechanism)
+  mapping_type: transformation
+  automatic_phase_e_eligibility: false
+  required_validator_rule: "New rule required: validate billing_dimension against a documented (not yet formally enumerated) set of accepted free-text values, so this generic mechanism doesn't become an uncontrolled dumping ground"
+  required_founder_or_architecture_approval: false
+  notes: "No column addition needed -- the existing generic billing_dimension/unit_price/unit_name/unit_quantity columns can represent these, used as one row per non-standard dimension rather than the three-column wide shortcut. This is the single most load-bearing reconciliation finding: it resolves most of what looked like schema gaps in Phase D's naive reading."
+
+- package_record_class: "pricing_facts -- OpenAI long_context_rule (multiplier only, no per-model $ stated)"
+  intended_live_file: Platform/docs/pricing/provider-pricing.csv
+  intended_live_columns: "long_context_threshold, long_context_multiplier (direct fit for the columns that exist) -- but ONE multiplier column cannot hold two different values (input 2x vs output 1.5x)"
+  mapping_type: no-fit / approval-required
+  automatic_phase_e_eligibility: false
+  required_validator_rule: N/A until resolved
+  required_founder_or_architecture_approval: true
+  notes: "Needs either two rows (one long_context_input-tagged, one long_context_output-tagged, each with its own multiplier) or a schema extension. Recommend the two-row approach as a transformation, not requiring new columns -- flagged here for founder/architecture sign-off since it's a modeling decision, not purely mechanical."
+
+- package_record_class: "pricing_facts -- OpenRouter channel rows (4 records: DeepSeek V4 Flash, GLM-5.2 input/output)"
+  intended_live_file: Platform/docs/pricing/provider-pricing.csv
+  intended_live_columns: "provider_id='openrouter' / provider_name='OpenRouter' as the channel distinguisher (transformation) -- NO channel or openrouter_model_slug column exists"
+  mapping_type: transformation
+  automatic_phase_e_eligibility: false
+  required_validator_rule: "New rule required: if provider_name='OpenRouter', require a note or a (currently nonexistent) slug field identifying which underlying model/route was actually used"
+  required_founder_or_architecture_approval: true
+  notes: "Workable without new columns by treating OpenRouter as its own provider_name value (already a natural reading of the existing provider_id/provider_name columns), but the OpenRouter-specific model slug (e.g. 'z-ai/glm-5.2') has nowhere structured to live except notes -- flagged as approval-required for whether that's acceptable or whether a slug column should be added."
+
+- package_record_class: commercial_policy_facts (all 12 records)
+  intended_live_file: Platform/docs/pricing/commercial-terms.csv
+  intended_live_columns: PROPOSED FILE DOES NOT EXIST
+  mapping_type: no-fit / approval-required
+  automatic_phase_e_eligibility: false
+  required_validator_rule: N/A until file exists
+  required_founder_or_architecture_approval: true
+  notes: "Phase D's commercial-terms.csv proposal is preserved as a recommendation, NOT created automatically per this synchronization task's explicit instruction. Founder/architecture must decide: (a) create the file as proposed, (b) represent these facts as prose in Platform/docs/providers/*.md instead (already partially true -- several of these facts are already flagged PENDING in those provider docs), or (c) some other structure. No production file created in this pass."
+
+- package_record_class: "audit_gaps (14 records, including the 2 REJECTED xAI corrections and the 1 meta-gap)"
+  intended_live_file: Platform/docs/pricing/pricing-audit-gaps.csv
+  intended_live_columns: "gap_id, provider, model, category, missing_information, reason, required_action, blocks_credit_engine (direct fit); priority, owner, status require human assignment"
+  mapping_type: direct (with human-assigned fields)
+  automatic_phase_e_eligibility: false
+  required_validator_rule: None beyond existing checks
+  required_founder_or_architecture_approval: false
+  notes: "Cleanest mapping in the whole package -- the production schema already anticipates exactly this shape. Not yet written to production because priority/owner/status are human judgment calls this pass does not make, and because GAP-STAGE-0014 (the URL-provenance meta-gap) arguably needs to be resolved or explicitly logged before the other 13 gap rows are finalized."

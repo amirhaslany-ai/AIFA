@@ -1,0 +1,150 @@
+# Phase E staging package -- section D: commercial_policy_facts
+# Batch: 2026-07-18 chat provider-pricing audit (Phase C / C.5 / D / D.5)
+# STAGING-ONLY. No production commercial/legal-terms file exists in the repository
+# (Phase D proposed 'commercial-terms.csv'; per this synchronization task's explicit
+# instruction, that file was NOT created automatically -- see mapping_manifest.yaml's
+# approval-required entry). Every record here is schema-gap by definition; disposition
+# is additionally capped PENDING by the source-URL caveat like every other section.
+
+- provider: Anthropic
+  scope: model_specific
+  official_model_id: claude-fable-5
+  field_name: data_retention_days
+  field_value: 30
+  staging_source_id: STAGE-SRC-0004
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: Covered-Model 30-day retention rule; applies even under ZDR per Phase C.5
+
+- provider: Anthropic
+  scope: model_specific
+  official_model_id: claude-fable-5
+  field_name: zdr_note
+  field_value: ZDR does not shorten the Covered-Model 30-day retention floor
+  staging_source_id: STAGE-SRC-0004
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: ""
+
+- provider: Anthropic
+  scope: provider_wide
+  official_model_id: null
+  field_name: zdr_availability
+  field_value: enterprise_only (qualifying arrangements)
+  staging_source_id: STAGE-SRC-0004
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: ""
+
+- provider: Anthropic
+  scope: provider_wide
+  official_model_id: null
+  field_name: regional_pricing_multiplier
+  field_value: inference_geo=us triggers a 1.1x pricing multiplier
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: Policy-triggered pricing fact -- cross-referenced in pricing_facts.yaml
+
+- provider: Anthropic
+  scope: model_specific
+  official_model_id: claude-fable-5
+  field_name: regional_restrictions
+  field_value: Export controls applied 2026-06-12; lifted 2026-06-30; global restoration 2026-07-01. Mythos access remained restricted.
+  staging_source_id: STAGE-SRC-0006
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: ""
+
+- provider: Anthropic
+  scope: provider_wide
+  official_model_id: null
+  field_name: data_retention_days_default
+  field_value: "not confirmed on official page this pass (reported elsewhere as 7-day, Sept 14 2025 effective)"
+  staging_source_id: STAGE-SRC-0004
+  adr0025_confidence: UNVERIFIED
+  phase_c5_evidence_status: SECONDARY_ONLY
+  staging_disposition: PENDING -- not confirmed on official page this pass
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: Routed to audit_gaps.yaml GAP-STAGE-0005
+
+- provider: Anthropic
+  scope: provider_wide
+  official_model_id: null
+  field_name: dpa_availability
+  field_value: "not located this pass (reported elsewhere as auto-incorporated, Jan 1 2026 effective)"
+  staging_source_id: STAGE-SRC-0004
+  adr0025_confidence: UNVERIFIED
+  phase_c5_evidence_status: UNVERIFIED
+  staging_disposition: "REJECTED-FOR-NOW -- compliance/legal claim, not located; treat as BLOCKED-equivalent per Phase D's own risk framing until confirmed at a Trust Center specifically"
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: "Routed to audit_gaps.yaml GAP-STAGE-0006. Highest-caution item in this batch: compliance/legal claims carry downstream contractual consequences if wrong."
+
+- provider: Anthropic
+  scope: provider_wide
+  official_model_id: null
+  field_name: certifications
+  field_value: "ISO 27001:2022 / ISO 42001 / SOC 2 claimed by secondary sources; not verified at Trust Center this pass"
+  staging_source_id: STAGE-SRC-0004
+  adr0025_confidence: UNVERIFIED
+  phase_c5_evidence_status: UNVERIFIED
+  staging_disposition: REJECTED-FOR-NOW -- same caution as DPA above
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: "Routed to audit_gaps.yaml GAP-STAGE-0007. No column concept fits a certification LIST cleanly even in Phase D's own proposed schema -- flagged there too."
+
+- provider: Google
+  scope: provider_wide
+  official_model_id: null
+  field_name: training_policy
+  field_value: "Paid-tier content not used to improve products; free-tier content may be used, subject to provider terms"
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: ""
+
+- provider: xAI
+  scope: provider_wide
+  official_model_id: null
+  field_name: training_policy
+  field_value: "Data-sharing/training opt-in program (opt-in, not default)"
+  staging_source_id: STAGE-SRC-0009
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: ""
+
+- provider: xAI
+  scope: provider_wide
+  official_model_id: null
+  field_name: regions
+  field_value: "us-east-1, us-west-2"
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  intended_canonical_destination: "commercial-terms.csv (Phase D proposal, NOT approved/created -- see mapping_manifest.yaml)"
+  schema_gap_status: No production file exists for this fact class as of 2026-07-18
+  notes: ""

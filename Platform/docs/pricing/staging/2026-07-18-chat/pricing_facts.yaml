@@ -1,0 +1,979 @@
+# Phase E staging package -- section C: pricing_facts
+# Batch: 2026-07-18 chat provider-pricing audit (Phase C / C.5 / D / D.5)
+# Atomic pricing facts mapped toward Platform/docs/pricing/provider-pricing.csv's
+# actual wide (33-column) schema. Where a fact fits the three standard wide columns
+# (input_price_per_million / cached_input_price_per_million / output_price_per_million)
+# that is noted as a direct fit. Where it does not, the generic billing_dimension +
+# unit_price mechanism is proposed as a transformation, or a genuine no-fit is flagged --
+# see destination_field_mapping on each record and mapping_manifest.yaml for the
+# consolidated list.
+# STRICT SOURCING RULE: every price_value below is a number Phase C.5 states literally
+# (including where Phase C.5 itself already performed a derivation, e.g. OpenAI cache-write).
+# Where Phase C.5 states a RULE without an absolute figure (OpenAI's >272K multiplier),
+# only the rule is recorded -- no absolute price is computed or invented in this pass.
+# NOTE ON "CONFIRMED-ABSENT" BATCH DISCOUNT REPRESENTATION: xAI's batch_discount_percent
+# is recorded as 0 because Phase C.5 cites an explicit official statement that unlisted
+# models (including grok-4.5) receive no discount -- a positive fact. DeepSeek's and
+# Zhipu's are recorded as null because Phase C.5 only reports no batch pricing was found/
+# shown, without an explicit official "no discount" statement -- absence of evidence, not
+# an evidenced absence. This is an intentional distinction, not an inconsistency.
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-sol
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 5.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-sol
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input
+  price_value: 0.5
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-sol
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 30.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-terra
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 2.5
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-terra
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input
+  price_value: 0.25
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-terra
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 15.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-luna
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 1.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-luna
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input
+  price_value: 0.1
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-luna
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 6.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-sol
+  channel: direct
+  plan: standard
+  billing_dimension: cache_write_5m
+  price_value: 6.25
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_DERIVED
+  phase_c5_evidence_status: OFFICIAL_DERIVED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column in provider-pricing.csv -- would need billing_dimension='cache_write_5m' + unit_price (generic row), since input/cached_input/output_price_per_million only cover the three standard dimensions"
+  notes: "Formula (stated by Phase C.5 itself, not re-derived here): 1.25 x standard input price"
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-terra
+  channel: direct
+  plan: standard
+  billing_dimension: cache_write_5m
+  price_value: 3.125
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_DERIVED
+  phase_c5_evidence_status: OFFICIAL_DERIVED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column in provider-pricing.csv -- would need billing_dimension='cache_write_5m' + unit_price (generic row), since input/cached_input/output_price_per_million only cover the three standard dimensions"
+  notes: "Formula (stated by Phase C.5 itself, not re-derived here): 1.25 x standard input price"
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-luna
+  channel: direct
+  plan: standard
+  billing_dimension: cache_write_5m
+  price_value: 1.25
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_DERIVED
+  phase_c5_evidence_status: OFFICIAL_DERIVED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column in provider-pricing.csv -- would need billing_dimension='cache_write_5m' + unit_price (generic row), since input/cached_input/output_price_per_million only cover the three standard dimensions"
+  notes: "Formula (stated by Phase C.5 itself, not re-derived here): 1.25 x standard input price"
+
+- provider: OpenAI
+  official_model_id: gpt-5.6-sol / -terra / -luna
+  channel: direct
+  plan: standard
+  billing_dimension: long_context_rule
+  price_value: null
+  unit: multiplier_rule
+  currency: USD
+  staging_source_id: STAGE-SRC-0002
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "long_context_threshold=272000 (direct fit); the SINGLE long_context_multiplier column cannot hold two different values (input 2x vs output 1.5x) -- needs two rows or a schema extension, see mapping_manifest.yaml"
+  notes: "Rule: entire request billed at input 2x / output 1.5x above 272,000 input tokens. No resulting absolute dollar figure is stated by Phase C.5 for any specific model -- NOT computed here to avoid inventing a value C.5 itself did not assert."
+
+- provider: OpenAI
+  official_model_id: "gpt-5.6-* (models released on/after 2026-03-05)"
+  channel: direct
+  plan: standard
+  billing_dimension: data_residency_uplift
+  price_value: 10
+  unit: percent_uplift
+  currency: USD
+  staging_source_id: STAGE-SRC-0001
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for a percentage uplift rule -- closest fit is a billing_dimension='residency_uplift' generic row, or a notes-field caveat on every affected row (lossy)"
+  notes: "Regional/commercial rule, also relevant to commercial_policy_facts.yaml"
+
+- provider: Anthropic
+  official_model_id: claude-fable-5
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 10.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: Anthropic
+  official_model_id: claude-fable-5
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 50.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: Anthropic
+  official_model_id: claude-opus-4-8
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 5.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: Anthropic
+  official_model_id: claude-opus-4-8
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 25.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: Anthropic
+  official_model_id: claude-sonnet-5
+  channel: direct
+  plan: introductory
+  billing_dimension: input
+  price_value: 2.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: Introductory price through 2026-08-31
+
+- provider: Anthropic
+  official_model_id: claude-sonnet-5
+  channel: direct
+  plan: introductory
+  billing_dimension: output
+  price_value: 10.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: Introductory price through 2026-08-31
+
+- provider: Anthropic
+  official_model_id: claude-sonnet-5
+  channel: direct
+  plan: standard-from-2026-09-01
+  billing_dimension: input
+  price_value: 3.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit); effective_from=2026-09-01
+  notes: Standard price from 2026-09-01
+
+- provider: Anthropic
+  official_model_id: claude-sonnet-5
+  channel: direct
+  plan: standard-from-2026-09-01
+  billing_dimension: output
+  price_value: 15.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit); effective_from=2026-09-01
+  notes: Standard price from 2026-09-01
+
+- provider: Anthropic
+  official_model_id: "claude-* (all current models)"
+  channel: direct
+  plan: standard
+  billing_dimension: cache_write_5m_multiplier
+  price_value: 1.25
+  unit: multiplier_rule
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for a multiplier rule (as opposed to a computed price) -- billing_dimension generic row, unit_price holding the multiplier itself rather than a currency amount is a semantic stretch; better modeled as a note or a future assumptions.yaml-style methodology entry"
+  notes: Rule only -- Phase C.5 does not state a per-model computed cache dollar value for Claude (unlike OpenAI); not computed here
+
+- provider: Anthropic
+  official_model_id: "claude-* (all current models)"
+  channel: direct
+  plan: standard
+  billing_dimension: cache_write_1h_multiplier
+  price_value: 2.0
+  unit: multiplier_rule
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for a multiplier rule (as opposed to a computed price) -- billing_dimension generic row, unit_price holding the multiplier itself rather than a currency amount is a semantic stretch; better modeled as a note or a future assumptions.yaml-style methodology entry"
+  notes: Rule only -- Phase C.5 does not state a per-model computed cache dollar value for Claude (unlike OpenAI); not computed here
+
+- provider: Anthropic
+  official_model_id: "claude-* (all current models)"
+  channel: direct
+  plan: standard
+  billing_dimension: cache_read_multiplier
+  price_value: 0.1
+  unit: multiplier_rule
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for a multiplier rule (as opposed to a computed price) -- billing_dimension generic row, unit_price holding the multiplier itself rather than a currency amount is a semantic stretch; better modeled as a note or a future assumptions.yaml-style methodology entry"
+  notes: Rule only -- Phase C.5 does not state a per-model computed cache dollar value for Claude (unlike OpenAI); not computed here
+
+- provider: Anthropic
+  official_model_id: "claude-* (provider-wide)"
+  channel: direct
+  plan: standard
+  billing_dimension: web_search
+  price_value: 10.0
+  unit: per_1000_calls
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for tool/per-call pricing -- billing_dimension='web_search', unit_name='searches', unit_quantity=1000, unit_price=10.00 (generic row fit)"
+  notes: ""
+
+- provider: Anthropic
+  official_model_id: "claude-* (provider-wide)"
+  channel: direct
+  plan: standard
+  billing_dimension: code_execution
+  price_value: 0.05
+  unit: per_container_hour
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column -- billing_dimension='code_execution', unit_name='container-hour', unit_price=0.05 (generic row fit); the '1550 free hours/month' allowance has no column at all (closest: included_units, if repurposed)"
+  notes: "After 1,550 free hours/month, subject to documented conditions"
+
+- provider: Anthropic
+  official_model_id: "claude-* (provider-wide)"
+  channel: direct
+  plan: standard
+  billing_dimension: inference_geo_us_multiplier
+  price_value: 1.1
+  unit: multiplier_rule
+  currency: USD
+  staging_source_id: STAGE-SRC-0003
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for a policy-triggered pricing multiplier -- region column exists but is descriptive, not a multiplier trigger; recommend commercial_policy_facts.yaml as the better home (also cross-referenced there)"
+  notes: ""
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: standard-le200k
+  billing_dimension: input
+  price_value: 2.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: "Standard tier, <=200K tokens"
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: standard-le200k
+  billing_dimension: cached_input
+  price_value: 0.2
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: "Standard tier, <=200K tokens"
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: standard-le200k
+  billing_dimension: output
+  price_value: 12.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: "Standard tier, <=200K tokens"
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: long-context-gt200k
+  billing_dimension: long_context_input
+  price_value: 4.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "input_price_per_million on a >200K-tagged row (direct fit, explicit absolute value stated by C.5)"
+  notes: "Long-context tier, >200K tokens"
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: long-context-gt200k
+  billing_dimension: long_context_cached_input
+  price_value: 0.4
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "cached_input_price_per_million on a >200K-tagged row"
+  notes: "Long-context tier, >200K tokens"
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: long-context-gt200k
+  billing_dimension: long_context_output
+  price_value: 18.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "output_price_per_million on a >200K-tagged row"
+  notes: "Long-context tier, >200K tokens"
+
+- provider: Google
+  official_model_id: gemini-3.1-pro-preview
+  channel: direct
+  plan: standard
+  billing_dimension: cache_storage
+  price_value: 4.5
+  unit: per_1M_tokens_per_hour
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column for a time-based storage rate (per-hour AND per-token) -- billing_dimension='cache_storage', unit_price=4.50 loses the 'per hour' dimension unless unit_name captures it"
+  notes: ""
+
+- provider: Google
+  official_model_id: gemini-3.1-flash-lite
+  channel: direct
+  plan: standard
+  billing_dimension: input_text_image_video
+  price_value: 0.25
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit for text/image/video modality)
+  notes: ""
+
+- provider: Google
+  official_model_id: gemini-3.1-flash-lite
+  channel: direct
+  plan: standard
+  billing_dimension: input_audio
+  price_value: 0.5
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: NO separate column for a modality-specific input price -- input_price_per_million can only hold one value per row; needs a second row or a modality column
+  notes: ""
+
+- provider: Google
+  official_model_id: gemini-3.1-flash-lite
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 1.5
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: Google
+  official_model_id: gemini-3.1-flash-lite
+  channel: direct
+  plan: standard
+  billing_dimension: cached_text_input
+  price_value: 0.025
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: ""
+
+- provider: Google
+  official_model_id: "gemini-3.* family"
+  channel: direct
+  plan: standard
+  billing_dimension: search_grounding
+  price_value: 14.0
+  unit: per_1000_queries
+  currency: USD
+  staging_source_id: STAGE-SRC-0007
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated column -- billing_dimension='search_grounding', unit_price=14.00 (generic row fit); the '5,000 free prompts/month' allowance maps loosely to included_units if repurposed"
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 2.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input
+  price_value: 0.5
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 6.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: long-context-gt200k
+  billing_dimension: long_context_input
+  price_value: 4.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "input_price_per_million on a >200K-tagged row (explicit absolute value stated)"
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: long-context-gt200k
+  billing_dimension: long_context_cached_input
+  price_value: 1.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "cached_input_price_per_million on a >200K-tagged row"
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: long-context-gt200k
+  billing_dimension: long_context_output
+  price_value: 12.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "output_price_per_million on a >200K-tagged row"
+  notes: ""
+
+- provider: xAI
+  official_model_id: grok-4.5
+  channel: direct
+  plan: standard
+  billing_dimension: batch_discount_percent
+  price_value: 0
+  unit: percent
+  currency: USD
+  staging_source_id: STAGE-SRC-0008
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "batch_discount_percent (direct fit) -- represents CONFIRMED ABSENCE, not a missing value"
+  notes: "REJECTED CORRECTION: Phase C originally claimed 50%; Phase C.5 confirms models not listed (including grok-4.5) receive NO batch discount. This record represents the corrected fact (0 / not offered), not the rejected claim. See audit_gaps.yaml GAP-STAGE-0001."
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-flash
+  channel: direct
+  plan: standard
+  billing_dimension: input (cache_miss)
+  price_value: 0.14
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "input_price_per_million (semantic mapping: DeepSeek's 'cache miss' = full/standard input price)"
+  notes: ""
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-flash
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input (cache_hit)
+  price_value: 0.0028
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "cached_input_price_per_million (semantic mapping: DeepSeek's 'cache hit' = discounted cached-input price)"
+  notes: ""
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-flash
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 0.28
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-pro
+  channel: direct
+  plan: standard
+  billing_dimension: input (cache_miss)
+  price_value: 0.435
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "input_price_per_million (semantic mapping, see V4 Flash note)"
+  notes: ""
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-pro
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input (cache_hit)
+  price_value: 0.003625
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "cached_input_price_per_million (semantic mapping, see V4 Flash note)"
+  notes: ""
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-pro
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 0.87
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-flash
+  channel: direct
+  plan: standard
+  billing_dimension: batch_discount_percent
+  price_value: null
+  unit: percent
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "batch_discount_percent = null/not-applicable (direct fit) -- represents CONFIRMED ABSENCE, not a missing value"
+  notes: "No documented Batch discount for this model -- confirmed absent, per Phase C.5's explicit instruction to represent this as such rather than a gap"
+
+- provider: DeepSeek
+  official_model_id: deepseek-v4-pro
+  channel: direct
+  plan: standard
+  billing_dimension: batch_discount_percent
+  price_value: null
+  unit: percent
+  currency: USD
+  staging_source_id: STAGE-SRC-0010
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "batch_discount_percent = null/not-applicable (direct fit) -- represents CONFIRMED ABSENCE, not a missing value"
+  notes: "No documented Batch discount for this model -- confirmed absent, per Phase C.5's explicit instruction to represent this as such rather than a gap"
+
+- provider: Zhipu
+  official_model_id: glm-5.2
+  channel: direct
+  plan: standard
+  billing_dimension: input
+  price_value: 1.4
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0012
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: input_price_per_million (direct fit)
+  notes: ""
+
+- provider: Zhipu
+  official_model_id: glm-5.2
+  channel: direct
+  plan: standard
+  billing_dimension: cached_input
+  price_value: 0.26
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0012
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: cached_input_price_per_million (direct fit)
+  notes: ""
+
+- provider: Zhipu
+  official_model_id: glm-5.2
+  channel: direct
+  plan: standard
+  billing_dimension: output
+  price_value: 4.4
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0012
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: output_price_per_million (direct fit)
+  notes: ""
+
+- provider: Zhipu
+  official_model_id: glm-5.2
+  channel: direct
+  plan: standard
+  billing_dimension: storage
+  price_value: 0.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0012
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "NO dedicated storage column -- billing_dimension='storage' generic row"
+  notes: "Listed as temporarily free -- '0' represents the current promotional state, not a permanent price; effective_to should be watched"
+
+- provider: Zhipu
+  official_model_id: glm-5.2
+  channel: direct
+  plan: standard
+  billing_dimension: batch_discount_percent
+  price_value: null
+  unit: percent
+  currency: USD
+  staging_source_id: STAGE-SRC-0012
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: batch_discount_percent = null/not-applicable (direct fit) -- confirmed absence
+  notes: "No batch price shown -- confirmed absent, not a gap"
+
+- provider: OpenRouter
+  official_model_id: deepseek-v4-flash
+  channel: openrouter
+  plan: standard
+  billing_dimension: input
+  price_value: 0.09
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0013
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "input_price_per_million on a channel='openrouter'-tagged row -- NO channel/openrouter_model_slug column exists; recommend provider_id='openrouter' as the distinguishing value (see mapping_manifest.yaml)"
+  notes: "Observed price ('around' $0.09 per Phase C.5 -- approximate, not exact); direct price for comparison is $0.14. Time-sensitive: carries accessed_at 2026-07-18."
+
+- provider: OpenRouter
+  official_model_id: deepseek-v4-flash
+  channel: openrouter
+  plan: standard
+  billing_dimension: output
+  price_value: 0.18
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0013
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "output_price_per_million on a channel='openrouter'-tagged row"
+  notes: "Observed price ('around' $0.18 per Phase C.5 -- approximate); direct price for comparison is $0.28."
+
+- provider: OpenRouter
+  official_model_id: glm-5.2
+  channel: openrouter
+  plan: standard
+  billing_dimension: input
+  price_value: 0.93
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0013
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "input_price_per_million on a channel='openrouter'-tagged row"
+  notes: "Observed price ('around' $0.93 per Phase C.5 -- approximate); direct price for comparison is $1.40."
+
+- provider: OpenRouter
+  official_model_id: glm-5.2
+  channel: openrouter
+  plan: standard
+  billing_dimension: output
+  price_value: 3.0
+  unit: per_1M_tokens
+  currency: USD
+  staging_source_id: STAGE-SRC-0013
+  adr0025_confidence: OFFICIAL_EXPLICIT
+  phase_c5_evidence_status: OFFICIAL_VERIFIED
+  staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
+  destination_field_mapping: "output_price_per_million on a channel='openrouter'-tagged row"
+  notes: "Observed price ('around' $3.00 per Phase C.5 -- approximate); direct price for comparison is $4.40."
