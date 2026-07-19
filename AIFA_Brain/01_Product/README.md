@@ -4,21 +4,21 @@
 |---|---|
 | **Title** | 01_Product — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-16 |
+| **Updated** | 2026-07-19 |
 | **Owner** | unassigned — see Ownership below |
 | **Status** | Active |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Dependencies** | none |
-| **Related Docs** | [`../MASTER_INDEX.md`](../MASTER_INDEX.md), [`../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md`](../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md), [`../04_Research/Market_Intelligence/03_Feature_Intelligence.md`](../04_Research/Market_Intelligence/03_Feature_Intelligence.md), `../../Platform/HANDOVER/12_OPEN_DECISIONS.md`, `../../Platform/FOUNDER_NEXT_STEP.md`, `../15_Roadmap/README.md` |
+| **Related Docs** | [`../MASTER_INDEX.md`](../MASTER_INDEX.md), [`../12_Decisions/PRODUCT_DECISION_LOG.md`](../12_Decisions/PRODUCT_DECISION_LOG.md), [`../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md`](../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md), [`../04_Research/Market_Intelligence/03_Feature_Intelligence.md`](../04_Research/Market_Intelligence/03_Feature_Intelligence.md), `../../Platform/HANDOVER/12_OPEN_DECISIONS.md`, `../../Platform/FOUNDER_NEXT_STEP.md`, `../15_Roadmap/README.md` |
 | **Tags** | `product, strategy` |
 
 ## Purpose
 
 Product vision, feature specs, user-facing product decisions, and product-strategy documents that span or precede either engineering workstream. This is where "what should we build and why" lives, distinct from "how is it built" (which lives in `Platform/` and Content Studio's own docs) and distinct from "what does it cost" (`11_Pricing/`).
 
-No ratified product-strategy document has been written yet. That's an honest gap, not an oversight: `Platform/FOUNDER_NEXT_STEP.md` (written at the end of the Platform architecture freeze) explicitly identifies product strategy as the next real bottleneck, ahead of more engineering work.
+**A ratified product-strategy decision now exists: [`P-001`](../12_Decisions/PRODUCT_DECISION_LOG.md#p-001--launch-with-a-broad-value-dense-product-foundation) (Locked, 2026-07-19).** AIFA launches as a broad multi-capability platform (chat, image, video, voice, music, avatar, Smart Router, wallet/quote-before-commit pricing, history/asset library, opt-in basic Memory, curated workflow templates, controlled Agents), not a minimal chat-only product — see the decision log entry for the full scope, constraints, and commercial rationale.
 
-> **The research to inform it now exists.** The [Executive Intelligence Report](../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md) sets out product conclusions (a narrow, trust-led MVP: multi-model chat + image, prepaid Toman wallet, quote-before-commit, Persian-quality guidance, four flagship differentiators), and [Feature Intelligence (Phase 3)](../04_Research/Market_Intelligence/03_Feature_Intelligence.md) is a 187-feature register with per-feature phase verdicts, an anti-backlog of things to never build, and constitutional-compatibility flags. These are *evidence and recommendations*; a ratified product decision still gets recorded in `../12_Decisions/PRODUCT_DECISION_LOG.md`. The first documents that belong here are the ones that answer `Platform/HANDOVER/12_OPEN_DECISIONS.md`'s product-shaped open questions: who the first real user is, what they need to be able to do that they can't do anywhere else, and whether the current API-first, aggregator-platform product framing (ADR-0006 in `Platform/docs/adr/`) is still the right one.
+> **Earlier research recommended a narrower MVP; P-001 supersedes it on capability breadth.** The [Executive Intelligence Report](../04_Research/Market_Intelligence/01_Executive_Intelligence_Report.md) sets out a narrow, trust-led MVP (multi-model chat + image, prepaid Toman wallet, quote-before-commit, Persian-quality guidance, four flagship differentiators) — that research conclusion is preserved as-is and is not rewritten by this note; P-001 is the ratified decision that now governs launch scope. [Feature Intelligence (Phase 3)](../04_Research/Market_Intelligence/03_Feature_Intelligence.md) (a 187-feature register with per-feature phase verdicts, an anti-backlog of things to never build, and constitutional-compatibility flags) remains relevant evidence for sequencing within P-001's locked breadth. Model/provider selection for each launch capability and implementation sequencing remain separate, still-open decisions — see `Platform/HANDOVER/12_OPEN_DECISIONS.md` and `Platform/FOUNDER_NEXT_STEP.md`.
 
 ## Update rules
 
