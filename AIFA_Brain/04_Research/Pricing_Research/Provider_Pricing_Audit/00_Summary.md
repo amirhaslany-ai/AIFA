@@ -4,10 +4,10 @@
 |---|---|
 | **Title** | Provider Pricing Audit — Chat Portfolio Summary |
 | **Created** | 2026-07-18 |
-| **Updated** | 2026-07-18 |
+| **Updated** | 2026-07-19 |
 | **Owner** | AIFA_Brain maintainers (synchronization); Platform maintainers (schema/ADR ownership) |
 | **Status** | Active |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Dependencies** | [`01_Phase_C_Chat_Pricing_Audit.md`](01_Phase_C_Chat_Pricing_Audit.md), [`02_Phase_C5_Official_Verification_Pass.md`](02_Phase_C5_Official_Verification_Pass.md), [`03_Phase_D_Repository_Ingestion_Plan.md`](03_Phase_D_Repository_Ingestion_Plan.md) |
 | **Related Docs** | [`../README.md`](../README.md), [`../../../11_Pricing/README.md`](../../../11_Pricing/README.md), [`../../../MASTER_INDEX.md`](../../../MASTER_INDEX.md), [`../../../../Platform/docs/adr/0025-pricing-source-of-truth.md`](../../../../Platform/docs/adr/0025-pricing-source-of-truth.md), [`../../../../Platform/docs/adr/0026-phase-c5-evidence-vocabulary-mapping.md`](../../../../Platform/docs/adr/0026-phase-c5-evidence-vocabulary-mapping.md), [`../../../../Platform/docs/pricing/staging/2026-07-18-chat/`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/) |
 | **Tags** | `pricing, provider-pricing, chat, phase-c, phase-c5, phase-d, phase-d5, evidence, staging` |
@@ -27,11 +27,37 @@
 | **D** | A proposed repository ingestion plan (file destinations, schemas, migration order, a `READY`/`WAIT`/`BLOCKED` gate), explicitly produced **without reading the live repository**. | Complete as a proposal — **not automatically authoritative**; reconciled against the real repository in Phase D.5 (see [`03_Phase_D_Repository_Ingestion_Plan.md`](03_Phase_D_Repository_Ingestion_Plan.md)'s import reconciliation note) |
 | **D.5** | This synchronization pass: import the three artifacts above, reconcile Phase D's proposed schemas against the real ones, and produce a deterministic, machine-readable Phase E staging package with atomic field-level dispositions. | Complete — this document + [`Platform/docs/pricing/staging/2026-07-18-chat/`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/) |
 
-## INSIGHT — the single most consequential finding of this synchronization pass
+## Three different questions, not one — read this before trusting any "0 ELIGIBLE" framing
 
-**Phase C.5 supplies zero literal source URLs anywhere in its own text**, despite its own "Repository Eligibility Rule" requiring "exact official URL or source ID resolving to it" for a fact to be production-eligible. The only URLs anywhere in the supplied bundle appear in Phase D — the lowest-precedence document, which self-describes as "produced without direct read access to the live AIFA repository... works from file names supplied as examples" (i.e., Phase D's own scope disclaimer is about repository structure, but its citation URLs carry the same "not independently confirmed" character).
+An earlier pass over this batch collapsed three distinct questions into a single `PENDING` disposition, which made 178 well-evidenced facts look indistinguishable from genuinely unverified ones. They are not the same question:
 
-**Consequence:** no fact in this batch currently satisfies Phase C.5's own eligibility rule from evidence internal to the supplied bundle alone. Every source in the Phase E staging package is therefore capped at staging disposition `PENDING — URL re-confirmation required`, never `ELIGIBLE`, regardless of how strong the underlying evidence classification (`OFFICIAL_VERIFIED`, etc.) otherwise is. This is not a rejection of the research — the evidence classifications themselves are retained and used to prioritize the eventual re-confirmation pass — but it means **Phase E cannot auto-ingest anything from this batch without a human (or a fresh, URL-citing fetch pass) re-confirming that Phase D's proposed URLs are the actual pages Phase C.5 verified against.** See [`Platform/docs/pricing/staging/2026-07-18-chat/sources.yaml`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/sources.yaml) and the mapping manifest for the full accounting.
+1. **Is the fact verified by an official source?** — Phase C.5's evidence classification (`OFFICIAL_VERIFIED`/`OFFICIAL_DERIVED` vs. `SECONDARY_ONLY`/`UNVERIFIED`/`CONFLICTING`), mapped per [ADR-0026](../../../../Platform/docs/adr/0026-phase-c5-evidence-vocabulary-mapping.md) §1.
+2. **Is the fact structurally compatible with the current production schema?** — whether `model-pricing.csv`/`provider-pricing.csv` already has a column that fits it (`direct`/`transformation`) or genuinely does not (`no-fit`), per [`mapping_manifest.yaml`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/mapping_manifest.yaml).
+3. **Is the fact safe to ingest automatically right now?** — no, for every fact in this batch, but **for a specific, stated reason per fact**, not a blanket "unverified."
+
+### The actual numbers (of 143 staged model/pricing/commercial-policy facts)
+
+| | Count | What blocks it |
+|---|---|---|
+| **Officially verified** (Phase C.5 `OFFICIAL_VERIFIED`/`OFFICIAL_DERIVED`) | **130** | — |
+| — of which blocked *only* by routine source-URL re-confirmation (an engineering/research task, not a decision) | **90** | Phase C.5 supplies no literal URLs in its own text; every URL here traces only to Phase D's proposal and needs one independent re-fetch pass per source. Schema destination already exists (direct fit or the existing `billing_dimension`/`unit_price` generic mechanism). |
+| — of which additionally blocked by a genuine schema/product decision | **40** | See "Founder/architecture decisions" below — a production column or file does not exist yet, or a specific modeling ambiguity needs sign-off. URL re-confirmation is *also* required for these, but resolving the URL alone would not make them ingestible. |
+| **Not yet verified** (Phase C.5 `SECONDARY_ONLY`/`UNVERIFIED`) | **13** | Genuine research gaps — one more official-page fetch pass needed (or, for 2 Anthropic compliance claims, confirmation at a Trust Center specifically). Logged individually in [`audit_gaps.yaml`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/audit_gaps.yaml). |
+
+Plus, tracked separately (not part of the 143): **13** proposed sources (all gated on the same URL re-confirmation task), and **2** xAI claims correctly `REJECTED` (contradicted by official evidence, not merely pending).
+
+**The takeaway: 130 facts are already officially verified — that is not "0 eligible."** What's actually true is that *zero* facts have cleared the additional, independent bar of an independently re-confirmed citation, which is one specific, boundable engineering task (re-fetch 13 URLs), not a referendum on the research quality.
+
+### Founder/architecture decisions (the real bottleneck — 40 facts, 4 decisions)
+
+Reserved for genuine product/commercial/legal/architectural choices, per [`mapping_manifest.yaml`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/mapping_manifest.yaml):
+
+1. **Add model-spec columns to `model-pricing.csv`** (context window, max output, knowledge cutoff, availability status) — no column exists today. Affects 24 verified facts (+ 4 still-unverified ones, moot until researched anyway).
+2. **How to represent OpenAI's dual long-context multiplier** (input 2× vs. output 1.5× — one column, two values needed) — a data-modeling decision (two tagged rows vs. a schema extension). Affects 4 verified facts.
+3. **Whether an OpenRouter model-slug column is added** (vs. `notes`-only, the current fallback) — affects 4 verified facts.
+4. **Whether `commercial-terms.csv` is created** (Phase D's proposal, preserved but not pre-approved) — affects 8 verified + 3 unverified commercial/policy facts with no production destination at all today.
+
+Everything else — URL re-confirmation, the generic `billing_dimension` transformation writes, `sources.csv`/`pricing-audit-gaps.csv` ID and priority/owner assignment, validator rule additions — is ordinary engineering work and does not require founder sign-off. See [`PHASE_E_RUNBOOK.md`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/PHASE_E_RUNBOOK.md) for the ordered task list.
 
 ## The verified field-level ingestion policy
 
@@ -40,22 +66,31 @@ Per ADR-0025 (existing, Accepted) and ADR-0026 (new, Accepted — records the Ph
 - Only `OFFICIAL_EXPLICIT` and `OFFICIAL_DERIVED` facts (ADR-0025's vocabulary) are eligible for production `provider-pricing.csv`/`model-pricing.csv` rows — mapped from Phase C.5's `OFFICIAL_VERIFIED`→`OFFICIAL_EXPLICIT` and `OFFICIAL_DERIVED`→`OFFICIAL_DERIVED`.
 - `SECONDARY_ONLY` facts map to `UNVERIFIED` for production eligibility (the original Phase C.5 evidence state is retained in staging metadata, not discarded).
 - `CONFLICTING` facts are prohibited from production entirely and retained only as an audit-gap reason.
-- A **third, independent, staging-only** disposition (`ELIGIBLE` / `PENDING` / `REJECTED`) governs whether a fact is ready for the Phase E runbook to act on — this is not a production CSV column; see the taxonomy note below.
+- A **third, independent, staging-only** disposition (`ELIGIBLE` / `PENDING` / `REJECTED`) governs whether a fact is ready for the Phase E runbook to act on — this is not a production CSV column; see ADR-0026 §3.
 
 ## Known xAI corrections (must never re-enter through a later copy)
 
 1. **Grok 4.5 does not receive a 50% Batch discount.** The original Phase C claim is `CONFLICTING` — official documentation states unlisted models receive no Batch discount, and Grok 4.5 is unlisted.
 2. **Grok 4.5's rate limit is 150 requests per *second*, not per minute.** The original Phase C claim used the wrong unit.
 
-Both are recorded with `disposition: REJECTED` in the staging package's `audit_gaps` section, explicitly so a future spreadsheet import or copy-paste cannot silently reintroduce them.
+Both are recorded with `disposition: REJECTED` in `audit_gaps.yaml`, explicitly so a future spreadsheet import or copy-paste cannot silently reintroduce them.
 
-## Remaining evidence gaps (headline items; full list in the staging package and preserved Phase C.5 artifact)
+## Remaining evidence gaps (the 13 not-yet-verified facts; full detail in `audit_gaps.yaml`)
 
 - OpenAI: Batch/Priority/web-search pricing rows, exact GA date.
-- Anthropic: Opus 4.8 release date, general default-retention effective date, DPA incorporation date, ISO 27001/ISO 42001/SOC 2 certification claims.
+- Anthropic: Opus 4.8 release date, general default-retention effective date, DPA incorporation date, ISO 27001/ISO 42001/SOC 2 certification claims (compliance/legal — confirm at a Trust Center specifically, do not infer from a pricing page).
 - Alibaba/Qwen: direct token pricing (Singapore secondary-only, Beijing unverified), context/modality/regional scope/free quota.
 - Zhipu/GLM-5.2: context window, max output, license/self-hosting claims.
-- **All of the above, plus every otherwise-`OFFICIAL_VERIFIED` fact**, are additionally capped at `PENDING` by the URL-provenance gap described above.
+
+## Real-schema reconciliation — the single most consequential finding
+
+Phase D proposed a **long/row-per-dimension** `provider-pricing.csv` and a `portfolio_model_id`/`context_window_tokens`/... `model-pricing.csv`; the live repository has a **wide** `provider-pricing.csv` (three standard price columns + a generic `billing_dimension`/`unit_price`/`unit_name`/`unit_quantity` escape hatch) and a `model-pricing.csv` with no model-spec columns at all. Reconciling the two:
+
+- **Direct fit** (existing column, no transformation): standard input/cached_input/output prices, `official_model_id`/`official_model_name`, most `audit_gaps.yaml` fields, `sources.csv` columns.
+- **Transformation** (existing generic mechanism used non-trivially, no new column needed): cache-write prices, tool pricing (web search, code execution), cache storage, search grounding, via `billing_dimension`/`unit_price`. This resolves most of what looked like schema gaps in Phase D's naive long-format reading.
+- **No-fit / founder decision required**: the 4 items listed above.
+
+`assumptions.yaml` and `scenario-costs.csv` are untouched — Phase D's own assessment that they're out of scope matched the live repository's actual state. See [`mapping_manifest.yaml`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/mapping_manifest.yaml) for the full per-record-class table (the authoritative, machine-readable form of this reconciliation).
 
 ## The boundary this audit does not cross
 
@@ -75,13 +110,8 @@ Those remain founder/business-pricing decisions, recorded (once made) in `AIFA_B
 
 ## Next step
 
-**Founder/architecture review of the schema-reconciliation and approval-required items**, then Phase E (production dataset implementation), gated on:
-1. Independent re-confirmation of source URLs (the headline finding above).
-2. A founder/architecture decision on the two approval-required schema gaps: whether `model-pricing.csv` gains new columns for model specs (context window, max output, knowledge cutoff, availability status, account requirements), and whether a new `commercial-terms.csv` file is created (Phase D's proposal, preserved but not pre-approved).
-3. The validator extensions identified in the schema-reconciliation manifest.
-
-See [`Platform/docs/pricing/staging/2026-07-18-chat/PHASE_E_RUNBOOK.md`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/PHASE_E_RUNBOOK.md) for the exact, ordered execution plan a future implementation agent should follow once these are resolved.
+**Founder/architecture review of the 4 decisions above**, in parallel with the ordinary engineering task of re-confirming the 13 source URLs — the two do not block each other. Then Phase E (production dataset implementation) per [`PHASE_E_RUNBOOK.md`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/PHASE_E_RUNBOOK.md).
 
 ## Still out of scope / pending (unchanged by this pass)
 
-Credit Engine economics · Margin Engine · Subscription pricing · Scenario costs · Smart-routing economics · Unverified/pending provider facts (see gaps above).
+Credit Engine economics · Margin Engine · Subscription pricing · Scenario costs · Smart-routing economics.

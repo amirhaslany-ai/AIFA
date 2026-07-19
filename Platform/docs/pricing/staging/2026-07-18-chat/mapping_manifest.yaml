@@ -9,6 +9,13 @@
 # automatic_phase_e_eligibility is false for EVERY record class in this batch -- see
 # 00_Summary.md's headline finding (source-URL provenance) and PHASE_E_RUNBOOK.md's
 # stop conditions.
+# IMPORTANT: automatic_phase_e_eligibility=false does NOT mean unverified. Of the 143
+# staged model/pricing/commercial-policy facts, 130 are officially verified per Phase
+# C.5 (see each record's own phase_c5_evidence_status/adr0025_confidence field). Only
+# the 4 classes below with required_founder_or_architecture_approval: true are blocked
+# on a real decision (40 facts total); every other class is blocked purely on the
+# routine source-URL re-confirmation task in PHASE_E_RUNBOOK.md -- an engineering task,
+# not a founder decision. See 00_Summary.md's "Three different questions" section.
 
 - package_record_class: sources (13 records)
   intended_live_file: Platform/docs/pricing/sources.csv
@@ -35,7 +42,7 @@
   automatic_phase_e_eligibility: false
   required_validator_rule: N/A until columns exist
   required_founder_or_architecture_approval: true
-  notes: "Genuine schema gap, not a naming mismatch. Phase D proposed exactly these columns (its own SCHEMA_RECONCILIATION-flagged fabrication) but the live schema does not have them. Recommend a founder/architecture decision: (a) add these columns to model-pricing.csv, or (b) accept they live only in provider docs (Platform/docs/providers/*.md) as prose, never structured data. Staged as facts regardless, per the task's 'staging is schema-agnostic' framing."
+  notes: "Genuine schema gap, not a naming mismatch. Phase D proposed exactly these columns but the live schema does not have them (see 00_Summary.md's real-schema reconciliation section). Recommend a founder/architecture decision: (a) add these columns to model-pricing.csv, or (b) accept they live only in provider docs (Platform/docs/providers/*.md) as prose, never structured data. Staged as facts regardless, per the task's 'staging is schema-agnostic' framing."
 
 - package_record_class: "pricing_facts -- standard input/cached_input/output rows (OpenAI, Anthropic, Google standard tier, xAI standard+long-context, DeepSeek, Zhipu)"
   intended_live_file: Platform/docs/pricing/provider-pricing.csv

@@ -31,11 +31,11 @@ Not yet enforced by the script (checked by review until implemented): that every
 
 ## Staging batches (Phase E input, not yet production)
 
-Reconciled, ready-for-review research batches land in `staging/<date>-<scope>/` before any row is written to the CSVs above — never committed directly. Each batch has its own `README.md`, `SCHEMA_RECONCILIATION.md`, `PHASE_E_RUNBOOK.md`, and atomic-fact YAML files.
+Reconciled, ready-for-review research batches land in `staging/<date>-<scope>/` before any row is written to the CSVs above — never committed directly. Each batch has its own `README.md`, a machine-readable `mapping_manifest.yaml` (schema mapping + founder-approval-required table), a `PHASE_E_RUNBOOK.md` implementation checklist, and atomic-fact YAML files.
 
 | Batch | Scope | Status |
 |---|---|---|
-| [`staging/2026-07-18-chat/`](staging/2026-07-18-chat/README.md) | Chat portfolio (13 models, 7 providers + OpenRouter) — Phase C research → Phase C.5 verification → Phase D ingestion plan → Phase D.5 synchronization | 180 records staged, 0 `ELIGIBLE`, 178 `PENDING` (source-URL re-confirmation required), 2 `REJECTED` (xAI corrections). See its `README.md` for the full disposition breakdown and `PHASE_E_RUNBOOK.md` for what's next. |
+| [`staging/2026-07-18-chat/`](staging/2026-07-18-chat/README.md) | Chat portfolio (13 models, 7 providers + OpenRouter) — Phase C research → Phase C.5 verification → Phase D ingestion plan → Phase D.5 synchronization | 130 of 143 staged model/pricing/commercial facts officially verified (90 blocked only by routine source-URL re-confirmation, 40 also need one of 4 founder/architecture decisions); 13 still genuinely unverified; 2 `REJECTED` (xAI corrections). See its `README.md`/`00_Summary.md` for the full breakdown and `PHASE_E_RUNBOOK.md` for what's next. |
 
 ## Related documents
 

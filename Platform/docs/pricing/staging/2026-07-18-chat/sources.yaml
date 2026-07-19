@@ -7,6 +7,9 @@
 # ALL records are capped at staging_disposition: PENDING -- see 00_Summary.md's headline
 # finding: Phase C.5 supplies no URLs; every url above is inherited from Phase D's
 # proposal only and is not independently confirmed within the supplied bundle.
+# This PENDING disposition is a routine engineering/research task (one re-fetch pass per
+# source), not a verification failure or a founder decision -- see PHASE_E_RUNBOOK.md #1
+# and 00_Summary.md's "Three different questions" section.
 
 - staging_source_id: STAGE-SRC-0001
   provider: OpenAI

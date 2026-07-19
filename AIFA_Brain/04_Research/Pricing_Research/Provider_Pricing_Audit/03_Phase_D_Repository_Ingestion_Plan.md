@@ -18,7 +18,7 @@ byte-for-byte unchanged.
 | **Status** | Archived — planning proposal only, **not automatically authoritative** (see reconciliation note below). Superseded in practice by the actual schema reconciliation performed in the Phase D.5 synchronization pass. |
 | **Version** | 1.0 (as supplied) |
 | **Dependencies** | [`01_Phase_C_Chat_Pricing_Audit.md`](01_Phase_C_Chat_Pricing_Audit.md), [`02_Phase_C5_Official_Verification_Pass.md`](02_Phase_C5_Official_Verification_Pass.md) |
-| **Related Docs** | [`00_Summary.md`](00_Summary.md), [`../../../../Platform/docs/pricing/staging/2026-07-18-chat/SCHEMA_RECONCILIATION.md`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/SCHEMA_RECONCILIATION.md), [`../../../../Platform/docs/adr/0025-pricing-source-of-truth.md`](../../../../Platform/docs/adr/0025-pricing-source-of-truth.md) |
+| **Related Docs** | [`00_Summary.md`](00_Summary.md) (includes the real-schema reconciliation this plan's proposals are checked against), [`../../../../Platform/docs/pricing/staging/2026-07-18-chat/mapping_manifest.yaml`](../../../../Platform/docs/pricing/staging/2026-07-18-chat/mapping_manifest.yaml), [`../../../../Platform/docs/adr/0025-pricing-source-of-truth.md`](../../../../Platform/docs/adr/0025-pricing-source-of-truth.md) |
 | **Tags** | `pricing, provider-pricing, chat, phase-d, ingestion-plan, proposal, not-authoritative` |
 
 ## Repository-reconciliation note (added on import, 2026-07-18)

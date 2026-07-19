@@ -5,7 +5,7 @@
 # (input_price_per_million / cached_input_price_per_million / output_price_per_million)
 # that is noted as a direct fit. Where it does not, the generic billing_dimension +
 # unit_price mechanism is proposed as a transformation, or a genuine no-fit is flagged --
-# see destination_field_mapping on each record and SCHEMA_RECONCILIATION.md for the
+# see destination_field_mapping on each record and mapping_manifest.yaml for the
 # consolidated list.
 # STRICT SOURCING RULE: every price_value below is a number Phase C.5 states literally
 # (including where Phase C.5 itself already performed a derivation, e.g. OpenAI cache-write).
@@ -210,7 +210,7 @@
   adr0025_confidence: OFFICIAL_EXPLICIT
   phase_c5_evidence_status: OFFICIAL_VERIFIED
   staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
-  destination_field_mapping: "long_context_threshold=272000 (direct fit); the SINGLE long_context_multiplier column cannot hold two different values (input 2x vs output 1.5x) -- needs two rows or a schema extension, see SCHEMA_RECONCILIATION.md"
+  destination_field_mapping: "long_context_threshold=272000 (direct fit); the SINGLE long_context_multiplier column cannot hold two different values (input 2x vs output 1.5x) -- needs two rows or a schema extension, see mapping_manifest.yaml"
   notes: "Rule: entire request billed at input 2x / output 1.5x above 272,000 input tokens. No resulting absolute dollar figure is stated by Phase C.5 for any specific model -- NOT computed here to avoid inventing a value C.5 itself did not assert."
 
 - provider: OpenAI
@@ -930,7 +930,7 @@
   adr0025_confidence: OFFICIAL_EXPLICIT
   phase_c5_evidence_status: OFFICIAL_VERIFIED
   staging_disposition: PENDING -- URL re-confirmation required (see sources.yaml); otherwise well-evidenced
-  destination_field_mapping: "input_price_per_million on a channel='openrouter'-tagged row -- NO channel/openrouter_model_slug column exists; recommend provider_id='openrouter' as the distinguishing value (see SCHEMA_RECONCILIATION.md)"
+  destination_field_mapping: "input_price_per_million on a channel='openrouter'-tagged row -- NO channel/openrouter_model_slug column exists; recommend provider_id='openrouter' as the distinguishing value (see mapping_manifest.yaml)"
   notes: "Observed price ('around' $0.09 per Phase C.5 -- approximate, not exact); direct price for comparison is $0.14. Time-sensitive: carries accessed_at 2026-07-18."
 
 - provider: OpenRouter

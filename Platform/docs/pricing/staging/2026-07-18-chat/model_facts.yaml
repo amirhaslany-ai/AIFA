@@ -1,11 +1,13 @@
 # Phase E staging package -- section B: model_facts
 # Batch: 2026-07-18 chat provider-pricing audit (Phase C / C.5 / D / D.5)
 # Atomic field-level identity/spec records -- NOT one all-or-nothing flag per model.
-# Maps toward Platform/docs/pricing/model-pricing.csv, but see SCHEMA_RECONCILIATION.md:
+# Maps toward Platform/docs/pricing/model-pricing.csv, but see mapping_manifest.yaml:
 # context_window_tokens, max_output_tokens, knowledge_cutoff, availability_status, and
 # account_requirements/access-timeline facts have NO destination column in the current
 # production model-pricing.csv schema -- staged here regardless (staging is schema-agnostic)
-# but flagged approval-required in mapping_manifest.yaml.
+# but flagged approval-required in mapping_manifest.yaml (see 00_Summary.md for the count:
+# 24 of these 28 spec-field records are already officially verified, blocked only on that
+# founder/architecture decision, not on evidence quality).
 # adr0025_confidence is this batch's mechanical mapping per ADR-0026; phase_c5_evidence_status
 # is the original, unmodified Phase C.5 classification, retained per that ADR's instruction
 # not to discard it.
