@@ -41,3 +41,5 @@ but not yet a confirmed **official model ID** column — that column is added to
 - `../architecture/capability-model-provider.md` (the routing chain every entry here is expressed in terms of)
 - `../providers/README.md` (per-provider detail)
 - `../pricing/model-pricing.csv` (machine-readable form of these tables, populated in Phase C)
+- `../../../AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md` (`P-002`, Locked 2026-07-20 — launch model/provider/activation matrix; adds Kimi K3 to Chat, distinguishes model owner from serving provider/gateway)
+- [`ACTIVATION_BACKLOG.md`](ACTIVATION_BACKLOG.md) (the concise implementation backlog P-002 implies — not implemented by P-002 itself)

@@ -13,6 +13,7 @@ deepseek-v4-pro,DeepSeek V4 Pro,chat,chat,UNVERIFIED,,,DeepSeek,,,,,,,,,ADR-0018
 deepseek-v4-flash,DeepSeek V4 Flash,chat,chat,UNVERIFIED,,,DeepSeek,,,,,,,,,ADR-0018
 qwen-3.6-max-preview,Qwen3.6 Max Preview,chat,chat,UNVERIFIED,,,Alibaba,,,,,,,,,ADR-0018
 glm-5.2,GLM-5.2,chat,chat,UNVERIFIED,,,Zhipu,,,,,,,,,ADR-0018
+kimi-k3,Kimi K3,chat,chat,VERIFIED_ACTIVE,Kimi K3,kimi-k3,OpenRouter,,,,,,,,2026-07-20,"Model owner: Moonshot AI (OpenRouter is initial serving gateway + billing counterparty only, not the owner). Pinned OpenRouter slug: moonshotai/kimi-k3 -- never ~moonshotai/kimi-latest. Direct future route: Moonshot AI Kimi API, model ID kimi-k3, https://api.moonshot.ai/v1 (not implemented). VERIFIED_ACTIVE reflects identity/availability confirmed 2026-07-20 against official Moonshot docs; NOT yet in the public Active Catalog -- P-002 activation gates pending. Schema gap: no dedicated model_owner/gateway/billing_counterparty columns exist yet -- see pricing-audit-gaps.csv. See AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md P-002, ADR-0018."
 chat-package,Chat Package,chat,packaging,AIFA_ALIAS,,,,,,,,,,,,ADR-0018 - commercial bundle not a model
 all-access-package,All Access Package,chat,packaging,AIFA_ALIAS,,,,,,,,,,,,ADR-0018 - commercial bundle spanning all capabilities
 gpt-image-2,GPT Image 2,image,image,UNVERIFIED,,,OpenAI,,,,,,,,,ADR-0019 - Premium tier
@@ -65,7 +66,7 @@ eleven-speech-to-speech,ElevenLabs Speech-to-Speech,voice,changer,UNVERIFIED,,,E
 eleven-dubbing,ElevenLabs Dubbing,voice,dubbing,UNVERIFIED,,,ElevenLabs,,,,,,,,,ADR-0021
 lyria-3-pro,Google Lyria 3 Pro,music,full-song,UNVERIFIED,,,Google,,,,,,,,,ADR-0022
 mureka-9,Mureka 9,music,full-song,UNVERIFIED,,,Mureka,,,,,,,,,ADR-0022
-suno-v5.5,Suno v5.5,music,full-song,INTEGRATION_GATED,,,Suno,,,,,,,,,"ADR-0022 - official API only, see GAP-001"
+suno-v5.5,Suno v5.5,music,full-song,INTEGRATION_GATED,,,,,,,,,,,,"No authorized public API exists (first-party Suno Support response, 2026-07-20; see AIFA_Brain/04_Research/API_Research/Suno/2026-07-20-suno-support-api-response.md and P-002). primary_provider intentionally blank -- Suno is the model owner but has no authorized serving provider/gateway/billing counterparty today. No price populated -- no authorized billing unit exists. ADR-0022, GAP-001."
 eleven-music,Eleven Music,music,full-song,INTEGRATION_GATED,,,ElevenLabs,,,,,,,,,"ADR-0022 - feature-gated, see GAP-002"
 lyria-3-clip,Google Lyria 3 Clip,music,preview,UNVERIFIED,,,Google,,,,,,,,,ADR-0022
 stable-audio-3-instrumental,Stable Audio 3,music,instrumental,UNVERIFIED,,,Stability AI,,,,,,,,,ADR-0022

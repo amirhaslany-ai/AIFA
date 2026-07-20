@@ -1,15 +1,16 @@
 # Alibaba Cloud (Qwen / Wan)
 
-**Status:** Skeleton — pending Phase C verification against official Alibaba Cloud sources only.
+**Status:** Skeleton, updated 2026-07-20 per [`P-002`](../../../AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md#p-002--launch-model-provider-and-activation-matrix) — pending full Phase C verification against official Alibaba Cloud sources.
 
 ## AIFA usage (locked portfolio decisions)
 
 - Chat: Qwen3.6 Max Preview (UNVERIFIED) — [`../portfolio/chat.md`](../portfolio/chat.md), ADR-0018
-- Video: Wan 2.6 or 2.7 (general launch), Wan 720p (Economy), Wan Video Edit / Reference-to-Video (Editing, Character) (all UNVERIFIED) — [`../portfolio/video.md`](../portfolio/video.md), ADR-0020
+- Video: **Wan 2.7** (model owner: Alibaba; general launch, 720p economy mode, Video Edit / Reference-to-Video) — the prior "2.6 or 2.7" ambiguity is **resolved to 2.7** by `P-002`, subject to exact API-endpoint verification (all UNVERIFIED pending full pricing/commercial pass) — [`../portfolio/video.md`](../portfolio/video.md), ADR-0020, `P-002`.
+- **Initial serving gateway (per P-002): `fal`** — confirmed live on fal's own model page (`fal.ai/wan-2.7`, checked 2026-07-20). Alibaba Cloud Model Studio (direct) is a possible future route, not the initial one.
 
-## Identity — PENDING
+## Identity — partially checked 2026-07-20
 
-Official model IDs for Qwen3.6 Max Preview and the exact Wan version (2.6 vs. 2.7 — unresolved per ADR-0020); GA/preview status; region restrictions (notably whether Alibaba Cloud's API is accessible from AIFA's target markets): **UNKNOWN, not yet checked against official Alibaba Cloud documentation.**
+fal's own model page confirms a Wan 2.7 endpoint exists (Text-to-Video, Image-to-Video, Reference-to-Video, editing modes, up to 15s, up to 1080p, per public secondary sources — re-verify against fal's own spec page before use). **Not yet checked:** exact official Alibaba model IDs for Qwen3.6 Max Preview and Wan 2.7 independent of the fal listing; GA/preview status; region restrictions (notably whether Alibaba Cloud's own API is accessible from AIFA's target markets): **UNKNOWN, not yet checked against official Alibaba Cloud documentation.**
 
 ## Pricing — PENDING
 

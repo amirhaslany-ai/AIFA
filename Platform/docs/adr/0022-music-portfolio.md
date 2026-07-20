@@ -51,3 +51,7 @@ Music is the capability with the most conditional/gated entries (Suno explicitly
 ## Related documents
 
 - `docs/portfolio/music.md`, `docs/providers/google.md`, `docs/providers/mureka.md`, `docs/providers/elevenlabs.md`, `docs/providers/stability-ai.md`
+
+## Note (2026-07-20, non-normative — added, not editing the Decision above)
+
+This ADR's own named gate — "does Suno publish an official API?" — is now resolved by first-party evidence: **no**. Suno Support confirmed directly that no authorized public API, developer signup, API keys, or API-tier subscription exist on any plan (`AIFA_Brain/04_Research/API_Research/Suno/2026-07-20-suno-support-api-response.md`). `AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md`'s **P-002** (Locked) records the corrected canonical relationship — Suno stays Locked/strategically important but `INTEGRATION_GATED — NO AUTHORIZED PUBLIC API OR PASS-THROUGH LICENSING FRAMEWORK`, with SunoAPI.org and other unofficial wrappers `REJECTED FOR PRODUCTION USE`. This confirms this ADR's own Risk above ("Full Song's committed entries are only Lyria 3 Pro and Mureka 9" once resolved) as the current state, not a hypothetical. This ADR's own Decision table is preserved exactly as originally Accepted; see `docs/portfolio/music.md`, `docs/providers/suno.md`, and P-002 for the current state.

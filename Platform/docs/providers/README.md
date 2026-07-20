@@ -13,6 +13,8 @@ The 20 providers explicitly named in the docs structure, plus **Suno** and **Car
 | [`google.md`](google.md) | Chat, Image, Video, Voice, Music |
 | [`xai.md`](xai.md) | Chat, Video (reserve) |
 | [`deepseek.md`](deepseek.md) | Chat |
+| [`moonshot.md`](moonshot.md) | Chat, Coding, Agentic (Kimi K3 — model owner) |
+| [`openrouter.md`](openrouter.md) | Chat (Kimi K3 — initial serving gateway only, not a model owner) |
 | [`alibaba.md`](alibaba.md) | Chat, Video |
 | [`zhipu.md`](zhipu.md) | Chat |
 | [`black-forest-labs.md`](black-forest-labs.md) | Image |
@@ -32,7 +34,7 @@ The 20 providers explicitly named in the docs structure, plus **Suno** and **Car
 | [`suno.md`](suno.md) | Music (integration-gated) |
 | [`cartesia.md`](cartesia.md) | Voice (reserve) |
 
-**Deliberately excluded:** OpenRouter. It is named in the audit mission's provider list as a research subject, but AIFA's locked portfolio decisions do not use it as a supplier — it is already documented at length as a **competitive reference** (the routing-arbitrage evidence motivating `../architecture/cost-routing.md`) in `AIFA_Brain/04_Research/Market_Intelligence/02_Competitors_Phase2.md` and `01_Executive_Intelligence_Report.md`. Adding a redundant supplier-shaped stub here would blur that distinction; if AIFA ever integrates OpenRouter as an actual supplier, add a doc then, cross-linked to the existing competitive research rather than restating it.
+**OpenRouter — no longer excluded.** [`P-002`](../../../AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md#p-002--launch-model-provider-and-activation-matrix) (Locked, 2026-07-20) selects OpenRouter as the initial serving gateway for one specific, explicitly-decided route: Kimi K3 (Moonshot AI). This corrects the prior blanket statement that "AIFA's locked portfolio decisions do not use it as a supplier" — that statement is no longer true for this one route; OpenRouter is still not a general-purpose supplier, and remains additionally documented as a **competitive reference** (the routing-arbitrage evidence motivating `../architecture/cost-routing.md`) in `AIFA_Brain/04_Research/Market_Intelligence/02_Competitors_Phase2.md` and `01_Executive_Intelligence_Report.md` — that research is unchanged and not restated here. See [`openrouter.md`](openrouter.md).
 
 ## Fields Phase C must populate per provider (ADR-0025)
 
