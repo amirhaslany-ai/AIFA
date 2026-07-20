@@ -74,3 +74,7 @@ Fix which chat models AIFA offers, which are AIFA-facing names versus literal pr
 ## Related documents
 
 - `docs/portfolio/chat.md`, `docs/providers/openai.md`, `docs/providers/anthropic.md`, `docs/providers/google.md`, `docs/providers/xai.md`, `docs/providers/deepseek.md`, `docs/providers/alibaba.md`, `docs/providers/zhipu.md`
+
+## Note (2026-07-20, non-normative — added, not editing the Decision above)
+
+`AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md`'s **P-002** (Locked) adds Kimi K3 (Moonshot AI, via OpenRouter as initial serving gateway) to this Chat portfolio and introduces the model-owner/serving-provider/gateway/billing-counterparty distinction as required terminology going forward. This ADR's own Decision table above is preserved exactly as originally Accepted; see `docs/portfolio/chat.md` and P-002 for the current state.

@@ -13,6 +13,7 @@ deepseek-v4-pro,DeepSeek V4 Pro,chat,chat,UNVERIFIED,,,DeepSeek,,,,,,,,,ADR-0018
 deepseek-v4-flash,DeepSeek V4 Flash,chat,chat,UNVERIFIED,,,DeepSeek,,,,,,,,,ADR-0018
 qwen-3.6-max-preview,Qwen3.6 Max Preview,chat,chat,UNVERIFIED,,,Alibaba,,,,,,,,,ADR-0018
 glm-5.2,GLM-5.2,chat,chat,UNVERIFIED,,,Zhipu,,,,,,,,,ADR-0018
+kimi-k3,Kimi K3,chat,chat,VERIFIED_ACTIVE,Kimi K3,kimi-k3,OpenRouter,,,,,,,,2026-07-20,"Model owner: Moonshot AI (OpenRouter is initial serving gateway + billing counterparty only, not the owner). Pinned OpenRouter slug: moonshotai/kimi-k3 -- never ~moonshotai/kimi-latest. Direct future route: Moonshot AI Kimi API, model ID kimi-k3, https://api.moonshot.ai/v1 (not implemented). VERIFIED_ACTIVE reflects identity/availability confirmed 2026-07-20 against official Moonshot docs; NOT yet in the public Active Catalog -- P-002 activation gates pending. Schema gap: no dedicated model_owner/gateway/billing_counterparty columns exist yet -- see pricing-audit-gaps.csv. See AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md P-002, ADR-0018."
 chat-package,Chat Package,chat,packaging,AIFA_ALIAS,,,,,,,,,,,,ADR-0018 - commercial bundle not a model
 all-access-package,All Access Package,chat,packaging,AIFA_ALIAS,,,,,,,,,,,,ADR-0018 - commercial bundle spanning all capabilities
 gpt-image-2,GPT Image 2,image,image,UNVERIFIED,,,OpenAI,,,,,,,,,ADR-0019 - Premium tier

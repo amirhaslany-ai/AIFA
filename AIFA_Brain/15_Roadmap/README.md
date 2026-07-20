@@ -4,10 +4,10 @@
 |---|---|
 | **Title** | 15_Roadmap — README |
 | **Created** | 2026-07-13 |
-| **Updated** | 2026-07-19 |
+| **Updated** | 2026-07-20 |
 | **Owner** | unassigned |
 | **Status** | Active |
-| **Version** | 1.2 |
+| **Version** | 1.3 |
 | **Dependencies** | none |
 | **Related Docs** | `../MASTER_INDEX.md`, `../../Platform/POST_FREEZE_BACKLOG.md`, `../../Platform/FOUNDER_NEXT_STEP.md`, `../01_Product/README.md`, `../12_Decisions/PRODUCT_DECISION_LOG.md`, `../../Platform/docs/pricing/staging/2026-07-18-chat/README.md` |
 | **Tags** | `roadmap, planning` |
@@ -21,7 +21,9 @@ The cross-workstream roadmap — what's next for Content Studio, Platform, and t
 
 This folder is where those two, plus whatever `01_Product/` and `02_Business/` produce, get sequenced against each other at the company level — e.g. deciding whether founder attention goes to Content Studio's blocked persona/brand questions or Platform's pricing/payment decisions first.
 
-**Launch scope (2026-07-19):** launch scope is now governed by Locked decision [`P-001`](../12_Decisions/PRODUCT_DECISION_LOG.md#p-001--launch-with-a-broad-value-dense-product-foundation) — a broad multi-capability launch (chat, image, video, voice, music, avatar, Smart Router, wallet, limited Memory/Workflows/Agents), not a chat-only MVP. Model/provider selection and implementation sequencing remain separate, still-open decisions.
+**Launch scope (2026-07-19):** launch scope is now governed by Locked decision [`P-001`](../12_Decisions/PRODUCT_DECISION_LOG.md#p-001--launch-with-a-broad-value-dense-product-foundation) — a broad multi-capability launch (chat, image, video, voice, music, avatar, Smart Router, wallet, limited Memory/Workflows/Agents), not a chat-only MVP.
+
+**Launch model/provider matrix (2026-07-20):** which models and serving providers implement that scope is now locked by [`P-002`](../12_Decisions/PRODUCT_DECISION_LOG.md#p-002--launch-model-provider-and-activation-matrix) — including Kimi K3 (Moonshot AI, via OpenRouter) added to Chat/Coding, and the Video gateway strategy (`fal` for Kling/Seedance/Wan/Hailuo, direct for Veo/Runway). Locked Portfolio membership is not the same as public activation — see P-002's Universal activation gates and `Platform/docs/portfolio/ACTIVATION_BACKLOG.md` for what's still open. Implementation sequencing itself remains a separate, still-open decision.
 
 **Pricing-audit status (2026-07-18):** the chat-portfolio provider-pricing research/verification/reconciliation cycle (Phase C → C.5 → D → D.5) is complete and staged — see `../../Platform/docs/pricing/staging/2026-07-18-chat/README.md`. No production pricing row was written yet; the batch is blocked on founder/architecture review (source-URL re-confirmation, two schema-gap approval items) before Phase E can populate `Platform/docs/pricing/*.csv`. This sits upstream of the real-pricing decision `Platform/FOUNDER_NEXT_STEP.md` and `Platform/POST_FREEZE_BACKLOG.md` already flag as a founder bottleneck — not a new bottleneck, but this is where its provider-cost evidence now lives.
 

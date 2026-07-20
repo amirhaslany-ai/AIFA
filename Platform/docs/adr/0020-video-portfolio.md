@@ -67,3 +67,7 @@ Video has the widest provider spread of any capability and the clearest tier-to-
 
 - `docs/portfolio/video.md`, `docs/providers/google.md`, `docs/providers/kling.md`, `docs/providers/fal.md`, `docs/providers/volcano-engine.md`, `docs/providers/alibaba.md`, `docs/providers/runway.md`, `docs/providers/minimax.md`
 - `AIFA_Brain/04_Research/Market_Intelligence/02_Competitors_Phase2.md` §2.4 (existing video-economics research — cross-referenced, not restated)
+
+## Note (2026-07-20, non-normative — added, not editing the Decision above)
+
+`AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md`'s **P-002** (Locked) resolves this ADR's open Wan version item (2.6-or-2.7 → **2.7**, pending endpoint verification), fixes exact naming for Kling ("Kling 3" → **Kling Video 3.0**, distinct from Kling Video 3.0 Omni) and Seedance ("Seedance 2" → **Seedance 2.0**), and sets **`fal`** as the *initial* serving gateway (not merely an optional fallback) for Kling Video 3.0, Seedance 2.0, Wan 2.7, and Hailuo 2.3 — correcting this ADR's "optional fallback"/"optional approved gateway" framing for Kling and Seedance. This ADR's own Decision table above is preserved exactly as originally Accepted; see `docs/portfolio/video.md` and P-002 for the current state.
