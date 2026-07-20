@@ -30,7 +30,13 @@ Each item names what it is, not how to build it — sequencing and estimation ar
 24. **Future direct-provider comparison for Kling, Seedance, Wan, and Hailuo** — KlingAI Open Platform, ByteDance/Volcano Engine direct, Alibaba Cloud Model Studio, and MiniMax's own API, each evaluated against the initial `fal` route on cost, limits, reliability, and contract terms.
 25. **ElevenLabs and Deepgram adapters** — Voice (TTS/STT/cloning/dubbing) and Music (ElevenLabs Music/Sound Effects) routes, with the Persian-capability checks from item 20 as a hard gate before Persian traffic is routed to either.
 26. **HeyGen Avatar adapter** — stock-avatar presenter video, text-to-avatar, audio-to-avatar, approved translation/lip sync, stock voices; Digital Twin/face/voice cloning stay out of scope until consent/identity controls exist.
-27. **Suno first-party onboarding and API review** — track the Founder's direct application to Suno's API partner program (`pricing-audit-gaps.csv` GAP-001) as an external dependency; do not build against SunoAPI.org or any unofficial route in the meantime.
+
+## External business dependencies (not engineering tasks)
+
+**Corrected 2026-07-20** on first-party evidence from Suno Support (`AIFA_Brain/04_Research/API_Research/Suno/2026-07-20-suno-support-api-response.md`): Suno has no authorized public API at all — there is no partner-program application to "track" (the prior version of this backlog named one; that framing is corrected here). No engineering item (adapter, API-key setup, smoke test, pricing ingestion) exists for Suno or for any unofficial Suno wrapper (e.g. SunoAPI.org, `REJECTED FOR PRODUCTION USE` — see `Platform/docs/providers/suno.md`), and none should be added until Suno grants explicit written authorization.
+
+- **External dependency:** Obtain direct authorized integration, pass-through licensing, and commercial partnership approval from Suno, or wait for a future official public API.
+- **Optional supporting business task** (not engineering, not scheduled): Prepare a concise Suno partnership proposal after AIFA has a working product, verified traction, expected usage estimates, and a defined integration architecture.
 
 ## Related documents
 
@@ -38,4 +44,5 @@ Each item names what it is, not how to build it — sequencing and estimation ar
 - `Platform/docs/portfolio/README.md`, `chat.md`, `video.md`, `voice.md`, `music.md`, `avatar.md`
 - `Platform/docs/providers/openrouter.md`, `moonshot.md`, `fal.md`, `kling.md`
 - `Platform/docs/pricing/pricing-audit-gaps.csv`
+- `AIFA_Brain/04_Research/API_Research/Suno/2026-07-20-suno-support-api-response.md` (first-party evidence for the Suno correction)
 - `Platform/POST_FREEZE_BACKLOG.md` (general engineering backlog — distinct scope, not duplicated here)

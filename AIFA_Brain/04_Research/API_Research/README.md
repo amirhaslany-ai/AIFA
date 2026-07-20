@@ -16,6 +16,8 @@
 
 How comparable API products structure their developer experience — docs, versioning policy, partner onboarding, authentication model, rate-limit design. Feeds `../../10_API/`'s go-to-market strategy for AIFA's own API. Currently structure-only; use `TEMPLATE_API_Research.md`.
 
+**One exception, added 2026-07-20:** [`Suno/`](Suno/README.md) holds first-party vendor-correspondence evidence about Suno's own API availability *to* AIFA (a supplier question, not this folder's original comparable-API-research purpose) — see that subfolder's own README for why it lives here. It directly feeds `AIFA_Brain/12_Decisions/PRODUCT_DECISION_LOG.md`'s `P-002`, not `10_API/`.
+
 ## Update rules
 
 Note the exact date/version of the comparable API's docs referenced — API products iterate their developer experience frequently.
